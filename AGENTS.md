@@ -6,7 +6,7 @@ Projeto do grupo 05 no Módulo 2 do MBA em IA e Dados para Negócios (Inteli): o
 
 Usar a base da Vitaliza para responder **quem vai sair, em quem vale a pena agir, com qual mensagem e quanto isso rende**. A resposta é um sistema de cinco peças: dados → extração com IA generativa → previsão de churn → regra de decisão → mensagem gerada por IA.
 
-Referências do case, que não ficam no repositório: *Vitaliza: enunciado do case* e *Vitaliza: dicionário de dados*.
+Referências do case: *Vitaliza: enunciado do case* e *Vitaliza: dicionário de dados*. Os PDFs ficam em `docs/case/`, na máquina de cada integrante, e não sobem para o repositório.
 
 ## Estrutura
 

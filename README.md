@@ -15,7 +15,11 @@ git clone https://github.com/pedrofilardi-mba-hub/vitaliza_grupo_05.git
 cd vitaliza_grupo_05
 ```
 
-**2. Copie os dados do case** para a pasta `dados/brutos/`. São os arquivos do data room: os CSVs, o `atividades.parquet` e os mapas de calor. Eles não ficam no GitHub porque são grandes e têm dados pessoais.
+**2. Copie os arquivos do case.** Eles não ficam no GitHub porque são grandes e têm dados pessoais.
+
+- **Os dados** vão para `dados/brutos/`. **Tire o número do fim do nome**: `usuarios_9730.csv` vira `usuarios.csv`, `atividades_9938.parquet` vira `atividades.parquet`, e assim por diante. O código do grupo usa os nomes sem número.
+- **Os mapas de calor** vão para `dados/brutos/heatmap/`. Descompacte os dois zips ali: devem surgir as pastas `2026-07-31/` (12.431 imagens) e `2026-09-30/` (13.047 imagens).
+- **Os PDFs** (enunciado e dicionário de dados) vão para `docs/case/`.
 
 **3. Crie o ambiente Python e instale as bibliotecas.** O ambiente é uma pasta `.venv` com as bibliotecas do projeto, separada do resto do computador.
 

@@ -2,6 +2,9 @@
 dados/brutos/*
 !dados/brutos/.gitkeep
 
+# Material do case (enunciado e dicionário em PDF): fica só na máquina de cada um
+docs/case/
+
 # Chaves de API e configurações locais
 .env
 .env.*
