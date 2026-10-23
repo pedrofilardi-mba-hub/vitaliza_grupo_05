@@ -45,7 +45,7 @@ Referências do case, que não ficam no repositório: *Vitaliza: enunciado do ca
 
 ## Ambiente
 
-- Python 3.12, com pandas, pyarrow, duckdb, scikit-learn, lightgbm, statsmodels, scipy e matplotlib.
+- Python 3.12. As bibliotecas, com as versões fixadas, estão no `requirements.txt`; o passo a passo de instalação está no `README.md`. Se precisar de uma biblioteca nova, adicione-a ao `requirements.txt` no mesmo commit.
 - No Windows, ao imprimir texto com emoji (posts, tickets), use `sys.stdout.reconfigure(encoding='utf-8')`.
 
 ## Convenções
