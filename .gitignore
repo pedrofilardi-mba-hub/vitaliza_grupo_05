@@ -1,0 +1,23 @@
+# Dados brutos do data room: não sobem para o repositório (só a pasta, via .gitkeep)
+dados/brutos/*
+!dados/brutos/.gitkeep
+
+# Chaves de API e configurações locais
+.env
+.env.*
+
+# Ambiente Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Sistema e editores
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
