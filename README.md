@@ -6,6 +6,8 @@ O contexto completo e as regras do projeto estão no [AGENTS.md](AGENTS.md). As 
 
 ## Como começar (uma vez só)
 
+> **Primeira vez com Git e Python?** Siga o guia [docs/CONFIGURAR_MAQUINA.md](docs/CONFIGURAR_MAQUINA.md). Ele traz um prompt pronto para a sua IA fazer a configuração com você, seja ela uma IA que mexe no computador (Claude Code, Codex, Cursor) ou um chat no navegador (ChatGPT, Claude, Gemini). Os passos abaixo são a versão curta, para quem prefere fazer à mão.
+
 Você precisa ter instalados o [Git](https://git-scm.com/downloads) e o [Python 3.12](https://www.python.org/downloads/).
 
 **1. Baixe o repositório** para o seu computador:

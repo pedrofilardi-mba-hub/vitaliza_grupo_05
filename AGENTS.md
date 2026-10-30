@@ -37,6 +37,10 @@ Referências do case: *Vitaliza: enunciado do case* e *Vitaliza: dicionário de 
 - **Experimento:** `campanha_ago26.csv` é o único sorteio da base, a fonte para medir o uplift. Compare cada grupo com o `controle` pela saída, não pela abertura nem pelo clique.
 - **Dados pessoais:** `usuarios.csv` traz e-mail e data de nascimento. Não envie esses campos a APIs de LLM e não os grave em `saidas/`.
 
+## Qualidade de dados
+
+Para avaliar a qualidade de um arquivo de `dados/brutos/`, siga a skill `.claude/skills/qualidade-dados/SKILL.md`, nas cinco dimensões: completude, validade, consistência, unicidade e temporalidade. O Claude Code a carrega sozinho; no Codex ou em outra IA, peça para ler esse arquivo e seguir o passo a passo. A skill não limpa nada: ela leva cada problema ao grupo como decisão (corrigir, remover ou marcar) e registra o que for decidido no `DECISOES.md`, com o efeito na contagem.
+
 ## IA generativa
 
 - O custo de LLM sai do orçamento de CRM, de R$ 40.000 por mês. **Estime o custo antes de rodar em toda a base**: teste numa amostra e registre o custo por assinante.
