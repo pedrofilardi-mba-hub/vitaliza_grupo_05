@@ -1,6 +1,6 @@
 # Evidências de qualidade: `onboarding.csv`
 
-Gerado por `src/qualidade.py` em 29/10/2026 22:18. Só mede: nenhuma linha foi alterada. Texto · uma linha por conta · 63.929 linhas · 7 colunas.
+Gerado por `src/qualidade.py` em 29/10/2026 23:58. Só mede: nenhuma linha foi alterada. Texto · uma linha por conta · 63.929 linhas · 7 colunas.
 
 Valores só aparecem quando se repetem pelo menos 5 vezes; colunas pessoais aparecem só em números.
 

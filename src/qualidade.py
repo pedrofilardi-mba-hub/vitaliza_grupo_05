@@ -81,7 +81,9 @@ def completude(df, spec, extra, ids_conta):
         nulos = int(s.isna().sum())
         texto = s.dropna().astype(str) if s.dtype == object or str(s.dtype).startswith('str') else pd.Series(dtype=str)
         brancos = int((texto.str.strip() == '').sum())
-        disf = texto[texto.str.strip() != ''].map(vazio_disfarcado) if col not in PESSOAIS and len(texto) else pd.Series(dtype=bool)
+        # só em texto livre: em categorias, 'nenhum' ou 'RS' são valores legítimos
+        livre = col in spec.get('texto_livre', []) and col not in PESSOAIS
+        disf = texto[texto.str.strip() != ''].map(vazio_disfarcado) if livre and len(texto) else pd.Series(dtype=bool)
         n_disf = int(disf.sum())
         exemplos = amostra(texto[disf].str.strip().value_counts()) if n_disf else '—'
         total = nulos + brancos + n_disf
@@ -127,9 +129,14 @@ def validade(df, spec, extra):
         if col not in df.columns:
             continue
         d = para_data(df[col].dropna())
-        achados.append((col, 'data válida e plausível',
-                        f'{fmt(int(d.isna().sum()))} não viram data; {fmt(int((d < LANCAMENTO).sum()))} antes do lançamento (01/09/2020); '
-                        f'{fmt(int((d > CORTE).sum()))} depois do corte (30/09/2026)',
+        if col == 'data_nascimento':
+            idade = (CORTE - d).dt.days / 365.25
+            regra = (f'{fmt(int(d.isna().sum()))} não viram data; {fmt(int((idade < 0).sum()))} no futuro; '
+                     f'{fmt(int(((idade >= 0) & (idade < 13)).sum()))} com menos de 13 anos; {fmt(int((idade > 100).sum()))} com mais de 100 anos')
+        else:
+            regra = (f'{fmt(int(d.isna().sum()))} não viram data; {fmt(int((d < LANCAMENTO).sum()))} antes do lançamento (01/09/2020); '
+                     f'{fmt(int((d > CORTE).sum()))} depois do corte (30/09/2026)')
+        achados.append((col, 'data válida e plausível', regra,
                         f'de {d.min():%d/%m/%Y} a {d.max():%d/%m/%Y}' if d.notna().any() else '—'))
     return achados
 

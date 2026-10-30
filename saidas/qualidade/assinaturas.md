@@ -79,6 +79,8 @@ Os problemas não são de dado errado, mas de **como usar o arquivo sem tirar co
 
 ### Q-ass-04 · Assinatura antes do cadastro
 
+> **Correção (29/10/2026, na avaliação de `usuarios.csv`):** a análise abaixo está errada. As 42 assinaturas são **todas contas internas de cortesia**, sem nenhum evento. Não há como confirmar a data de início pelos eventos, e a frase "o errado é o cadastro" não se sustenta. O caso já está fora das métricas pela D-013. Ver Q-usu-07 em [usuarios.md](usuarios.md). O texto original foi mantido abaixo para registro.
+
 **Em palavras simples:** 42 pessoas aparecem assinando antes de criar a conta, o que é impossível.
 
 **Exemplo real do arquivo:** uma assinatura começa em 10/01/2025, mas a conta aparece criada em 22/12/2025, 346 dias depois.
@@ -92,7 +94,7 @@ Os problemas não são de dado errado, mas de **como usar o arquivo sem tirar co
   - **Remover:** tirar as 42. Efeito: −42 assinantes ativos reais.
   - **Marcar:** criar `cadastro_inconsistente` e decidir a correção na avaliação de `usuarios.csv`. Efeito: 0 linhas; 1 coluna nova.
 - **Recomendação:** **marcar agora** e corrigir o cadastro quando avaliarmos o `usuarios.csv`, onde já há outros problemas de data, como cadastros em 2027.
-- **Status:** decidido (D-016, 29/10/2026, Pedro Filardi)
+- **Status:** decidido (D-016, 29/10/2026, Pedro Filardi) · **substituída por D-023**
 
 ## Já decidido
 

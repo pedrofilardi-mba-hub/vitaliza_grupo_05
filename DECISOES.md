@@ -174,7 +174,7 @@ Decisões de qualidade de dados ("limpar é decidir": corrigir, remover ou marca
 - Impacto: objetivo 4 (modelo de churn) e qualquer análise do passado.
 
 ## D-016: assinaturas.csv · assinatura antes do cadastro
-- Data: 2026-10-29 · Responsável: Pedro Filardi · Status: aceita
+- Data: 2026-10-29 · Responsável: Pedro Filardi · Status: substituída por D-023 (o motivo abaixo estava errado: as 42 são contas internas de cortesia)
 - Dimensão: validade · consistência · Problema: Q-ass-04 (saidas/qualidade/assinaturas.md)
 - Contexto: 42 assinaturas ativas começam antes de `usuarios.data_cadastro` (de 8 a 612 dias antes). O início bate com os eventos; o erro está no cadastro.
 - Decisão: marcar. Na cópia processada é criada a coluna `cadastro_inconsistente` (sim/não). A correção da data de cadastro será decidida na avaliação de `usuarios.csv`. Os brutos não mudam.
@@ -182,3 +182,73 @@ Decisões de qualidade de dados ("limpar é decidir": corrigir, remover ou marca
 - Alternativas consideradas: remover as 42 (perderia assinantes ativos reais); corrigir já o cadastro (é decisão do `usuarios.csv`).
 - Efeito na contagem: 32.643 assinaturas → 32.643; 1 coluna nova (42 marcadas).
 - Impacto: cálculos de tempo entre cadastro e assinatura; pendência para a avaliação de `usuarios.csv`.
+
+## D-017: usuarios.csv · cidade padronizada
+- Data: 2026-10-29 · Responsável: Pedro Filardi · Status: aceita
+- Dimensão: consistência · Problema: Q-usu-01 (saidas/qualidade/usuarios.md)
+- Contexto: `cidade` tem 36 grafias para 13 cidades (`Sampa`, `SP`, `S. Paulo`, `SAO PAULO`, `BH`, `Floripa`, `BSB`…); 13.601 contas (20,9%) fora da grafia padrão.
+- Decisão: corrigir. Na cópia processada, as 36 grafias são mapeadas para os 13 nomes oficiais, com uma tabela de-para registrada no código. Os brutos não mudam.
+- Motivo: as grafias são inequívocas, e a `uf` (limpa, uma por cidade) confirma cada mapeamento.
+- Alternativas consideradas: manter como está (contagens por cidade partidas).
+- Efeito na contagem: 64.948 contas → 64.948; 13.601 cidades reescritas (SP 8.371, RJ 2.245, BH 1.340, Brasília 896, Florianópolis 749).
+- Impacto: análises e segmentos por localização (objetivos 2 e 3).
+
+## D-018: usuarios.csv · sexo padronizado e só para controle
+- Data: 2026-10-29 · Responsável: Pedro Filardi · Status: aceita
+- Dimensão: consistência · completude · Problema: Q-usu-02 (saidas/qualidade/usuarios.md)
+- Contexto: `sexo` tem 6 grafias (`F`, `Fem`, `feminino`, `M`, `Masc`, `masculino`) e 3.142 vazios (4,8%).
+- Decisão: corrigir. Na cópia processada, os valores viram `F` e `M`, e os vazios viram `nao_informado`. Regra: sexo só para descrever e controlar análises, **nunca como critério de oferta ou contato**. Os brutos não mudam.
+- Motivo: as grafias são inequívocas. Pela LGPD (art. 6º, IX, não discriminação) e pelas Aulas 2 e 3, gênero não deve guiar decisões, e não teve poder preditivo (AUC 0,50).
+- Alternativas consideradas: remover a coluna (perderia a variável de controle).
+- Efeito na contagem: 64.948 contas → 64.948; 24.830 valores reescritos; 3.142 vazios viram `nao_informado` (F 32.507, M 29.299).
+- Impacto: objetivos 3 (segmentos) e 6 (regra de contato, que não pode usar sexo).
+
+## D-019: usuarios.csv · sistema padronizado
+- Data: 2026-10-29 · Responsável: Pedro Filardi · Status: aceita
+- Dimensão: consistência · Problema: Q-usu-03 (saidas/qualidade/usuarios.md)
+- Contexto: `sistema` tem 5 grafias para 2 sistemas; 16.067 contas (24,7%) fora da grafia padrão.
+- Decisão: corrigir. Na cópia processada, os valores viram `android` e `ios`. Os brutos não mudam.
+- Motivo: as grafias são inequívocas.
+- Alternativas consideradas: manter as grafias (contagens partidas).
+- Efeito na contagem: 64.948 contas → 64.948; 16.067 valores reescritos (android 35.151, ios 29.797).
+- Impacto: análises por canal de pagamento e por loja (objetivos 2 e 6).
+
+## D-020: usuarios.csv · datas de nascimento falsas viram vazio
+- Data: 2026-10-29 · Responsável: Pedro Filardi · Status: aceita
+- Dimensão: validade · completude · Problema: Q-usu-04 (saidas/qualidade/usuarios.md)
+- Contexto: 412 nascimentos em 01/01/1900, 194 numa mesma data de 2031 (datas de preenchimento padrão) e 3.301 vazios; 1 conta com 13 a 17 anos.
+- Decisão: corrigir. Na cópia processada, as 606 datas falsas viram vazio, e é criada a coluna `idade_informada` (sim/não). Regras: idade só como variável de controle, **nunca como critério de oferta ou contato**; a conta menor de 18 anos é marcada e fica fora de qualquer campanha. Os brutos não mudam.
+- Motivo: as datas falsas distorcem médias e segmentos. Pela LGPD e pela Aula 3, idade não deve decidir ofertas, e menores pedem cuidado extra.
+- Alternativas consideradas: remover as contas sem nascimento válido (−3.907, −6,0%); manter e marcar como suspeita (médias distorcidas).
+- Efeito na contagem: 64.948 contas → 64.948; nascimento preenchido de 61.647 para 61.041; 1 coluna nova; 1 conta marcada como menor.
+- Impacto: objetivos 3 e 4 (idade como controle) e 6 (exclusão do menor das campanhas).
+
+## D-021: usuarios.csv · contas criadas depois do corte removidas
+- Data: 2026-10-29 · Responsável: Pedro Filardi · Status: aceita
+- Dimensão: temporalidade · validade · Problema: Q-usu-05 (saidas/qualidade/usuarios.md)
+- Contexto: 119 contas com `data_cadastro` entre 10/2026 e 04/2027, depois da exportação (01/10/2026). Nenhuma tem evento, assinatura ou onboarding.
+- Decisão: remover. As 119 ficam fora da cópia processada. Os brutos não mudam.
+- Motivo: as datas são impossíveis, as contas não carregam nenhuma outra informação, e a D-002 proíbe dado posterior ao corte.
+- Alternativas consideradas: marcar com `cadastro_pos_corte` (deixaria contas "do futuro" nos totais).
+- Efeito na contagem: 64.948 contas → 64.829.
+- Impacto: total de contas e taxa de conversão de cadastro em assinatura (objetivo 1).
+
+## D-022: usuarios.csv · código de pessoa para contas duplicadas
+- Data: 2026-10-29 · Responsável: Pedro Filardi · Status: aceita
+- Dimensão: unicidade · Problema: Q-usu-06 (saidas/qualidade/usuarios.md)
+- Contexto: 959 pares de contas (1.918) com o mesmo e-mail, variando só maiúsculas e minúsculas, com a mesma UF e a mesma data de nascimento; em nenhum par as duas contas pagaram.
+- Decisão: marcar. Na cópia processada é criada `pessoa_id`, um código derivado do e-mail em minúsculas que não revela o e-mail. Contagens "por conta" usam `user_id`; "por pessoa" usam `pessoa_id`. Os brutos não mudam.
+- Motivo: nenhum dado se perde, e a ligação com os outros arquivos pelo `user_id` continua intacta.
+- Alternativas consideradas: fundir as contas (reescreveria o `user_id` em todos os arquivos, com risco de erro em cascata); remover a conta sem assinatura de cada par (−959 contas e o histórico de uso delas).
+- Efeito na contagem: 64.948 contas → 64.948 (64.829 depois da D-021); pessoas distintas = 63.989 antes da D-021; 1 coluna nova.
+- Impacto: conversão e segmentos por pessoa (objetivos 1 e 3).
+
+## D-023: correção da D-016 · as 42 assinaturas são contas internas
+- Data: 2026-10-29 · Responsável: Pedro Filardi · Status: aceita · Substitui: D-016
+- Dimensão: validade · Problema: Q-usu-07 (saidas/qualidade/usuarios.md) e Q-ass-04 (saidas/qualidade/assinaturas.md)
+- Contexto: a D-016 afirmou que as 42 assinaturas com início antes do cadastro eram de assinantes ativos e que o erro estava no cadastro, porque o início "batia com os eventos". A avaliação de `usuarios.csv` mostrou que as 42 são todas `cortesia` / `interno`, sem nenhum evento; o motivo da D-016 era falso.
+- Decisão: nenhuma data é alterada e a coluna `cadastro_inconsistente` não é criada. O caso pertence às contas internas, que já estão fora de todas as métricas pela D-013.
+- Motivo: corrigir o registro sem apagar a decisão anterior.
+- Alternativas consideradas: manter a D-016 (deixaria um motivo falso no registro).
+- Efeito na contagem: 0 contas; 0 colunas (a coluna prevista na D-016 deixa de existir).
+- Impacto: nenhum número de negócio muda.
