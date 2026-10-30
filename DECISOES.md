@@ -142,3 +142,43 @@ Decisões de qualidade de dados ("limpar é decidir": corrigir, remover ou marca
 - Alternativas consideradas: remover os atípicos (−1.765 eventos, inclusive expirações reais); reordenar ou inferir eventos (inventaria a sequência).
 - Efeito na contagem: 275.565 eventos → 275.565; 2 colunas novas; ativos em 30/09/2026 = 14.753.
 - Impacto: reconstrução da situação de cada assinante numa data (objetivo 1).
+
+## D-013: assinaturas.csv · contas de cortesia fora das métricas
+- Data: 2026-10-29 · Responsável: Pedro Filardi · Status: aceita
+- Dimensão: validade · Problema: Q-ass-01 (saidas/qualidade/assinaturas.md)
+- Contexto: 60 assinaturas `cortesia`, canal `interno`, todas ativas, sem eventos e sem cobrança. São contas internas, e o dicionário só prevê os planos `mensal` e `anual`.
+- Decisão: marcar. Na cópia processada é criada a coluna `pagante` (sim/não), e as 60 `cortesia` ficam como `não`, fora de toda conta de assinantes, churn e receita. Os brutos não mudam.
+- Motivo: o dado está certo, só não é de pagante; marcar mantém o registro e evita inflar as métricas.
+- Alternativas consideradas: remover as 60 da cópia processada (perderia o registro de quem são).
+- Efeito na contagem: 32.643 assinaturas → 32.643; ativos pagantes = 14.753 (e não 14.813); 1 coluna nova.
+- Impacto: toda métrica de base, churn e receita (objetivos 1, 2 e 7).
+
+## D-014: assinaturas.csv · histórico só a partir de julho de 2024
+- Data: 2026-10-29 · Responsável: Pedro Filardi · Status: aceita
+- Dimensão: completude · temporalidade · Problema: Q-ass-02 (saidas/qualidade/assinaturas.md)
+- Contexto: nenhuma assinatura termina antes de 07/07/2024. As 5.200 iniciadas antes de 07/2024 são só as que sobreviveram até lá; as que saíram antes não estão em nenhum arquivo.
+- Decisão: marcar. Na cópia processada é criada a coluna `inicio_antes_historico` (sim/não). Regra: **taxas de churn só a partir de 07/2024**, e análises por ano de entrada ou tempo de casa sempre com a ressalva de que os clientes antigos são sobreviventes. Os brutos não mudam.
+- Motivo: não há como recuperar o que falta, e remover tiraria 1.462 assinantes ativos reais. A série de churn pedida (2025 e 2026) está inteira no período coberto.
+- Alternativas consideradas: remover as 5.200 (de 32.643 para 27.443, perdendo 1.462 ativos).
+- Efeito na contagem: 32.643 assinaturas → 32.643; 1 coluna nova (5.200 marcadas).
+- Impacto: série de churn (objetivos 1 e 2), tempo de casa no modelo e nos segmentos (objetivos 3 e 4).
+
+## D-015: assinaturas.csv · colunas de retrato nunca usadas para prever
+- Data: 2026-10-29 · Responsável: Pedro Filardi · Status: aceita
+- Dimensão: temporalidade · Problema: Q-ass-03 (saidas/qualidade/assinaturas.md)
+- Contexto: `status_atual`, `renovacao_automatica`, `data_fim` e `motivo_fim` descrevem o dia 01/10/2026; o sistema sobrescreve o valor a cada mudança.
+- Decisão: marcar. Na cópia processada, as quatro colunas ganham o prefixo `retrato_0110_`. Regra: **nunca usar como variável de previsão**; a situação em datas passadas vem de `eventos_assinatura.csv` (D-012). Os brutos não mudam.
+- Motivo: evitar vazamento. Usar essas colunas daria ao modelo a resposta, e na prática a empresa não teria a informação a tempo de agir.
+- Alternativas consideradas: remover as colunas (perderia o motivo da saída, usado no D-011).
+- Efeito na contagem: 32.643 assinaturas → 32.643; 4 colunas renomeadas.
+- Impacto: objetivo 4 (modelo de churn) e qualquer análise do passado.
+
+## D-016: assinaturas.csv · assinatura antes do cadastro
+- Data: 2026-10-29 · Responsável: Pedro Filardi · Status: aceita
+- Dimensão: validade · consistência · Problema: Q-ass-04 (saidas/qualidade/assinaturas.md)
+- Contexto: 42 assinaturas ativas começam antes de `usuarios.data_cadastro` (de 8 a 612 dias antes). O início bate com os eventos; o erro está no cadastro.
+- Decisão: marcar. Na cópia processada é criada a coluna `cadastro_inconsistente` (sim/não). A correção da data de cadastro será decidida na avaliação de `usuarios.csv`. Os brutos não mudam.
+- Motivo: a data de início é confirmada pelos eventos, e o problema pertence a outro arquivo.
+- Alternativas consideradas: remover as 42 (perderia assinantes ativos reais); corrigir já o cadastro (é decisão do `usuarios.csv`).
+- Efeito na contagem: 32.643 assinaturas → 32.643; 1 coluna nova (42 marcadas).
+- Impacto: cálculos de tempo entre cadastro e assinatura; pendência para a avaliação de `usuarios.csv`.
