@@ -124,7 +124,14 @@ Como recomendar:
 
 ### 7. Levar as decisões ao usuário
 
-- Apresente o resumo e pergunte **uma decisão por problema**, com as opções e a recomendação primeiro. Se houver ferramenta de perguntas com botões, use-a, com até 4 problemas por vez.
+O grupo é iniciante. **Explique cada problema em linguagem simples, sem jargão**, antes de pedir a decisão. Para cada um:
+1. **O que está acontecendo**, em palavras do dia a dia.
+2. **Um exemplo concreto**, de uma pessoa ou de uma linha. Por exemplo: *"alguém cancela pelo iPhone em 30/09 às 22h; a Apple anota 01/10 à 1h, e o cancelamento conta como de outubro"*.
+3. **Por que importa para a Vitaliza**, e a recomendação, com uma frase de motivo.
+
+Não use termos como UTC, nulo, imputar, merge ou vazamento sem explicá-los na mesma frase. Lembre sempre que a decisão vale para a cópia em `dados/processados/`, e que o arquivo bruto não muda.
+
+- Pergunte **uma decisão por problema**, numerando os problemas, e aceite resposta curta, como *"1 sim, 2 sim, 3 não…"*, em que "sim" segue a recomendação. Se houver ferramenta de perguntas com botões, ela pode complementar a explicação, mas não substituí-la.
 - Aceite também: "decidir depois", que mantém o problema pendente, ou uma alternativa do usuário.
 - Pergunte o nome de quem decide, se ainda não souber. Ele vai no campo Responsável.
 

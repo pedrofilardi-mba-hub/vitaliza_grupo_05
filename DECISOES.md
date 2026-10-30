@@ -102,3 +102,43 @@ Decisões de qualidade de dados ("limpar é decidir": corrigir, remover ou marca
 - Alternativas consideradas: remover das análises (−1,6% das contas, com viés).
 - Efeito na contagem: 64.948 contas → 64.948 nas tabelas integradas; 1 coluna nova.
 - Impacto: integração das tabelas pelo `user_id` (objetivo 1) e análises de conversão.
+
+## D-009: eventos_assinatura.csv · horários convertidos para Brasília
+- Data: 2026-10-29 · Responsável: Pedro Filardi · Status: aceita
+- Dimensão: temporalidade · consistência · Problema: Q-eve-01 (saidas/qualidade/eventos_assinatura.md)
+- Contexto: as lojas (App Store, Google Play) gravam em UTC (`...Z`) e o site em Brasília; são 186.323 horários em UTC (67,6%). Sem converter, 753 eventos caem no mês errado.
+- Decisão: corrigir. Na cópia processada, os horários em UTC são convertidos para Brasília (UTC−3), e o original fica em `data_hora_original`. Os brutos não mudam.
+- Motivo: depois da conversão, 100% das 17.830 expirações caem no mesmo dia de `assinaturas.data_fim`; sem converter, só 92,1%.
+- Alternativas consideradas: só marcar o fuso (os 753 continuariam no mês errado nas contagens).
+- Efeito na contagem: 275.565 eventos → 275.565; 186.323 horários convertidos; 21.951 mudam de dia; 753 mudam de mês; 1 coluna nova.
+- Impacto: série de churn mensal (objetivos 1 e 2) e toda contagem por dia ou mês.
+
+## D-010: eventos_assinatura.csv · fase teste ou pago
+- Data: 2026-10-29 · Responsável: Pedro Filardi · Status: aceita
+- Dimensão: completude · Problema: Q-eve-02 (saidas/qualidade/eventos_assinatura.md)
+- Contexto: `plano` está vazio em 72.873 eventos (26,4%). São 66.139 eventos de teste grátis e 6.734 desligamentos de renovação feitos durante o teste.
+- Decisão: marcar. Na cópia processada é criada a coluna `fase`: `teste` para os eventos de teste e para os desligamentos sem plano anterior; `pago` para os demais. Os brutos não mudam.
+- Motivo: desistir no teste grátis e cancelar depois de pagar são comportamentos diferentes; só o segundo é churn de assinante pagante.
+- Alternativas consideradas: remover os eventos de teste (−26,4% dos eventos e todo o histórico de teste).
+- Efeito na contagem: 275.565 eventos → 275.565; 1 coluna nova (72.873 eventos `teste`, 202.692 `pago`).
+- Impacto: definição de churn pagante (objetivo 1) e análise de conversão do teste.
+
+## D-011: eventos_assinatura.csv · motivo da saída vindo de assinaturas.csv
+- Data: 2026-10-29 · Responsável: Pedro Filardi · Status: aceita
+- Dimensão: completude · Problema: Q-eve-03 (saidas/qualidade/eventos_assinatura.md)
+- Contexto: só 6.071 das 17.830 expirações (34%) têm `detalhe`. `assinaturas.motivo_fim` tem o motivo de todas e concorda 100% onde os dois existem.
+- Decisão: corrigir. Na cópia processada, o motivo de cada expiração é preenchido a partir de `assinaturas.motivo_fim`, ligando por `user_id` e dia do fim (com o fuso já convertido, D-009). O motivo serve para medir e descrever o churn, **nunca como variável de previsão** para quem está ativo. Os brutos não mudam.
+- Motivo: separar a saída voluntária (renovação desligada) da involuntária (falha de pagamento, chargeback) define em quem vale agir.
+- Alternativas consideradas: marcar como desconhecido (66% das saídas sem motivo).
+- Efeito na contagem: 275.565 eventos → 275.565; motivo preenchido de 6.071 para 17.830 expirações (16.145 renovação desligada, 1.321 falha de pagamento, 292 chargeback, 72 reembolso).
+- Impacto: objetivos 2 e 6 (por que saem e em quem agir).
+
+## D-012: eventos_assinatura.csv · eventos atípicos marcados
+- Data: 2026-10-29 · Responsável: Pedro Filardi · Status: aceita
+- Dimensão: consistência · validade · Problemas: Q-eve-04 e Q-eve-05 (saidas/qualidade/eventos_assinatura.md)
+- Contexto: 611 eventos (0,2%) em ordem atípica, como o desligamento depois da expiração ou a expiração logo após uma renovação. Além disso, 1.154 cobranças fora do ciclo: 1.144 mensais fora de 25 a 35 dias e 10 anuais fora de 355 a 375.
+- Decisão: marcar. Na cópia processada são criadas `sequencia_atipica` e `ciclo_atipico`. A regra de estado usa eventos-chave: saída = `assinatura_expirada`, em qualquer ordem; ativo = cobrança (`assinatura_iniciada` ou `renovacao`) sem expiração posterior. O ciclo atípico será investigado junto com `pagamentos.csv`. Os brutos não mudam.
+- Motivo: são poucos casos, sem valor certo conhecido, e a regra de estado já reproduz os 14.753 ativos do enunciado com eles dentro.
+- Alternativas consideradas: remover os atípicos (−1.765 eventos, inclusive expirações reais); reordenar ou inferir eventos (inventaria a sequência).
+- Efeito na contagem: 275.565 eventos → 275.565; 2 colunas novas; ativos em 30/09/2026 = 14.753.
+- Impacto: reconstrução da situação de cada assinante numa data (objetivo 1).
