@@ -469,3 +469,42 @@ Decisões de qualidade de dados ("limpar é decidir": corrigir, remover ou marca
 - Alternativas consideradas: sobrescrever pela grafia mais comum (perde o original).
 - Efeito na contagem: 119.187 posts → 119.187; 1 coluna nova.
 - Impacto: contagens por texto e extração com IA (objetivo 5).
+## D-046: pesquisa_saida.csv · motivo revisado pelo comentário
+- Data: 2026-11-03 · Responsável: Pedro Filardi · Status: aceita
+- Dimensão: consistência · validade · Problema: Q-ps-01 (saidas/qualidade/pesquisa_saida.md)
+- Contexto: o motivo marcado muitas vezes contradiz o comentário. Dos 264 `preco`, 76 escrevem que cumpriram o objetivo e 22 falam de problema técnico; dos 223 `outro`, 109 falam de objetivo cumprido. Cerca de 194 respostas descrevem "objetivo cumprido", motivo que não existe na lista.
+- Decisão: marcar. Na cópia processada, o motivo original fica, e é criado `motivo_revisado`, que inclui a categoria nova `objetivo_cumprido` e é preenchido pelo comentário quando ele existe: agora com regras de palavras-chave; no objetivo 5, com a IA, conferida contra uma amostra rotulada à mão. Sem comentário, vale o motivo marcado. Os brutos não mudam.
+- Motivo: o texto da pessoa é mais rico e mais fiel que a opção clicada, e a razão mais citada nos comentários não estava disponível na lista.
+- Alternativas consideradas: sobrescrever o motivo (perderia o original); remover as respostas incoerentes (perderia as mais informativas).
+- Efeito na contagem: 643 respostas → 643; 1 coluna nova.
+- Impacto: por que as pessoas saem (objetivo 2) e qual oferta faz sentido (objetivo 6).
+
+## D-047: pesquisa_saida.csv · motivos não são generalizados para a base
+- Data: 2026-11-03 · Responsável: Pedro Filardi · Status: aceita
+- Dimensão: validade (uso do dado) · Problema: Q-ps-02 (saidas/qualidade/pesquisa_saida.md)
+- Contexto: só quem cancela pelo site vê a pesquisa (100% cartão ou Pix); quem paga pela loja (cerca de 70% da base) nunca responde; entre os cancelamentos pelo site, responderam de 49% a 57% por mês.
+- Decisão: regra de uso. Os motivos descrevem só quem cancela pelo site e responde, e nunca são extrapolados como "motivo de saída da base". Todo número vem com o tamanho do grupo e a ressalva. Para quem paga pela loja, o motivo é inferido de uso, chamados e posts.
+- Motivo: generalizar seria viés de seleção, como o enunciado alerta.
+- Alternativas consideradas: nenhuma correção é possível para quem não respondeu.
+- Efeito na contagem: 0 linhas; regra registrada.
+- Impacto: objetivos 2 e 6.
+
+## D-048: pesquisa_saida.csv · última resposta de quem respondeu duas vezes
+- Data: 2026-11-03 · Responsável: Pedro Filardi · Status: aceita
+- Dimensão: unicidade · Problema: Q-ps-03 (saidas/qualidade/pesquisa_saida.md)
+- Contexto: 2 contas responderam duas vezes, em datas diferentes (643 respostas de 641 pessoas).
+- Decisão: marcar. Na cópia processada é criada `ultima_resposta` (sim ou não). Contagens "por pessoa" usam só a última; contagens "por resposta" usam todas. Os brutos não mudam.
+- Motivo: as duas respostas são reais, e nenhuma se perde.
+- Alternativas consideradas: manter só a mais recente (perderia a primeira).
+- Efeito na contagem: 643 respostas → 643; 641 pessoas; 1 coluna nova.
+- Impacto: contagens de motivo por pessoa.
+
+## D-049: pesquisa_saida.csv · comentário normalizado para contagem
+- Data: 2026-11-03 · Responsável: Pedro Filardi · Status: aceita
+- Dimensão: consistência · Problema: Q-ps-04 (saidas/qualidade/pesquisa_saida.md)
+- Contexto: 142 comentários distintos viram 107 depois de normalizar; 52 (8,1%) diferem só por acento ou letra trocada.
+- Decisão: marcar. Na cópia processada é criada `texto_norm`, só para contar; a IA lê o original. Mesma regra das D-007, D-042 e D-045. Os brutos não mudam.
+- Motivo: agrupar sem perder o texto original.
+- Alternativas consideradas: sobrescrever pela grafia mais comum.
+- Efeito na contagem: 643 respostas → 643; 1 coluna nova.
+- Impacto: contagens por comentário (objetivo 5).
