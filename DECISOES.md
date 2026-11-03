@@ -291,3 +291,22 @@ Decisões de qualidade de dados ("limpar é decidir": corrigir, remover ou marca
 - Alternativas consideradas: remover a coluna sem substituta; manter com aviso no nome (ainda poderia ser usada por engano).
 - Efeito na contagem: 163.607 linhas → 163.607; 54 marcadas como retentativa real; 1 coluna nova e 1 coluna a menos.
 - Impacto: análise de churn involuntário (objetivos 2 e 6).
+## D-028: uso_mensal.csv · base mensal padronizada por assinante ativo
+- Data: 2026-11-03 · Responsável: Pedro Filardi · Status: aceita
+- Dimensão: temporalidade · completude · Problema: Q-uso-01 (saidas/qualidade/uso_mensal.md)
+- Contexto: em 2025 o resumo só traz quem treinou no mês (0 linhas zeradas). Em 2026 traz todo mundo, com zero para quem não treinou e inclusive contas não assinantes (41.536 das 56.565 linhas de set/2026). A média de minutos "cai" de 265 para 118 na virada só por causa do registro.
+- Decisão: corrigir. Na cópia processada é montada uma base com uma linha por assinante ativo em cada mês (situação pelos eventos, D-012). Quem não tem linha no mês recebe zero. As linhas de não assinantes ficam marcadas com `assinante_no_mes = não`. Os brutos não mudam.
+- Motivo: só a base completa mostra "assinante que não treinou" do mesmo jeito nos dois anos, um sinal central para prever saída e para explicar a subida do churn em 2026.
+- Alternativas consideradas: remover os zeros de 2026 (−303.735 linhas e perda do sinal de inatividade); só marcar o ano da regra (comparações entre anos continuariam erradas).
+- Efeito na contagem: nenhuma linha do original é perdida; a base de assinantes passa a ter, por mês, o tamanho da base ativa (de cerca de 8,5 mil em jan/2025 a cerca de 15,4 mil em set/2026); 2025 ganha cerca de 2.400 linhas zeradas por mês; 1 coluna nova.
+- Impacto: objetivos 2 (por que o churn subiu) e 4 (variáveis de uso no modelo).
+
+## D-029: uso_mensal.csv × atividades.parquet · regra de fonte para o uso
+- Data: 2026-11-03 · Responsável: Pedro Filardi · Status: aceita
+- Dimensão: consistência · Problema: Q-uso-02 (saidas/qualidade/uso_mensal.md)
+- Contexto: em 2026, o resumo mensal conta de 69% a 70% dos treinos do detalhe (`atividades.parquet`); bate em só 60% dos pares pessoa-mês, e os minutos quase nunca coincidem. Nenhuma de 4 explicações testadas reproduz a diferença.
+- Decisão: marcar, com regra de uso. Para 2026, treinos, minutos e dias ativos vêm do `atividades.parquet`, depois da avaliação de qualidade dele. O `uso_mensal.csv` vale para 2025 e para `sessoes_app`, que só existe nele. Nunca comparar números de fontes diferentes como se fossem a mesma medida. Na cópia processada é criada a coluna `fonte` (`resumo` ou `detalhe`). Os brutos não mudam.
+- Motivo: o dicionário indica o detalhe como fonte de 2026, e ele é verificável treino a treino; o resumo é a única fonte de 2025 e das sessões no app.
+- Alternativas consideradas: recalcular já o resumo de 2026 pelo detalhe (depende da avaliação de `atividades.parquet`); descartar o resumo de 2026 (perderia `sessoes_app`).
+- Efeito na contagem: 591.662 linhas → 591.662; 1 coluna nova.
+- Impacto: objetivos 2, 3 e 4. Pendência: perguntar ao professor se a diferença entre as fontes é proposital no case.
