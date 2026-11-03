@@ -71,17 +71,30 @@ Seguindo a regra da aula, nenhuma decisão foi apagada. As erradas ganharam o st
 - **D-016 → D-023:** as 42 assinaturas "antes do cadastro" eram contas internas, e não assinantes reais.
 - **D-027 → D-051:** as retentativas reais de cartão são 1.881, e não 54.
 
-## Como usar o que foi feito
+## Como trazer tudo isso para o seu computador
 
-1. **Atualize o projeto:** `git pull`, ou peça à sua IA para atualizar.
-2. **Gere a cópia limpa e a base** na sua máquina. Ela não fica no GitHub (D-050):
-   ```
+Abra a sua IA (Claude Code, Codex, Cursor ou um chat como ChatGPT ou Claude) e cole o texto abaixo. Ela faz os passos com você.
+
+```text
+Quero atualizar o projeto do grupo Vitaliza no meu computador. A pasta do projeto é <<ex.: C:\Projetos\MBA\vitaliza_grupo_05>>.
+Explique cada passo em português simples. Se você não consegue rodar comandos no meu computador, me diga exatamente o que digitar, um passo por vez, e espere eu colar o resultado.
+
+1. Entre na pasta do projeto e veja se eu tenho alterações minhas ainda não salvas (git status). Se tiver, me mostre quais são e pergunte o que fazer antes de seguir. Não descarte nada.
+2. Baixe as novidades do grupo (git pull). Se aparecer conflito, pare e me explique; não escolha nada sozinho.
+3. Instale as bibliotecas novas, se houver: use o Python do .venv com pip install -r requirements.txt.
+4. Gere a cópia limpa e a base, com o Python do .venv:
    python src/limpeza.py
    python src/base_integrada.py
-   ```
-   Use o Python do `.venv`. Leva alguns minutos.
-3. **Confira** se `saidas/limpeza_conferencia.md` mostra os mesmos números deste resumo.
-4. **Para avaliar um arquivo novo** ou repetir uma avaliação, peça à sua IA: *"use a skill qualidade-dados no arquivo X"*. No Codex: *"leia .claude/skills/qualidade-dados/SKILL.md e siga o passo a passo para o arquivo X"*.
+   (no Windows, o Python do .venv é .venv\Scripts\python.exe; no Mac, .venv/bin/python). Leva alguns minutos.
+5. Abra saidas/base_integrada.md e me confirme se aparece "Assinantes: 14.753".
+6. Não envie nada para o GitHub (sem commit, sem push).
+
+No final, me diga em 3 frases o que mudou no projeto.
+```
+
+**Para avaliar a qualidade de um arquivo**, peça à sua IA:
+- no Claude Code: *"use a skill qualidade-dados no arquivo X"*;
+- no Codex ou em outra IA: *"leia o arquivo .claude/skills/qualidade-dados/SKILL.md e siga o passo a passo para o arquivo X"*.
 
 ## Próximos passos e pendências
 
