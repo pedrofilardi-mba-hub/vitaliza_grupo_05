@@ -411,3 +411,32 @@ Decisões de qualidade de dados ("limpar é decidir": corrigir, remover ou marca
 - Alternativas consideradas: marcar com `apos_corte` (risco de alguém esquecer o filtro).
 - Efeito na contagem: 113.480 relações → 113.207.
 - Impacto: variáveis de rede social (objetivos 3 e 4).
+## D-040: tickets_suporte.csv · categoria pelo texto do cliente
+- Data: 2026-11-03 · Responsável: Pedro Filardi · Status: aceita
+- Dimensão: consistência · Problema: Q-tk-01 (saidas/qualidade/tickets_suporte.md)
+- Contexto: em 33,8% dos chamados com texto repetido (1.383 de 4.090), a categoria do atendente difere da mais comum dada ao mesmo texto.
+- Decisão: marcar. Na cópia processada, a categoria original fica, e é criada `categoria_texto`, derivada do texto do cliente: por enquanto, a categoria mais comum para o mesmo texto normalizado; no objetivo 5, a classificação pela IA, conferida contra uma amostra rotulada à mão. Regra: análises por tema usam `categoria_texto`. Os brutos não mudam.
+- Motivo: o texto do cliente é a fonte mais estável; a escolha do atendente varia para o mesmo problema.
+- Alternativas consideradas: sobrescrever a categoria (perderia a original); remover a coluna.
+- Efeito na contagem: 4.422 chamados → 4.422; 1 coluna nova.
+- Impacto: temas de chamado como hipótese de churn (objetivo 2) e extração com IA (objetivo 5).
+
+## D-041: tickets_suporte.csv · situação do chamado em 30/09
+- Data: 2026-11-03 · Responsável: Pedro Filardi · Status: aceita
+- Dimensão: temporalidade · Problema: Q-tk-02 (saidas/qualidade/tickets_suporte.md)
+- Contexto: 41 chamados abertos em setembro/2026 foram resolvidos entre 01/10 e 07/10, depois do corte.
+- Decisão: corrigir. Na cópia processada é criada `status_no_corte`: os 41 ficam `aberto`, e a data de resolução não entra nas variáveis. Os originais ficam preservados. Os brutos não mudam.
+- Motivo: em 30/09 os chamados estavam abertos; usar "resolvido" seria informação posterior ao corte (D-002).
+- Alternativas consideradas: remover os 41 (perderia o fato de a pessoa ter aberto chamado); só marcar (o status continuaria "vendo o futuro").
+- Efeito na contagem: 4.422 chamados → 4.422; 41 situações ajustadas no corte; 1 coluna nova.
+- Impacto: variáveis de suporte no modelo (objetivo 4).
+
+## D-042: tickets_suporte.csv · texto normalizado para contagem
+- Data: 2026-11-03 · Responsável: Pedro Filardi · Status: aceita
+- Dimensão: consistência · Problema: Q-tk-03 (saidas/qualidade/tickets_suporte.md)
+- Contexto: 303 textos distintos viram 195 depois de normalizar; 529 chamados (12,0%) diferem da grafia mais comum só por acento ou letra trocada.
+- Decisão: marcar. Na cópia processada é criada `texto_norm`, só para contar e agrupar; a IA lê o texto original. Mesma regra da D-007. Os brutos não mudam.
+- Motivo: agrupar sem perder o texto original.
+- Alternativas consideradas: sobrescrever pela grafia mais comum (perde o original).
+- Efeito na contagem: 4.422 chamados → 4.422; 1 coluna nova.
+- Impacto: contagens por tema (objetivos 2 e 5).
