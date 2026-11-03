@@ -402,3 +402,12 @@ Decisões de qualidade de dados ("limpar é decidir": corrigir, remover ou marca
 - Alternativas consideradas: medir pelo clique ou pela abertura (não mede retenção); medir só a saída efetiva (ignora os anuais).
 - Efeito na contagem: 0 linhas; regra registrada.
 - Impacto: objetivo 6 (uplift por mensagem e segmento) e objetivo 7 (retorno em reais).
+## D-039: amizades.csv · relações depois do corte removidas
+- Data: 2026-11-03 · Responsável: Pedro Filardi · Status: aceita
+- Dimensão: temporalidade · Problema: Q-amz-01 (saidas/qualidade/amizades.md)
+- Contexto: 273 relações (0,2%) com `desde` entre 01/10 e 09/10/2026, depois do corte (30/09) e até depois da exportação (01/10).
+- Decisão: remover. As 273 ficam fora da cópia processada. Os brutos não mudam.
+- Motivo: a D-002 proíbe informação posterior ao corte, e é a mesma regra da D-021.
+- Alternativas consideradas: marcar com `apos_corte` (risco de alguém esquecer o filtro).
+- Efeito na contagem: 113.480 relações → 113.207.
+- Impacto: variáveis de rede social (objetivos 3 e 4).
