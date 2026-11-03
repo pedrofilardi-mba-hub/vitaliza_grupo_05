@@ -369,3 +369,36 @@ Decisões de qualidade de dados ("limpar é decidir": corrigir, remover ou marca
 - Alternativas consideradas: remover os treinos (−14.779 reais).
 - Efeito na contagem: 1.245.092 treinos → 1.245.092; 7.455 distâncias apagadas na cópia; 1 coluna nova.
 - Impacto: médias de distância (objetivos 3 e 5).
+## D-036: campanha_ago26.csv · sorteados ainda em teste grátis mantidos
+- Data: 2026-11-03 · Responsável: Pedro Filardi · Status: aceita
+- Dimensão: validade · Problema: Q-cam-01 (saidas/qualidade/campanha_ago26.md)
+- Contexto: 48 sorteados (0,3%) estavam no teste grátis às 10h de 10/08 e fizeram a 1ª cobrança naquele mesmo dia; 1 pagante ativo não foi sorteado; nenhuma conta interna foi sorteada.
+- Decisão: marcar. Na cópia processada é criada `em_teste_no_envio`, e todos os 14.120 continuam na análise principal como foram sorteados. A análise é repetida sem os 48 só como conferência. Os brutos não mudam.
+- Motivo: num experimento, analisar todos como foram sorteados evita viés; a mensagem pode ter influenciado a decisão de pagar, que aconteceu depois do sorteio.
+- Alternativas consideradas: remover os 48 (de 14.120 para 14.072, com risco de viés).
+- Efeito na contagem: 14.120 sorteados → 14.120; 1 coluna nova (48 marcados).
+- Impacto: medição do efeito das mensagens (objetivos 6 e 7).
+
+## D-037: campanha_ago26.csv · sim/não convertido para booleano
+- Data: 2026-11-03 · Responsável: Pedro Filardi · Status: aceita
+- Dimensão: consistência · Problema: Q-cam-02 (saidas/qualidade/campanha_ago26.md)
+- Contexto: `abriu_push`, `abriu_email` e `clicou` estão gravados como texto (`True`/`False`).
+- Decisão: corrigir. Na cópia processada, as três colunas viram booleanos. Os brutos não mudam.
+- Motivo: sem converter, somas e taxas de abertura e clique não funcionam.
+- Alternativas consideradas: nenhuma viável.
+- Efeito na contagem: 14.120 → 14.120; 3 colunas convertidas.
+- Impacto: descrição do engajamento com as mensagens (objetivo 6).
+
+## D-038: campanha_ago26.csv · regra para medir o efeito da campanha
+- Data: 2026-11-03 · Responsável: Pedro Filardi · Status: aceita
+- Dimensão: validade (uso do dado) · Problema: Q-cam-03 (saidas/qualidade/campanha_ago26.md)
+- Contexto: o arquivo mede atenção (abriu, clicou), não retenção. A janela observável vai de 10/08 ao corte, 30/09 (51 dias), e 59% dos sorteados são anuais, que só podem sair na renovação.
+- Decisão: regra de análise.
+  - O efeito de cada mensagem é a diferença entre o grupo e o controle, **com todos os sorteados** (intenção de tratar), e não só com quem abriu.
+  - O resultado se mede pelos eventos (D-012), de 10/08 a 30/09, em duas medidas: (a) **saiu**: assinatura expirada no período; (b) **anunciou saída**: renovação desligada no período e não religada até 30/09.
+  - Os resultados saem separados para mensal e anual.
+  - Abertura e clique só descrevem a atenção à mensagem.
+- Motivo: comparar só quem abriu mistura o efeito da mensagem com o perfil de quem abre; para os anuais, a saída efetiva quase não cabe em 51 dias.
+- Alternativas consideradas: medir pelo clique ou pela abertura (não mede retenção); medir só a saída efetiva (ignora os anuais).
+- Efeito na contagem: 0 linhas; regra registrada.
+- Impacto: objetivo 6 (uplift por mensagem e segmento) e objetivo 7 (retorno em reais).
