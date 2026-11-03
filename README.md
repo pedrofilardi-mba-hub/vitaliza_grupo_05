@@ -39,7 +39,16 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-**4. Abra os notebooks:**
+**4. Gere a cópia limpa e a base integrada.** Elas não ficam no GitHub (D-050): cada um recria rodando dois scripts, que leem `dados/brutos/`, aplicam as decisões do `DECISOES.md` e gravam em `dados/processados/`. Leva alguns minutos.
+
+```
+python src/limpeza.py
+python src/base_integrada.py
+```
+
+No fim, confira em `saidas/limpeza_conferencia.md` se os números batem com os do GitHub.
+
+**5. Abra os notebooks:**
 ```
 jupyter lab
 ```

@@ -86,6 +86,8 @@ Os problemas para decidir são estes:
 
 ### Q-pag-04 · A coluna "tentativa" engana
 
+> **Correção (03/11/2026, ao aplicar a limpeza):** o número de retentativas reais abaixo está errado. Das 3.250 recusas, **1.881** são seguidas de uma cobrança aprovada (mediana de 4 dias), e a maioria vem marcada `tentativa = 1`. A coluna erra para os dois lados. A decisão continua a mesma; o número certo está na D-051, que substitui a D-027. O texto original foi mantido abaixo para registro.
+
 **Em palavras simples:** o dicionário diz que `tentativa = 2` é uma nova tentativa depois de o cartão ser recusado. Na prática, quase nunca é.
 
 **Exemplo:** uma assinante mensal paga normalmente em agosto (`tentativa = 1`) e, 30 dias depois, paga setembro normalmente, mas a linha vem marcada `tentativa = 2`. Não houve nenhuma recusa no meio.

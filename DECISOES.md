@@ -283,7 +283,7 @@ Decisões de qualidade de dados ("limpar é decidir": corrigir, remover ou marca
 - Impacto: receita mensal (objetivos 1 e 7).
 
 ## D-027: pagamentos.csv · retentativa real no lugar de "tentativa"
-- Data: 2026-11-03 · Responsável: Pedro Filardi · Status: aceita
+- Data: 2026-11-03 · Responsável: Pedro Filardi · Status: substituída por D-051 (a decisão vale; o número de retentativas reais estava errado: são 1.881, não 54)
 - Dimensão: validade · Problema: Q-pag-04 (saidas/qualidade/pagamentos.md)
 - Contexto: das 4.866 cobranças com `tentativa = 2`, só 54 vêm depois de uma recusa. As outras são a mensalidade normal do mês seguinte (3.888) ou a primeira cobrança da conta (924).
 - Decisão: corrigir. Na cópia processada é criada `retentativa_real` (sim quando a cobrança vem depois de uma recusa da mesma conta), e a coluna `tentativa` original fica de fora. Os brutos não mudam.
@@ -508,3 +508,22 @@ Decisões de qualidade de dados ("limpar é decidir": corrigir, remover ou marca
 - Alternativas consideradas: sobrescrever pela grafia mais comum.
 - Efeito na contagem: 643 respostas → 643; 1 coluna nova.
 - Impacto: contagens por comentário (objetivo 5).
+## D-050: dados/processados fora do repositório
+- Data: 2026-11-03 · Responsável: Pedro Filardi · Status: aceita
+- Dimensão: — (organização do projeto)
+- Contexto: a cópia limpa tem cerca de 50 MB (o maior arquivo, atividades, tem 22 MB) e é recriada por `src/limpeza.py` e `src/base_integrada.py`. Os dados são fictícios, então não há questão de privacidade.
+- Decisão: `dados/processados/` entra no `.gitignore`, como os brutos (D-001). Cada integrante recria a cópia rodando os scripts. As conferências agregadas (`saidas/limpeza_conferencia.md`, `saidas/base_integrada.md`) vão para o repositório.
+- Motivo: cada nova rodada da limpeza acrescentaria cerca de 50 MB ao histórico do repositório; os scripts garantem que todos chegam à mesma cópia.
+- Alternativas consideradas: versionar a cópia limpa (mais simples para quem não roda Python, mas o repositório cresce a cada rodada).
+- Efeito na contagem: 0 linhas; só muda o que vai para o GitHub.
+- Impacto: colegas precisam rodar os dois scripts depois de configurar a máquina.
+
+## D-051: correção da D-027 · são 1.881 retentativas reais
+- Data: 2026-11-03 · Responsável: Pedro Filardi · Status: aceita · Substitui: D-027
+- Dimensão: validade · Problema: Q-pag-04 (saidas/qualidade/pagamentos.md)
+- Contexto: a D-027 registrou que só 54 cobranças eram tentativas depois de uma recusa, contando as linhas com `tentativa = 2` que vinham logo após uma recusa. Ao aplicar a limpeza, apareceu o erro: das 3.250 recusas, 1.881 são seguidas de uma cobrança aprovada (mediana de 4 dias; 90% em até 12 dias; nenhuma entre 25 e 35 dias, ou seja, não é a mensalidade seguinte), e a maioria delas vem marcada `tentativa = 1`. A coluna `tentativa` erra para os dois lados.
+- Decisão: a mesma da D-027 (criar `retentativa_real` pelo comportamento e não usar `tentativa`), com a regra: cobrança aprovada imediatamente depois de uma recusa da mesma conta.
+- Motivo: registrar o número certo sem apagar a decisão anterior.
+- Alternativas consideradas: manter a D-027 (deixaria um número falso no registro).
+- Efeito na contagem: 163.607 linhas → 163.607; 1.881 marcadas como retentativa real (e não 54).
+- Impacto: churn involuntário (objetivos 2 e 6): 58% das recusas são recuperadas pela nova tentativa.
