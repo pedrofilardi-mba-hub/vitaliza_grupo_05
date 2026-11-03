@@ -440,3 +440,32 @@ Decisões de qualidade de dados ("limpar é decidir": corrigir, remover ou marca
 - Alternativas consideradas: sobrescrever pela grafia mais comum (perde o original).
 - Efeito na contagem: 4.422 chamados → 4.422; 1 coluna nova.
 - Impacto: contagens por tema (objetivos 2 e 5).
+## D-043: feed_posts.csv · posts depois do corte removidos
+- Data: 2026-11-03 · Responsável: Pedro Filardi · Status: aceita
+- Dimensão: temporalidade · Problema: Q-fp-01 (saidas/qualidade/feed_posts.md)
+- Contexto: 122 posts (0,1%) entre 01/10 e 07/10/2026, depois do corte.
+- Decisão: remover. Os 122 ficam fora da cópia processada. Os brutos não mudam.
+- Motivo: a D-002 proíbe informação posterior ao corte; é a mesma regra das D-021 e D-039.
+- Alternativas consideradas: marcar com `apos_corte` (risco de esquecer o filtro).
+- Efeito na contagem: 119.309 posts → 119.187.
+- Impacto: variáveis de texto e de engajamento social (objetivos 4 e 5).
+
+## D-044: feed_posts.csv · posts antes do horário de cadastro marcados
+- Data: 2026-11-03 · Responsável: Pedro Filardi · Status: aceita
+- Dimensão: validade · consistência · Problema: Q-fp-02 (saidas/qualidade/feed_posts.md)
+- Contexto: 692 posts (0,6%, de 688 contas) aparecem de minutos a 16,6 horas antes do horário de criação da conta, sempre no mesmo dia; não há um intervalo fixo, então não é fuso.
+- Decisão: marcar. Na cópia processada é criada `post_antes_cadastro`. Regra: nas variáveis do primeiro dia, a data de post é usada só no nível do dia, não da hora. Os brutos não mudam.
+- Motivo: o dia está certo, e só a hora é imprecisa; remover apagaria posts do primeiro dia, o momento mais importante para o churn.
+- Alternativas consideradas: corrigir o horário (inventaria um valor); remover os 692 (perderia posts reais).
+- Efeito na contagem: 119.187 posts → 119.187; 1 coluna nova (692 marcados).
+- Impacto: variáveis de primeiro dia e de primeiras semanas (objetivos 3 e 4).
+
+## D-045: feed_posts.csv · texto normalizado para contagem
+- Data: 2026-11-03 · Responsável: Pedro Filardi · Status: aceita
+- Dimensão: consistência · Problema: Q-fp-03 (saidas/qualidade/feed_posts.md)
+- Contexto: 31.620 textos distintos viram 11.637 depois de normalizar; 51.146 posts (42,9%) diferem da grafia mais comum só por emoji, acento ou espaço.
+- Decisão: marcar. Na cópia processada é criada `texto_norm`, só para contar e agrupar; a IA lê o texto original, com emoji. Mesma regra das D-007 e D-042. Os brutos não mudam.
+- Motivo: agrupar sem perder o texto original nem o tom dado pelos emoji.
+- Alternativas consideradas: sobrescrever pela grafia mais comum (perde o original).
+- Efeito na contagem: 119.187 posts → 119.187; 1 coluna nova.
+- Impacto: contagens por texto e extração com IA (objetivo 5).
