@@ -310,3 +310,62 @@ Decisões de qualidade de dados ("limpar é decidir": corrigir, remover ou marca
 - Alternativas consideradas: recalcular já o resumo de 2026 pelo detalhe (depende da avaliação de `atividades.parquet`); descartar o resumo de 2026 (perderia `sessoes_app`).
 - Efeito na contagem: 591.662 linhas → 591.662; 1 coluna nova.
 - Impacto: objetivos 2, 3 e 4. Pendência: perguntar ao professor se a diferença entre as fontes é proposital no case.
+## D-030: atividades.parquet · horário do Garmin convertido para Brasília
+- Data: 2026-11-03 · Responsável: Pedro Filardi · Status: aceita
+- Dimensão: temporalidade · Problema: Q-atv-01 (saidas/qualidade/atividades.md)
+- Contexto: os 207.954 treinos do Garmin estão em UTC. Eles têm o pico às 9h, contra 6h no app e no Apple Health, e 34 deles caem em "01/10/2026".
+- Decisão: corrigir. Na cópia processada, 3 horas são subtraídas do início dos treinos do Garmin, e o original fica em `inicio_original`. Os brutos não mudam.
+- Motivo: é a mesma regra das D-009 e D-026, confirmada pelo padrão de horário, e é pré-condição para encontrar as duplicatas (D-031).
+- Alternativas consideradas: remover os 34 de outubro (os outros 207.920 continuariam com o horário errado); só marcar o fuso.
+- Efeito na contagem: 1.254.475 treinos → 1.254.475; 207.954 horários ajustados; os 34 de "outubro" passam para 30/09.
+- Impacto: dias e meses de treino (objetivos 2 a 4) e detecção de duplicatas.
+
+## D-031: atividades.parquet · treinos em dobro (app e relógio)
+- Data: 2026-11-03 · Responsável: Pedro Filardi · Status: aceita
+- Dimensão: unicidade · Problema: Q-atv-02 (saidas/qualidade/atividades.md)
+- Contexto: 9.383 treinos chegaram duas vezes, pelo app e pelo relógio (4.184 Apple Health e 5.199 Garmin). Regra da Aula 2: mesma conta, mesmo tipo, mesma duração, início a até 5 minutos (fuso já corrigido, D-030), uma origem `app` e outra `garmin` ou `apple_health`.
+- Decisão: remover. Na cópia processada sai a cópia de origem `app`, e fica a do relógio. Os brutos não mudam.
+- Motivo: o relógio tem os mesmos dados e mais a frequência cardíaca; manter as duas inflaria treinos e minutos de quem tem relógio.
+- Alternativas consideradas: marcar `treino_duplicado` (toda contagem precisaria lembrar do filtro).
+- Efeito na contagem: 1.254.475 treinos → 1.245.092.
+- Impacto: variáveis de frequência e volume de treino (objetivos 3 e 4).
+
+## D-032: atividades.parquet · tipos de treino em português
+- Data: 2026-11-03 · Responsável: Pedro Filardi · Status: aceita
+- Dimensão: consistência · Problema: Q-atv-03 (saidas/qualidade/atividades.md)
+- Contexto: 11 nomes para 7 tipos; 376.930 treinos (30%), todos registrados pelo app, com nome em inglês (`run`, `walk`, `strength`, `ride`).
+- Decisão: corrigir. Na cópia processada, `run` vira corrida, `walk` vira caminhada, `strength` vira força e `ride` vira pedal. É criada a coluna `modalidade` (ar livre: corrida, caminhada e pedal; vídeo: força, funcional, hiit e yoga). Os brutos não mudam.
+- Motivo: o mapeamento é inequívoco, e a proporção em inglês é igual em todas as versões do app.
+- Alternativas consideradas: manter os 11 nomes (contagens por tipo partidas).
+- Efeito na contagem: 1.245.092 treinos → 1.245.092; 376.930 tipos reescritos (menos os das duplicatas removidas); 1 coluna nova.
+- Impacto: segmentos por tipo de treino (objetivo 3).
+
+## D-033: atividades.parquet · distância recalculada pelo ritmo
+- Data: 2026-11-03 · Responsável: Pedro Filardi · Status: aceita
+- Dimensão: validade · Problema: Q-atv-04 (saidas/qualidade/atividades.md)
+- Contexto: 951 treinos acima de 200 km (máximo de 10.013 km), cerca de 100 vezes a distância real; ritmo e duração estão coerentes.
+- Decisão: corrigir. Na cópia processada, a distância desses treinos passa a ser duração ÷ ritmo, e a original fica em `distancia_original`. Os brutos não mudam.
+- Motivo: nas linhas normais, ritmo = duração ÷ distância em 99,6% dos casos, e a distância recalculada fica no padrão de cada tipo (corrida 6,67 km, típico 6,51).
+- Alternativas consideradas: remover os treinos (−951 reais); deixar a distância vazia (perderia um valor recuperável).
+- Efeito na contagem: 1.245.092 treinos → 1.245.092; 951 distâncias reescritas.
+- Impacto: variáveis de distância e mapas de rota (objetivos 3 a 5).
+
+## D-034: atividades.parquet · duração zero recalculada ou marcada
+- Data: 2026-11-03 · Responsável: Pedro Filardi · Status: aceita
+- Dimensão: validade · Problema: Q-atv-05 (saidas/qualidade/atividades.md)
+- Contexto: 3.649 treinos com 0 minuto. Desses, 1.972 têm distância e ritmo; 1.677 não têm.
+- Decisão: corrigir e marcar. Na cópia processada, a duração dos 1.972 passa a ser ritmo × distância. Os 1.677 restantes ficam com duração vazia e a marca `duracao_invalida`: contam como treino, mas não entram na soma de minutos. Os brutos não mudam.
+- Motivo: recuperar o que é recuperável sem inventar o resto.
+- Alternativas consideradas: remover os 3.649 (perderia treinos reais); só marcar (perderia 1.972 durações recuperáveis).
+- Efeito na contagem: 1.245.092 treinos → 1.245.092; 1.972 durações recalculadas; 1.677 marcadas.
+- Impacto: minutos de treino (objetivos 3 e 4).
+
+## D-035: atividades.parquet · distância de GPS falho descartada
+- Data: 2026-11-03 · Responsável: Pedro Filardi · Status: aceita
+- Dimensão: validade · Problema: Q-atv-06 (saidas/qualidade/atividades.md)
+- Contexto: 14.779 treinos com `gps_ok = falso`, todos ao ar livre; 7.455 deles têm uma distância gravada, cortada (mediana de 0,6 km) e sem ritmo.
+- Decisão: marcar. Na cópia processada é criada `gps_falhou` nos 14.779; a distância dos 7.455 vira vazia, e o treino e a duração continuam valendo. Os brutos não mudam.
+- Motivo: o treino aconteceu, só a distância não é confiável e não dá para recalcular, porque não há ritmo.
+- Alternativas consideradas: remover os treinos (−14.779 reais).
+- Efeito na contagem: 1.245.092 treinos → 1.245.092; 7.455 distâncias apagadas na cópia; 1 coluna nova.
+- Impacto: médias de distância (objetivos 3 e 5).
