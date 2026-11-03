@@ -252,3 +252,42 @@ Decisões de qualidade de dados ("limpar é decidir": corrigir, remover ou marca
 - Alternativas consideradas: manter a D-016 (deixaria um motivo falso no registro).
 - Efeito na contagem: 0 contas; 0 colunas (a coluna prevista na D-016 deixa de existir).
 - Impacto: nenhum número de negócio muda.
+## D-024: pagamentos.csv · cobranças repetidas removidas
+- Data: 2026-11-03 · Responsável: Pedro Filardi · Status: aceita
+- Dimensão: unicidade · Problema: Q-pag-01 (saidas/qualidade/pagamentos.md)
+- Contexto: 1.941 cobranças aprovadas repetidas (mesma conta, mesmo instante, mesmo valor), em 1.807 contas e em todos os meios de pagamento.
+- Decisão: remover. Na cópia processada fica só a primeira de cada repetição. Os brutos não mudam.
+- Motivo: são cópias de registro, não cobranças reais. Sem elas, as aprovadas batem 1 a 1 com os eventos de cobrança (159.989), o faturamento de setembro/2026 reproduz a Aula 2 (R$ 492.572), e quem aparece "cobrado em dobro" não reclamou mais no suporte (0,5% nos dois grupos).
+- Alternativas consideradas: marcar com `cobranca_repetida` (toda soma precisaria lembrar do filtro).
+- Efeito na contagem: 165.548 linhas → 163.607; aprovadas de 161.930 para 159.989; setembro/2026 de R$ 499.402 para R$ 492.572.
+- Impacto: toda conta de receita e retorno (objetivo 7).
+
+## D-025: pagamentos.csv · valores em texto convertidos para número
+- Data: 2026-11-03 · Responsável: Pedro Filardi · Status: aceita
+- Dimensão: consistência · Problema: Q-pag-02 (saidas/qualidade/pagamentos.md)
+- Contexto: 19.750 valores gravados como texto (`R$ 34,90`), todos do site (cartão 13.044, Pix 6.706), em 2024 e 2025.
+- Decisão: corrigir. Na cópia processada, o `R$` é retirado, a vírgula vira ponto e o valor é guardado como número. Os brutos não mudam.
+- Motivo: o valor certo é inequívoco, e sem converter essas linhas ficam fora das somas.
+- Alternativas consideradas: remover as linhas (−11,9% das cobranças e toda a receita do site em 2024 e 2025).
+- Efeito na contagem: 163.607 linhas → 163.607; 19.750 valores convertidos.
+- Impacto: receita (objetivos 1 e 7).
+
+## D-026: pagamentos.csv · horários convertidos para Brasília
+- Data: 2026-11-03 · Responsável: Pedro Filardi · Status: aceita
+- Dimensão: temporalidade · Problema: Q-pag-03 (saidas/qualidade/pagamentos.md)
+- Contexto: App Store e Google Play gravam em UTC (112.126 linhas); cartão e Pix em Brasília (53.422).
+- Decisão: corrigir, com a mesma regra da D-009. Na cópia processada, os horários em UTC são convertidos para Brasília (UTC−3), e o original fica em `data_hora_original`. Os brutos não mudam.
+- Motivo: com a conversão, as cobranças batem com os eventos no mesmo dia em 100% dos casos, e setembro/2026 reproduz a Aula 2 (R$ 499.402 antes de tirar as repetidas).
+- Alternativas consideradas: só marcar o fuso (cobranças continuariam no mês errado).
+- Efeito na contagem: 163.607 linhas → 163.607; 112.126 horários convertidos (menos os das repetidas removidas); 1 coluna nova.
+- Impacto: receita mensal (objetivos 1 e 7).
+
+## D-027: pagamentos.csv · retentativa real no lugar de "tentativa"
+- Data: 2026-11-03 · Responsável: Pedro Filardi · Status: aceita
+- Dimensão: validade · Problema: Q-pag-04 (saidas/qualidade/pagamentos.md)
+- Contexto: das 4.866 cobranças com `tentativa = 2`, só 54 vêm depois de uma recusa. As outras são a mensalidade normal do mês seguinte (3.888) ou a primeira cobrança da conta (924).
+- Decisão: corrigir. Na cópia processada é criada `retentativa_real` (sim quando a cobrança vem depois de uma recusa da mesma conta), e a coluna `tentativa` original fica de fora. Os brutos não mudam.
+- Motivo: a coluna original não significa o que o dicionário diz, e usá-la superestimaria a recuperação de cartões recusados (4.866 contra 54).
+- Alternativas consideradas: remover a coluna sem substituta; manter com aviso no nome (ainda poderia ser usada por engano).
+- Efeito na contagem: 163.607 linhas → 163.607; 54 marcadas como retentativa real; 1 coluna nova e 1 coluna a menos.
+- Impacto: análise de churn involuntário (objetivos 2 e 6).
