@@ -536,3 +536,12 @@ Decisões de qualidade de dados ("limpar é decidir": corrigir, remover ou marca
 - Alternativas consideradas: manter no modelo com `saida_anunciada` como variável (inflaria a métrica e desperdiçaria a capacidade de contato com quem já decidiu).
 - Efeito na contagem: em 30/09/2026, 14.753 assinantes ativos → 12.503 no modelo + 2.250 na regra à parte.
 - Impacto: objetivos 4 (quem entra no modelo), 6 (regra de contato) e 7 (retorno da ação).
+## D-053: gabarito do modelo passa a ser "vai desligar a renovação nos próximos 60 dias"
+- Data: 2026-11-03 · Responsável: Pedro Filardi · Status: aceita
+- Dimensão: — (desenho do modelo, objetivo 4)
+- Contexto: com o gabarito "a assinatura terminou nos 60 dias", quase nenhum anual aparece (1,2% em 31/05; 1,6% em 31/07), porque o anual só sai na renovação. Mas 11,5% (31/05) e 10,3% (31/07) dos anuais **desligam a renovação** nesse período, meses antes de sair. Antes de desligar, os treinos caem nas 4 semanas anteriores (de cerca de 2,4 para 1,0 por semana), o que dá uma janela para agir. Ver saidas/motivos_leitura.md.
+- Decisão: o modelo de churn prevê, para cada assinante pagante **ainda sem saída anunciada** no corte (D-052), se ele vai **desligar a renovação automática ou cancelar pelo site** nos 60 dias seguintes (evento `renovacao_automatica_desligada` ou `cancelamento_web` na fase paga). O treino usa cortes históricos (31/05 principal, 31/07 conferência). A saída efetiva continua sendo medida para o retorno em reais (objetivo 7).
+- Motivo: avisar antes da decisão, quando ainda dá para convencer, e incluir os anuais longe da renovação.
+- Alternativas consideradas: manter "a assinatura terminou nos 60 dias" (ignora os anuais e avisa tarde).
+- Efeito na contagem: no corte de 31/05, 11.965 assinantes sem saída anunciada, dos quais 14,8% desligaram em 60 dias (contra 8,5% que saíram).
+- Impacto: objetivo 4 (o que o modelo prevê), objetivo 6 (quando e quem contatar) e objetivo 7 (o retorno considera quem desligaria e foi revertido).
