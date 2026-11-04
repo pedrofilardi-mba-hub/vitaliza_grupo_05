@@ -527,3 +527,12 @@ Decisões de qualidade de dados ("limpar é decidir": corrigir, remover ou marca
 - Alternativas consideradas: manter a D-027 (deixaria um número falso no registro).
 - Efeito na contagem: 163.607 linhas → 163.607; 1.881 marcadas como retentativa real (e não 54).
 - Impacto: churn involuntário (objetivos 2 e 6): 58% das recusas são recuperadas pela nova tentativa.
+## D-052: quem já desligou a renovação vai para uma regra à parte, fora do modelo
+- Data: 2026-11-03 · Responsável: Pedro Filardi · Status: aceita
+- Dimensão: — (desenho do modelo, objetivos 4 e 6)
+- Contexto: no gabarito de 31/05/2026, 99,3% dos mensais que já tinham desligado a renovação (ou cancelado pelo site) saíram nos 60 dias seguintes; entre os anuais nessa situação, 20,8%, porque muitos só renovam depois da janela. Esse grupo é cerca de 15% da base (2.137 em 31/05; 2.250 em 30/09). Ver saidas/dimensoes_leitura.md.
+- Decisão: assinantes com `saida_anunciada` no corte saem do treino e da pontuação do modelo de churn e recebem uma **regra à parte**: a ação é tentar reverter a decisão antes do fim do período pago (para quem paga pela loja, no intervalo entre os dois avisos da loja). O modelo prevê só quem ainda não anunciou a saída.
+- Motivo: para esse grupo, a resposta já é quase certa; incluí-lo faria o modelo "acertar o óbvio" e esconderia quem ainda pode ser convencido.
+- Alternativas consideradas: manter no modelo com `saida_anunciada` como variável (inflaria a métrica e desperdiçaria a capacidade de contato com quem já decidiu).
+- Efeito na contagem: em 30/09/2026, 14.753 assinantes ativos → 12.503 no modelo + 2.250 na regra à parte.
+- Impacto: objetivos 4 (quem entra no modelo), 6 (regra de contato) e 7 (retorno da ação).
