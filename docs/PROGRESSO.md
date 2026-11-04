@@ -4,7 +4,9 @@ Atualizado em 03/11/2026.
 
 ## Em uma frase
 
-**A base está limpa, conferida e montada.** Avaliamos os 12 arquivos do data room, registramos 51 decisões de limpeza (cada uma com motivo e efeito nos números) e montamos a base integrada no corte de 30/09/2026. Ela bate com todos os números do enunciado e da Aula 2. Os arquivos originais nunca foram alterados.
+**A base está limpa, conferida e montada, e já sabemos o que o modelo vai prever.** Avaliamos os 12 arquivos do data room, registramos as decisões de limpeza (cada uma com motivo e efeito nos números) e montamos a base integrada no corte de 30/09/2026. Ela bate com todos os números do enunciado e da Aula 2. Os arquivos originais nunca foram alterados.
+
+Depois, testamos **19 dimensões novas** e estudamos **por que as pessoas desligam a renovação**. Isso levou a duas decisões de desenho do modelo (D-052 e D-053). São **53 decisões** registradas ao todo.
 
 Com isso, **o que a Aula 2 pede para a entrega de 13/11 está pronto**: a base integrada no corte e o registro de decisões.
 
@@ -53,13 +55,32 @@ Com isso, **o que a Aula 2 pede para a entrega de 13/11 está pronto**: a base i
 | Posts | 122 posts depois do corte | Removidos | [posts](../saidas/qualidade/feed_posts.md) |
 | Pesquisa de saída | O motivo marcado não combina com o comentário; só responde quem cancela pelo site | Motivo revisado com "objetivo cumprido"; nunca generalizar | [pesquisa](../saidas/qualidade/pesquisa_saida.md) |
 
-## Achados que já ajudam nas próximas etapas
+## Novas descobertas: o que separa quem sai
 
-Ainda não são conclusões. São pistas para testar:
+Para saber o que ajuda a prever a saída, **voltamos no tempo**: montamos a base como ela era em 31/05 e em 31/07 e conferimos quem saiu (ou desligou a renovação) nos 60 dias seguintes. Detalhes em [dimensoes_leitura.md](../saidas/dimensoes_leitura.md) e [motivos_leitura.md](../saidas/motivos_leitura.md).
 
-- **15% dos assinantes já tinham desligado a renovação em 30/09** (2.250 pessoas). Eles vão sair, a não ser que algo mude. Precisamos decidir se entram no modelo ou numa regra à parte.
-- **"Objetivo cumprido" é um motivo de saída forte e escondido.** Na pesquisa, cerca de 190 pessoas saíram depois de fazer a prova ou a maratona, mas marcaram "preço" ou "outro" porque essa opção não existia. Desconto não segura essa pessoa; um novo desafio talvez segure.
-- **O suporte deixou o dobro de chamados sem solução em 2026** (25,7% abertos, contra 12,6% em 2025). É uma hipótese para explicar a subida do churn em 2026.
+**1. Quem já desligou a renovação vai sair.** Entre os mensais nessa situação, 99% saíram em 60 dias. Por isso esse grupo (cerca de 15% da base, 2.250 pessoas em 30/09) vai para uma **regra à parte**, cuja ação é tentar reverter antes do fim do período pago (**D-052**).
+
+**2. A decisão de sair dá aviso.** Quem desliga a renovação treinava igual aos outros dois meses antes, mas **os treinos caem nas 4 semanas anteriores**, de cerca de 2,4 para 1,0 por semana. É uma janela para agir antes da decisão.
+
+**3. Por isso o modelo vai prever "quem vai desligar a renovação"**, e não "quem vai sair" (**D-053**). Com o gabarito antigo, quase nenhum anual aparecia (1%), porque ele só sai na renovação. Mas **1 em cada 10 anuais desliga a renovação** em 60 dias, meses antes de sair, e agora eles entram no radar.
+
+**4. "Objetivo cumprido" é real e aparece nos posts.** Quem posta "completei minha meia maratona!!" no mês anterior aparece **8 vezes mais** entre quem desliga. Quem entrou para uma **prova** ou por **estética** sai mais; quem entrou por **saúde** ou **bem-estar** fica mais. Para essa pessoa, a mensagem é **uma nova meta**, e não desconto.
+
+**5. Algumas hipóteses não se confirmaram:**
+- **Preço:** comparando pessoas com o mesmo tempo de casa, quem sofreu o reajuste de março desligou na mesma proporção de quem não sofreu (45% e 45%).
+- **Suporte:** quem ficou com chamado sem solução não saiu mais.
+- **"Contágio" entre amigos:** quem tem amigos que saíram não sai mais.
+- **Cartão recusado:** não faz diferença.
+
+**6. Perfis de quem desligou:**
+- parou de treinar: 36%;
+- objetivo cumprido: 9%;
+- problema técnico: 6%;
+- **sem sinal claro nos dados: 47%**. É aí que a leitura dos textos com IA (objetivo 5) pode ajudar.
+
+## Outros achados da limpeza
+
 - **58% dos cartões recusados são recuperados** numa nova tentativa, em cerca de 4 dias. Ajuda a separar o churn voluntário do involuntário.
 - **A queda de uso na virada de 2025 para 2026 é falsa:** é mudança no jeito de registrar, não pessoas treinando menos.
 - **331 posts falam em cancelar, parar ou desistir:** um sinal que só o texto mostra (objetivo 5).
@@ -100,9 +121,12 @@ No final, me diga em 3 frases o que mudou no projeto.
 
 | O quê | Para quê | Status |
 |---|---|---|
-| Montar a base num corte anterior (ex.: 31/07/2026) e marcar quem saiu nos 60 dias seguintes | Treinar o modelo de churn (objetivo 4). A saída depois de 30/09 ainda não está nos dados | A fazer |
-| Decidir o que fazer com os 2.250 que já anunciaram a saída | Evitar que o modelo "acerte o óbvio" | Decisão do grupo |
-| Explicar a subida do churn em 2026, testando preço, canal, suporte e uso | Objetivo 2 | A fazer |
+| Bases em 31/05 e 31/07 com o gabarito de 60 dias, e 19 dimensões novas testadas | Saber o que ajuda a prever a saída | ✅ Feito |
+| Decidir o que fazer com os 2.250 que já anunciaram a saída | Evitar que o modelo "acerte o óbvio" | ✅ Regra à parte (D-052) |
+| Escolher o que o modelo prevê | Avisar antes da decisão e incluir os anuais | ✅ "Vai desligar a renovação em 60 dias" (D-053) |
+| **Treinar o modelo de churn** (regressão logística, árvores, boosting) com o gabarito da D-053 | Objetivo 4 | **Próximo passo** |
+| Explicar a subida do churn em 2026. O preço não se confirmou; falta testar o perfil de quem entrou (metas com prazo, canal) | Objetivo 2 | A fazer |
+| Detalhar a regra à parte: mensagem, canal e oferta para quem já desligou, por perfil de motivo | Objetivo 6 | A fazer |
 | Segmentação (clusterização) | Objetivo 3 | A fazer |
 | Ler textos e mapas de calor com IA, conferindo contra uma amostra feita à mão | Objetivo 5 | A fazer |
 | Perguntar ao professor: a diferença entre o resumo de uso e o detalhe de treinos (D-029) é proposital? | Saber qual fonte é a "verdade" para 2025 | Pendente |
