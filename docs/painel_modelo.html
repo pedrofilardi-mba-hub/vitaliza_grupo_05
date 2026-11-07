@@ -300,7 +300,7 @@ details.deep[open]>summary::before{content:"－"}
 </header>
 
 <nav class="jump" aria-label="Seções">
-  <a href="#resumo">Resumo</a><a href="#percurso">Percurso</a><a href="#proximo">Próximo passo</a><a href="#reuniao">Para decidir</a><a href="#raiox">Raio-x da base</a><a href="#segprocesso">Segmentação: como escolhemos</a><a href="#segmento">Segmentação escolhida</a><a href="#personas">Personas</a><a href="#dados">Churn: quem sai e por quê</a>
+  <a href="#resumo">Resumo</a><a href="#percurso">Percurso</a><a href="#raiox">Raio-x da base</a><a href="#segprocesso">Segmentação: como escolhemos</a><a href="#segmento">Segmentação escolhida</a><a href="#personas">Personas</a><a href="#proximo">Próximo passo</a><a href="#reuniao">Para decidir</a><a href="#dados">Churn: quem sai e por quê</a>
   <a href="#achados">Achados</a><a href="#decisoes">Decisões</a><a href="#qualidade">Qualidade</a><a href="#entregas">Entregas</a><a href="#limites">Limites</a>
 </nav>
 
@@ -320,41 +320,6 @@ details.deep[open]>summary::before{content:"－"}
     <button class="btn" id="toggleHow" type="button">Abrir todas as etapas</button>
   </div>
   <ol class="course" id="course"></ol>
-</section>
-
-<section id="proximo">
-  <div class="label">Próximo passo · km 10 · fechar a entrega de 15/11</div>
-  <h2>Personas definidas: agora relatório, notebook, deck e Drive</h2>
-  <p class="lead"><b>Onde estamos:</b> a segmentação está escolhida (D-054) e as 4 personas estão definidas (aba <a href="#personas">Personas</a>, D-055). <b>O objetivo agora:</b> fechar as peças da entrega de <b>15/11</b>, que é individual: cada integrante envia na Adalove o link de uma pasta pública do Drive.</p>
-  <div class="flow">
-    <div class="in"><h4>1 · Entra</h4><ul><li>As abas <a href="#segmento">Segmentação escolhida</a> e <a href="#personas">Personas</a></li><li><a href="https://github.com/pedrofilardi-mba-hub/vitaliza_grupo_05/blob/main/docs/personas.md" target="_blank" rel="noopener">docs/personas.md ↗</a> e <a href="https://github.com/pedrofilardi-mba-hub/vitaliza_grupo_05/blob/main/saidas/clusters.md" target="_blank" rel="noopener">saidas/clusters.md ↗</a></li><li>Os gráficos do raio-x e dos motivos</li></ul></div>
-    <div class="do"><h4>2 · Fazemos</h4><ol><li>Revisar o texto das personas</li><li>Escrever o relatório executivo</li><li>Montar o notebook de EDA</li><li>Fazer o mini deck</li><li>Revisar e montar a pasta no Drive</li></ol></div>
-    <div class="out"><h4>3 · Sai</h4><ul><li>Customer Segmentation Report (negócios)</li><li>Notebook de EDA e mini deck de 3 a 5 slides (tecnologia)</li><li>O link de cada integrante na Adalove</li></ul></div>
-  </div>
-
-  <div class="rx-step">
-    <h3>O que está pendente decidir</h3>
-    <ol class="decide" id="kmDecide"></ol>
-  </div>
-
-  <div class="rx-step">
-    <h3>O que falta para 15/11, peça por peça</h3>
-    <ol class="steps" id="kmSteps"></ol>
-  </div>
-
-  <div class="rx-step">
-    <h3>Os prompts para a IA</h3>
-    <p class="lead">Funcionam no Claude Code, Codex ou Cursor, com o projeto aberto. Cada um gera uma peça; troque o que está entre <code>&lt;&lt; &gt;&gt;</code>.</p>
-    <div class="prompt"><div class="ph"><b>Relatório de segmentação (negócios)</b><button class="btn copy" type="button">Copiar</button></div><pre id="kmPrompt"></pre></div>
-    <div class="prompt"><div class="ph"><b>Notebook de EDA (tecnologia)</b><button class="btn copy" type="button">Copiar</button></div><pre id="kmPrompt2"></pre></div>
-  </div>
-</section>
-
-<section id="reuniao">
-  <div class="label">Para decidir na reunião do grupo</div>
-  <h2>O que precisa da conversa de hoje</h2>
-  <p class="lead">Cada pergunta explica o que está em jogo, mostra as opções com o lado bom (✔) e o cuidado (✖) de cada uma, e traz a nossa sugestão com o motivo. A opção com borda verde é a sugerida, mas a decisão é do grupo.</p>
-  <ol class="decide" id="decide"></ol>
 </section>
 
 <section id="raiox">
@@ -731,6 +696,41 @@ details.deep[open]>summary::before{content:"－"}
     </tbody></table></div>
     <p class="lesson"><b>Por que "preliminar":</b> a regra final de quem contatar junta o risco de cada pessoa (modelo de churn, objetivo 4), o efeito de cada mensagem medido na campanha de agosto (objetivo 6) e o custo dos canais e das ofertas (objetivo 7). As personas dizem <b>qual mensagem</b>; o modelo dirá <b>em quem</b>.</p>
   </div>
+</section>
+
+<section id="proximo">
+  <div class="label">Próximo passo · km 10 · fechar a entrega de 15/11</div>
+  <h2>Personas definidas: agora relatório, notebook, deck e Drive</h2>
+  <p class="lead"><b>Onde estamos:</b> a segmentação está escolhida (D-054) e as 4 personas estão definidas (aba <a href="#personas">Personas</a>, D-055). <b>O objetivo agora:</b> fechar as peças da entrega de <b>15/11</b>, que é individual: cada integrante envia na Adalove o link de uma pasta pública do Drive.</p>
+  <div class="flow">
+    <div class="in"><h4>1 · Entra</h4><ul><li>As abas <a href="#segmento">Segmentação escolhida</a> e <a href="#personas">Personas</a></li><li><a href="https://github.com/pedrofilardi-mba-hub/vitaliza_grupo_05/blob/main/docs/personas.md" target="_blank" rel="noopener">docs/personas.md ↗</a> e <a href="https://github.com/pedrofilardi-mba-hub/vitaliza_grupo_05/blob/main/saidas/clusters.md" target="_blank" rel="noopener">saidas/clusters.md ↗</a></li><li>Os gráficos do raio-x e dos motivos</li></ul></div>
+    <div class="do"><h4>2 · Fazemos</h4><ol><li>Revisar o texto das personas</li><li>Escrever o relatório executivo</li><li>Montar o notebook de EDA</li><li>Fazer o mini deck</li><li>Revisar e montar a pasta no Drive</li></ol></div>
+    <div class="out"><h4>3 · Sai</h4><ul><li>Customer Segmentation Report (negócios)</li><li>Notebook de EDA e mini deck de 3 a 5 slides (tecnologia)</li><li>O link de cada integrante na Adalove</li></ul></div>
+  </div>
+
+  <div class="rx-step">
+    <h3>O que está pendente decidir</h3>
+    <ol class="decide" id="kmDecide"></ol>
+  </div>
+
+  <div class="rx-step">
+    <h3>O que falta para 15/11, peça por peça</h3>
+    <ol class="steps" id="kmSteps"></ol>
+  </div>
+
+  <div class="rx-step">
+    <h3>Os prompts para a IA</h3>
+    <p class="lead">Funcionam no Claude Code, Codex ou Cursor, com o projeto aberto. Cada um gera uma peça; troque o que está entre <code>&lt;&lt; &gt;&gt;</code>.</p>
+    <div class="prompt"><div class="ph"><b>Relatório de segmentação (negócios)</b><button class="btn copy" type="button">Copiar</button></div><pre id="kmPrompt"></pre></div>
+    <div class="prompt"><div class="ph"><b>Notebook de EDA (tecnologia)</b><button class="btn copy" type="button">Copiar</button></div><pre id="kmPrompt2"></pre></div>
+  </div>
+</section>
+
+<section id="reuniao">
+  <div class="label">Para decidir na reunião do grupo</div>
+  <h2>O que precisa da conversa de hoje</h2>
+  <p class="lead">Cada pergunta explica o que está em jogo, mostra as opções com o lado bom (✔) e o cuidado (✖) de cada uma, e traz a nossa sugestão com o motivo. A opção com borda verde é a sugerida, mas a decisão é do grupo.</p>
+  <ol class="decide" id="decide"></ol>
 </section>
 
 <section id="dados">
