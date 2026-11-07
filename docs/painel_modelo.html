@@ -141,6 +141,23 @@ table.stats td.r{text-align:right;font-variant-numeric:tabular-nums}
 .tag.sim{background:var(--accent-soft);color:var(--accent)}
 .tag.cauda{background:var(--warn-soft);color:var(--warn)}
 .tag.forte{background:var(--risk-soft);color:var(--risk)}
+.biz{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--ok);border-radius:10px;padding:14px 16px;display:grid;gap:10px}
+.biz h4{margin:0;font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ok);font-weight:600}
+.biz ul{margin:0;padding-left:18px;display:grid;gap:8px}
+.biz li{font-size:15px}
+.biz .act{display:block;color:var(--accent);font-size:14px;margin-top:2px}
+.biz .act::before{content:"→ "}
+.rx-index{display:flex;flex-wrap:wrap;gap:6px;font-size:13.5px}
+.rx-index a{text-decoration:none;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:4px 11px;color:var(--ink)}
+.rx-index a:hover{background:var(--accent-soft)}
+.rx-index a.sum{background:var(--medal-soft);border-color:var(--medal);font-weight:600}
+.rx-sum{background:var(--surface);border:2px solid var(--medal);border-radius:14px;padding:20px;display:grid;gap:16px;scroll-margin-top:72px}
+.rx-sum ol{margin:0;padding:0;list-style:none;display:grid;gap:12px;counter-reset:s}
+.rx-sum ol li{counter-increment:s;display:grid;grid-template-columns:34px 1fr;gap:10px;align-items:start}
+.rx-sum ol li::before{content:counter(s);font-family:var(--display);font-weight:700;font-size:22px;color:var(--medal);line-height:1.1}
+.rx-sum ol li p{color:var(--muted);font-size:14.5px}
+.rx-sum ol li a{font-size:13px}
+.rx-step{scroll-margin-top:72px}
 .legend-heat{display:flex;gap:8px;align-items:center;font-size:12.5px;color:var(--muted);flex-wrap:wrap}
 .legend-heat i{display:inline-block;width:46px;height:10px;border-radius:4px}
 /* passo a passo de cada fase */
@@ -175,6 +192,30 @@ details.how[open]>summary::before{transform:rotate(90deg)}
 .tech{font-size:13px;color:var(--muted);border-left:3px solid var(--line);padding-left:12px}
 .tech b{color:var(--ink);font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase}
 .tech code{font-family:var(--mono);font-size:12px}
+.links{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:13.5px}
+.links span{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-right:4px}
+.links a{text-decoration:none;border:1px solid var(--line);border-radius:6px;padding:3px 9px;background:var(--surface)}
+.links a:hover{background:var(--accent-soft)}
+details.deep{border:1px dashed var(--accent);border-radius:10px;background:color-mix(in srgb,var(--accent-soft) 45%,var(--surface))}
+details.deep>summary{cursor:pointer;padding:10px 14px;font-weight:600;font-size:15px;list-style:none;display:flex;gap:8px;align-items:center}
+details.deep>summary::-webkit-details-marker{display:none}
+details.deep>summary::before{content:"＋";font-family:var(--mono);color:var(--accent)}
+details.deep[open]>summary::before{content:"－"}
+.deep-body{padding:0 14px 14px;display:grid;gap:12px;font-size:14.5px}
+.deep-body h5{margin:6px 0 0;font-family:var(--display);font-size:18px;font-weight:600}
+.deep-body p{color:var(--ink)}
+.deep-body .tbl table{min-width:560px;font-size:13.5px}
+.deep-body .tbl th,.deep-body .tbl td{padding:7px 10px}
+.deep-body ul,.deep-body ol{margin:0;padding-left:20px;display:grid;gap:4px}
+.course .deep-body li{display:list-item;padding:0;border:0;grid-template-columns:none}
+.prompt{border:1px solid var(--line);border-radius:10px;background:var(--surface);overflow:hidden}
+.prompt .ph{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid var(--line);font-size:13.5px}
+.prompt .ph .btn{padding:3px 10px;font-size:13px}
+.prompt pre{margin:0;padding:12px;font-family:var(--mono);font-size:12px;line-height:1.5;white-space:pre-wrap;word-break:break-word;max-height:320px;overflow:auto;color:var(--ink)}
+.ver{font-size:12px;padding:2px 8px;border-radius:6px;white-space:nowrap}
+.ver.forte{background:var(--ok-soft);color:var(--ok)}
+.ver.medio{background:var(--warn-soft);color:var(--warn)}
+.ver.fraco{background:var(--idle-soft);color:var(--idle)}
 @media (max-width:560px){details.how{grid-column:1/-1}}
 @media (max-width:560px){.course li{grid-template-columns:56px 1fr}.course li .pill{grid-column:2}}
 @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
@@ -222,22 +263,34 @@ details.how[open]>summary::before{transform:rotate(90deg)}
   <div class="label">Raio-x da base de clientes · análise exploratória antes do K-means</div>
   <h2>Quem são os nossos assinantes, em 8 exames</h2>
   <p class="lead">Antes de agrupar, olhamos a base com as técnicas da Aula 2 (granularidade, centro e dispersão, distribuição, extremos, correlação, taxa com o denominador certo) e da Aula 3 (a média esconde grupos, as três lentes). A fotografia é a <b>base ativa de 30/09/2026</b>. Nos exames de saída usamos o <b>gabarito de 31/05</b>: quem desligou a renovação ou cancelou pelo site nos 60 dias seguintes (D-053), sem quem já tinha anunciado a saída (D-052). <span id="rxChurnBase"></span></p>
+  <p class="lead">Cada exame tem o gráfico, como lê-lo e um quadro verde <b>"Na ótica do negócio"</b>: o que aquilo quer dizer para a Vitaliza e o que dá para fazer. Com pressa? Vá direto ao resumo.</p>
+  <nav class="rx-index" aria-label="Exames do raio-x"><a class="sum" href="#rxResumo">★ Resumo em 7 pontos</a><a href="#rx1">1 · Funil</a><a href="#rx2">2 · Assinante típico</a><a href="#rx3">3 · Distribuições</a><a href="#rx4">4 · Composição</a><a href="#rx5">5 · Promessa × prática</a><a href="#rx6">6 · O que anda junto</a><a href="#rx7">7 · A média esconde</a><a href="#rx8">8 · O que explica a saída</a></nav>
 
-  <div class="rx-step">
+  <div class="rx-step" id="rx1">
     <h3>1. Uma linha por quê? <span class="tec">granularidade</span></h3>
     <p class="lead">Cada arquivo conta uma coisa diferente: contas, testes, pagantes, assinantes ativos. Antes de qualquer taxa, é preciso saber de qual "população" estamos falando.</p>
     <div class="charts"><div class="chart wide"><h3>Do cadastro ao assinante ativo</h3><p class="cap">Cada barra é uma população diferente. O K-means e as personas usam só a última (ou a penúltima).</p><div class="box" style="height:240px"><canvas id="cFunil"></canvas></div><p class="src">Fonte: usuarios, eventos_assinatura, assinaturas, base_corte_2026-09-30 · src/raio_x.py</p></div></div>
     <p class="lesson"><b>Por que importa:</b> "churn de 15%" muda de sentido conforme o denominador. Se dividirmos as saídas pelas 64 mil contas, e não pelos 12 mil pagantes, o número cai para menos de 3% e esconde o problema.</p>
+    <div class="biz"><h4>Na ótica do negócio</h4><ul>
+      <li><b>De cada 100 pessoas que criam conta, 72 testam o app, 50 chegam a pagar e só 23 estão pagando hoje.</b> O maior vazamento acontece depois de pagar: mais da metade de quem já foi assinante não está mais aqui.<span class="act">Segurar quem já paga dispensa gastar de novo com anúncio para trazer alguém: é o foco do case.</span></li>
+      <li><b>Dos 14.753 assinantes de hoje, 2.250 já desligaram a renovação.</b> Para esses, a decisão está tomada e a conversa é outra: oferta de volta, pesquisa de motivo (regra à parte, D-052).<span class="act">O trabalho de prevenção mira os 12.503 que ainda não decidiram.</span></li>
+    </ul></div>
   </div>
 
-  <div class="rx-step">
+  <div class="rx-step" id="rx2">
     <h3>2. Centro, dispersão e extremos <span class="tec">5 números · média × mediana · CV · 1,5×IQR</span></h3>
     <p class="lead">Para cada variável numérica: os cinco números (mínimo, 1º quartil, mediana, 3º quartil, máximo), média, desvio padrão, coeficiente de variação (desvio ÷ média) e quantos ficam fora da cerca de 1,5 × IQR.</p>
     <div class="tbl"><table class="stats"><thead><tr><th>Variável</th><th>n</th><th>mín</th><th>Q1</th><th>mediana</th><th>Q3</th><th>máx</th><th>média</th><th>CV</th><th>extremos</th><th>leitura</th></tr></thead><tbody id="tStats"></tbody></table></div>
     <p class="lesson"><b>Como ler:</b> quando a média fica bem acima da mediana, alguns valores muito altos puxam a média (cauda à direita). Exemplo: "dias desde o último treino" tem mediana 2 e média ~13, porque uma minoria parou há meses. Nesses casos, a mediana descreve melhor o assinante típico, e o K-means precisa da variável transformada (log ou faixas), senão os extremos dominam os grupos.</p>
+    <div class="biz"><h4>Na ótica do negócio</h4><ul>
+      <li><b>O assinante típico (a mediana):</b> 46 anos, 8 meses e meio de casa, treina 2 vezes por semana, abre o app 6 vezes por mês, tem 1 seguidor e fez 1 post em 3 meses.<span class="act">É esse retrato, e não a média, que deve aparecer em apresentações para a diretoria.</span></li>
+      <li><b>A média engana.</b> "13 dias sem treinar, em média" não descreve quase ninguém: metade treinou nos últimos 2 dias. A média sobe porque uma minoria sumiu há meses.</li>
+      <li><b>Cerca de 2 mil assinantes (14%) estão há mais de 17 dias sem treinar e continuam pagando.</b> São os "dormentes": hoje não reclamam, mas podem perceber na hora de renovar que pagam por algo que não usam.<span class="act">Grupo natural para uma régua de reativação, antes da data de renovação.</span></li>
+      <li><b>A parte social é pouco usada:</b> 1 em cada 4 não tem nenhum seguidor, e 1 em cada 4 não postou nada em 90 dias.<span class="act">Vale testar se puxar a pessoa para a rede (amigos, grupos) ajuda a ficar; os dados ainda não provam isso.</span></li>
+    </ul></div>
   </div>
 
-  <div class="rx-step">
+  <div class="rx-step" id="rx3">
     <h3>3. O formato de cada distribuição <span class="tec">histograma</span></h3>
     <div class="charts">
       <div class="chart"><h3>Idade: quase simétrica</h3><p class="cap">Concentrada entre 35 e 55 anos, mediana 46. Não é um app de jovens.</p><div class="box" style="height:220px"><canvas id="hIdade"></canvas></div></div>
@@ -245,29 +298,50 @@ details.how[open]>summary::before{transform:rotate(90deg)}
       <div class="chart"><h3>Treinos nas últimas 4 semanas</h3><p class="cap" id="capTreinos">Mediana de 8 (2 por semana); 12% não treinaram nenhuma vez no mês.</p><div class="box" style="height:220px"><canvas id="hTreinos"></canvas></div></div>
       <div class="chart"><h3>Dias desde o último treino: cauda à direita</h3><p class="cap">A maioria treinou nesta semana, mas há um rabo de quem sumiu há 1 a 9 meses e continua pagando.</p><div class="box" style="height:220px"><canvas id="hDias"></canvas></div></div>
     </div>
+    <div class="biz"><h4>Na ótica do negócio</h4><ul>
+      <li><b>É um público maduro:</b> 6 em cada 10 têm entre 35 e 55 anos, e só 3% têm menos de 30.<span class="act">Tom de comunicação e ofertas pensados para quem busca saúde e rotina, não para o atleta jovem. Pela LGPD, a idade descreve o público, mas nunca decide quem recebe uma ação.</span></li>
+      <li><b>2.176 assinantes (15%) estão nos dois primeiros meses de casa</b>, a fase em que o mensal mais sai (exame 7).<span class="act">O onboarding é a janela de maior retorno: criar o hábito do treino nas primeiras semanas.</span></li>
+      <li><b>1.772 (12%) não treinaram nenhuma vez no último mês, e cerca de 1.500 (10%) estão há mais de 30 dias parados.</b><span class="act">Uma régua por tempo parado (7, 15, 30 dias) é simples de montar e fácil de medir.</span></li>
+    </ul></div>
   </div>
 
-  <div class="rx-step">
+  <div class="rx-step" id="rx4">
     <h3>4. De que é feita a base <span class="tec">tabela de frequência</span></h3>
     <div class="charts" id="rxComp"></div>
     <p class="lesson"><b>Por que importa:</b> 30% não disseram o objetivo (ou escreveram "nada", "x"). Qualquer segmento que dependa do objetivo cobre no máximo 70% da base, e a leitura com IA dos textos pode ajudar a fechar essa lacuna.</p>
+    <div class="biz"><h4>Na ótica do negócio</h4><ul>
+      <li><b>Não sabemos o que 3 em cada 10 assinantes querem.</b><span class="act">Perguntar de novo dentro do app ("qual é o seu objetivo agora?") custa quase nada e destrava mensagens personalizadas.</span></li>
+      <li><b>Dois blocos de motivação com destinos opostos.</b> Saúde e bem-estar (27% da base) são os que mais ficam. Estética, desempenho e prova com prazo (26%) são os que mais saem no plano mensal (exame 7): a meta acaba, a assinatura também.<span class="act">Para quem entra com meta de prazo, oferecer a próxima meta antes de a atual terminar.</span></li>
+      <li><b>62% não usam relógio:</b> a experiência principal acontece no celular. <b>Metade da base está em SP.</b><span class="act">Ações presenciais (corridas, grupos de treino) podem começar em SP e depois se espalhar.</span></li>
+    </ul></div>
   </div>
 
-  <div class="rx-step">
+  <div class="rx-step" id="rx5">
     <h3>5. O que dizem × o que fazem <span class="tec">comparação de grupos</span></h3>
     <div class="charts"><div class="chart wide"><h3>Prometeram treinar X dias por semana; treinam em média…</h3><p class="cap">Dias por semana declarados no onboarding × treinos reais por semana nas últimas 4 semanas. A linha tracejada é "cumpriu a promessa".</p><div class="box" style="height:260px"><canvas id="cDecl"></canvas></div><p class="src">Fonte: onboarding (dias_por_semana normalizado, D-005) + atividades</p></div></div>
     <p class="lesson"><b>Leitura:</b> todo mundo treina menos do que prometeu, e a distância cresce com a promessa: quem disse 5 dias treina ~3. A promessa ainda ordena as pessoas (r ≈ 0,46), então serve como variável, mas "distância entre promessa e prática" pode ser uma dimensão melhor para o K-means do que a promessa sozinha.</p>
+    <div class="biz"><h4>Na ótica do negócio</h4><ul>
+      <li><b>A promessa do cadastro é otimista para todo mundo.</b> Quem disse 5 dias por semana treina 3; quem disse 7 treina menos de 5.<span class="act">O app pode sugerir uma meta alcançável e comemorar quando ela é cumprida, em vez de lembrar a pessoa de que ela "falhou". É uma hipótese para testar com grupo de controle.</span></li>
+      <li><b>A frustração pode ser um sinal de saída.</b> Quem fica muito abaixo do que prometeu talvez sinta que o app "não está funcionando".<span class="act">Vamos testar essa distância como variável no K-means e no modelo.</span></li>
+    </ul></div>
   </div>
 
-  <div class="rx-step">
+  <div class="rx-step" id="rx6">
     <h3>6. O que anda junto <span class="tec">correlação de Pearson</span></h3>
-    <p class="lead">r vai de −1 a 1. Perto de 0: as variáveis não andam juntas em linha reta. Azul: sobem juntas; vermelho: quando uma sobe, a outra desce.</p>
+    <p class="lead">A pergunta da tabela é simples: <b>quando um comportamento aumenta, outro aumenta junto?</b> É como checar se duas perguntas de uma pesquisa medem a mesma coisa. Cada quadrado cruza duas medidas: azul forte = andam juntas (quem tem mais de uma tem mais da outra); vermelho = andam ao contrário (quem tem mais de uma tem menos da outra); quase branco = não têm relação. O número vai de −1 a 1; acima de 0,5 já é uma relação forte.</p>
     <div class="tbl"><table class="corr" id="tCorr"></table></div>
     <div class="charts"><div class="chart wide"><h3 id="hDisp">Quem abre o app treina mais</h3><p class="cap">Amostra de 500 assinantes ativos. Cada ponto é uma pessoa.</p><div class="box" style="height:280px"><canvas id="cDisp"></canvas></div><p class="src">Correlação não é causa: abrir o app não faz treinar; quem treina abre o app para registrar.</p></div></div>
     <p class="lesson"><b>Para o K-means:</b> treinos, minutos, semanas ativas e sessões no app andam muito juntos (r de 0,5 a 0,8). Se entrarem todos, o "quanto treina" vale quatro vezes no cálculo da distância. Melhor escolher um ou dois. Idade, tempo de casa e % de vídeo quase não se correlacionam com o resto: trazem informação nova.</p>
+    <div class="biz"><h4>Na ótica do negócio</h4><ul>
+      <li><b>"Engajamento" é um bloco só.</b> Quem treina mais também acumula mais minutos, mais semanas ativas e abre mais o app (o quadrado azul no meio da tabela).<span class="act">Um indicador de engajamento no acompanhamento da diretoria basta (ex.: treinos nas últimas 4 semanas). Acompanhar quatro é ver a mesma coisa quatro vezes.</span></li>
+      <li><b>Quem está parado há mais tempo também tinha poucas semanas ativas</b> (vermelho, −0,62). O afastamento não é de repente: vai acontecendo semana a semana.<span class="act">Dá tempo de perceber e agir antes de a pessoa sumir de vez.</span></li>
+      <li><b>Idade não anda com nada.</b> Uma pessoa de 30 e outra de 60 anos treinam, em média, o mesmo tanto.<span class="act">Segmentar por idade não muda o comportamento esperado. Mais um motivo para não usá-la em ações.</span></li>
+      <li><b>Quem está há mais tempo tem mais seguidores</b> (0,33). Não sabemos se a rede de amigos segura a pessoa ou só vem com o tempo.<span class="act">Correlação não é causa: só um teste (dar o empurrão social a uma parte e comparar) responde.</span></li>
+      <li><b>No gráfico de pontos:</b> quem abre o app treina mais, mas isso não quer dizer que mandar notificação para abrir o app faz treinar. Provavelmente é o treino que leva a pessoa a abrir o app para registrar.<span class="act">Medir campanhas pelo treino que geram, não pelas aberturas do app.</span></li>
+    </ul></div>
   </div>
 
-  <div class="rx-step">
+  <div class="rx-step" id="rx7">
     <h3>7. A média esconde grupos <span class="tec">cruzamentos · terceira variável</span></h3>
     <p class="lead">Taxa de desligamento em 60 dias em cada combinação, com o tamanho do grupo (n). Células com menos de 200 pessoas ficam apagadas: a taxa delas oscila muito.</p>
     <div class="legend-heat"><span>menor</span><i style="background:linear-gradient(90deg,var(--ok-soft),var(--risk))"></i><span>maior saída</span></div>
@@ -276,9 +350,15 @@ details.how[open]>summary::before{transform:rotate(90deg)}
       <div class="card"><h3>Objetivo × plano</h3><div class="tbl" style="border:0"><table class="heat" id="mObjPlano"></table></div><p class="cap" style="color:var(--muted);font-size:14px">No mensal, quem entrou por meta com prazo, desempenho ou estética sai quase 3× mais que quem entrou por bem-estar. No anual a diferença encolhe: o contrato segura.</p></div>
     </div>
     <div class="card"><h3>Tempo de casa × frequência de treino (a terceira variável)</h3><div class="tbl" style="border:0"><table class="heat" id="mCasaFreq"></table></div><p style="color:var(--muted);font-size:14px">Olhando a base toda, quem treina pouco parece sair mais. Mas, dentro de cada faixa de tempo de casa, a frequência quase não muda a taxa: quem está há mais de um ano sai ~9% treinando muito ou pouco. Boa parte do "efeito do treino" era tempo de casa disfarçado. O que avisa a saída é a <b>queda</b> do treino (exame 8), não o nível.</p></div>
+    <div class="biz"><h4>Na ótica do negócio</h4><ul>
+      <li><b>O mensal nos primeiros meses é a prioridade.</b> Com até 1 mês de casa, 1 em cada 4 desliga em 60 dias. Há um segundo pico entre 3 e 6 meses (24%), quando a novidade passa.<span class="act">Dois momentos de cuidado: o primeiro mês (criar o hábito) e o terceiro mês (renovar o interesse).</span></li>
+      <li><b>O anual com mais de 1 ano é a base fiel</b> (6,7%).<span class="act">Só monitorar. Gastar retenção aqui é desperdício.</span></li>
+      <li><b>O motivo da entrada pesa no mensal:</b> meta com prazo, desempenho e estética saem perto de 30%; bem-estar, 11%. No anual a diferença quase some.<span class="act">Oferecer o plano anual, com a próxima meta, para quem entra no mensal com meta de prazo. É uma hipótese a testar.</span></li>
+      <li><b>Treinar pouco não basta como alarme.</b> Um veterano que treina 1 vez por semana sai tanto quanto um que treina 4.<span class="act">O gatilho de contato deve ser a mudança ("caiu pela metade"), não um patamar fixo ("treina pouco").</span></li>
+    </ul></div>
   </div>
 
-  <div class="rx-step">
+  <div class="rx-step" id="rx8">
     <h3>8. Que lente explica a saída? <span class="tec">três lentes · separar × cobrir</span></h3>
     <div class="charts">
       <div class="chart"><h3>Quanto cada lente separa quem sai</h3><p class="cap">AUC de uma regressão logística só com as variáveis de cada lente, validação cruzada em 5 partes. 0,50 = moeda; 1,00 = perfeito.</p><div class="box" style="height:260px"><canvas id="cLentes"></canvas></div><p class="src">Gabarito de 31/05 · src/raio_x.py</p></div>
@@ -292,6 +372,38 @@ details.how[open]>summary::before{transform:rotate(90deg)}
     <p class="lead">Cada hipótese vira uma tabela: a taxa de quem tem a característica, a de quem não tem, e quanto das saídas ela cobre. Um bom segmento precisa <b>separar</b> (taxa bem diferente) e <b>cobrir</b> (pegar uma parte relevante das saídas).</p>
     <div class="tbl"><table><thead><tr><th>Hipótese</th><th>n</th><th>% da base</th><th>Taxa dentro</th><th>Taxa fora</th><th>Diferença</th><th>Cobre das saídas</th></tr></thead><tbody id="tHip"></tbody></table></div>
     <p class="lesson"><b>Cruzamento aponta suspeitos, não culpados.</b> "Mensal novo com meta de prazo" separa muito (29% × 14%) mas cobre só 7% das saídas; "plano mensal" cobre 59%, mas separa menos. É essa troca que o K-means vai organizar. Surpresas: ficar mais de 14 dias sem treinar quase não muda a taxa (muitos param e seguem pagando), e o anual perto de renovar desliga <i>menos</i> que a média nesta janela.</p>
+    <div class="biz"><h4>Na ótica do negócio</h4><ul>
+      <li><b>Para decidir com quem falar, olhe nesta ordem:</b> 1) plano e tempo de casa; 2) se o treino caiu; 3) por que a pessoa contratou. O cadastro (idade, estado, celular) quase não ajuda.</li>
+      <li><b>Nenhuma combinação acerta sempre.</b> Mesmo juntando tudo (nota 0,68), vamos contatar gente que ficaria e deixar passar gente que sai.<span class="act">Por isso o cálculo de retorno (semana 10) precisa contar o custo dos contatos desperdiçados.</span></li>
+      <li><b>Ação focada × ação ampla.</b> "Mensal novo com meta de prazo" são 453 pessoas com 29% de saída: ótimo para um piloto barato. "Todo mensal" pega 59% das saídas, mas gasta com muita gente que ficaria.<span class="act">Começar focado, medir com grupo de controle e ampliar se der retorno.</span></li>
+    </ul></div>
+  </div>
+
+  <div class="rx-sum" id="rxResumo">
+    <div class="label">Resumo do raio-x</div>
+    <h3 style="font-size:28px">Se for levar só 7 coisas desta seção</h3>
+    <ol>
+      <li><div><b>O problema está depois do pagamento.</b><p>De cada 100 que já pagaram, 55 foram embora. O foco são os 12.503 assinantes que ainda não decidiram sair. <a href="#rx1">exame 1</a></p></div></li>
+      <li><div><b>O cliente é maduro e busca rotina.</b><p>Mediana de 46 anos, treina 2 vezes por semana, usa pouco a parte social. Fale de saúde e hábito, não de performance. <a href="#rx2">exames 2 e 3</a></p></div></li>
+      <li><div><b>Contrato e tempo de casa são o primeiro corte.</b><p>Mensal novo sai 3,7× mais que anual veterano. Primeiro mês e terceiro mês são os momentos de cuidado. <a href="#rx7">exame 7</a></p></div></li>
+      <li><div><b>O porquê de ter contratado muda quem fica.</b><p>Meta com prazo, desempenho e estética saem quase 3× mais no mensal que bem-estar. E 30% não disseram o objetivo: vale perguntar de novo. <a href="#rx4">exames 4 e 7</a></p></div></li>
+      <li><div><b>O alarme é a queda do treino, não o nível.</b><p>Treinar pouco não prevê saída; parar de treinar, sim. Cerca de 2 mil "dormentes" pagam sem usar. <a href="#rx7">exames 2 e 7</a></p></div></li>
+      <li><div><b>Engajamento é uma coisa só; idade não diz nada.</b><p>Basta um indicador de engajamento. Idade não muda o comportamento e, pela LGPD, não dispara ação. <a href="#rx6">exame 6</a></p></div></li>
+      <li><div><b>Nenhuma lente sozinha resolve.</b><p>Contrato, comportamento e objetivo juntos explicam melhor. É exatamente o que o K-means vai combinar. <a href="#rx8">exame 8</a></p></div></li>
+    </ol>
+    <div class="two">
+      <div class="card"><h3>O que levamos para o K-means</h3><ul>
+        <li>Variáveis de contrato, comportamento (uma ou duas de engajamento, mais a queda) e objetivo</li>
+        <li>Variáveis com cauda longa entram em faixas ou em log</li>
+        <li>Idade e sexo ficam fora: só descrevem os grupos depois</li>
+        <li>Testar a distância entre o prometido e o feito como variável nova</li>
+      </ul></div>
+      <div class="card"><h3>Perguntas em aberto</h3><ul>
+        <li>A rede de amigos segura a pessoa ou só vem com o tempo?</li>
+        <li>Por que o anual perto de renovar desligou menos nesta janela?</li>
+        <li>O que querem os 30% que não informaram o objetivo?</li>
+      </ul></div>
+    </div>
   </div>
 </section>
 
@@ -393,6 +505,54 @@ details.how[open]>summary::before{transform:rotate(90deg)}
 </footer>
 </div>
 
+<script type="text/plain" id="pSetup">
+Preciso preparar meu computador para um projeto em grupo do MBA (case Vitaliza). Faça o passo a passo abaixo comigo, explicando cada passo em português simples, em uma ou duas frases.
+
+Como trabalhar comigo:
+- Se você consegue rodar comandos no meu computador (por exemplo, Claude Code, Codex ou Cursor), rode você mesmo, mas peça minha autorização antes de instalar qualquer programa.
+- Se você é um chat e não consegue rodar comandos no meu computador (por exemplo, ChatGPT, Claude ou Gemini no navegador), me guie UM passo por vez: diga exatamente o que digitar e onde, e espere eu colar o resultado antes de seguir. Comece me ensinando a abrir o PowerShell (Windows) ou o Terminal (Mac) já dentro da minha pasta do projeto. Para copiar e renomear arquivos, pode me dar o comando ou me explicar como fazer pelo Explorador de Arquivos (Windows) ou pelo Finder (Mac).
+- Se algo der erro, me explique o que aconteceu e proponha a solução antes de tentar de novo.
+
+Minhas informações:
+- Meu sistema: <<Windows ou Mac>>
+- Minha pasta do projeto: <<ex.: C:\Projetos\MBA>>
+- Pasta onde estão os arquivos do case (dados, zips e PDFs): <<ex.: C:\Users\fulano\Downloads\Vitaliza>>
+- Meu nome para os commits: <<ex.: Maria Silva>>
+- Meu e-mail para os commits: <<ex.: maria.silva@mba.inteli.edu.br>>
+
+Passos:
+
+1. Verifique se o Git está instalado (git --version). Se não estiver, instale (Windows: winget install --id Git.Git -e; Mac: xcode-select --install). Depois de instalar, pode ser preciso fechar e abrir o PowerShell/Terminal de novo.
+
+2. Verifique se o Python 3.12 está instalado. O projeto usa Python 3.12. Se não estiver, instale (Windows: winget install --id Python.Python.3.12 -e; Mac: instalador do python.org). No Windows, cuidado: o comando "python" pode abrir a Microsoft Store em vez do Python de verdade; use "py -3.12" se precisar.
+
+3. Dentro da minha pasta do projeto, baixe o repositório do grupo:
+git clone https://github.com/pedrofilardi-mba-hub/vitaliza_grupo_05.git
+Depois entre na pasta vitaliza_grupo_05. Todos os passos seguintes acontecem dentro dela.
+
+4. Se você consegue ler arquivos, leia o README.md e o AGENTS.md do repositório, que têm as regras do projeto, e siga-as daqui em diante. Se não consegue, siga este roteiro.
+
+5. Configure meu nome e e-mail só para este repositório (git config user.name e git config user.email, sem --global).
+
+6. Crie o ambiente Python dentro da pasta do projeto, numa pasta chamada .venv, com o Python 3.12, e instale as bibliotecas com: pip install -r requirements.txt
+No Windows, se a ativação do .venv for bloqueada ("execução de scripts foi desabilitada"), NÃO mude configurações de segurança: use direto o Python do ambiente, .venv\Scripts\python.exe (por exemplo: .venv\Scripts\python.exe -m pip install -r requirements.txt).
+
+7. Copie os arquivos do case da minha pasta para o projeto:
+- Os 12 arquivos de dados (.csv e .parquet) vão para dados/brutos/, SEM o número no fim do nome. Exemplos: usuarios_9730.csv vira usuarios.csv; atividades_9938.parquet vira atividades.parquet. Os nomes finais devem ser: usuarios.csv, assinaturas.csv, amizades.csv, campanha_ago26.csv, eventos_assinatura.csv, pagamentos.csv, uso_mensal.csv, atividades.parquet, onboarding.csv, pesquisa_saida.csv, feed_posts.csv e tickets_suporte.csv.
+- Os 2 zips de mapas de calor vão para dados/brutos/heatmap/ e devem ser descompactados ali. Precisam surgir as pastas 2026-07-31/ (12.426 imagens .png) e 2026-09-30/ (13.047 imagens .png). Se aparecer uma pasta __MACOSX, apague-a: é lixo do Mac, não são mapas.
+- Os 2 PDFs vão para docs/case/.
+Copie, não mova: os originais ficam onde estão.
+
+8. Confira se tudo deu certo rodando o inventário com o Python do .venv:
+.venv\Scripts\python.exe src\inventario.py (no Mac: .venv/bin/python src/inventario.py)
+Depois mostre o começo do arquivo saidas/inventario.md e confira se a seção "Principais pontos" começa com "O data room está completo. 12 de 12 arquivos têm exatamente as linhas do dicionário". Se não começar, descubra qual arquivo está faltando ou com nome errado. Como o inventário regenera esse arquivo com a data de hoje, desfaça a mudança no final com: git restore saidas/inventario.md
+
+9. Rode git status e confirme que não há nada para enviar: os dados, o .venv e os PDFs precisam aparecer como ignorados, nunca como arquivos novos.
+
+10. Não faça commit nem push de nada nesta configuração.
+
+No final, me mostre um resumo: o que foi instalado, onde ficou a pasta do projeto, e como eu faço no dia a dia para abrir o Jupyter (com o comando exato para o meu sistema).
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script>
 const D = /*__DADOS__*/{};
@@ -534,6 +694,158 @@ const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).
       saiu: ['Plano de intervenção com ROI (entrega de 20/12)'],
       pq: 'Fecha a pergunta do case: em quem vale a pena agir e quanto isso rende.' },
   ];
+  // ---- segundo nível: "Aprofundar" (tabelas, prompts, arquivos)
+  const GH = 'https://github.com/pedrofilardi-mba-hub/vitaliza_grupo_05';
+  const tb = (cab, linhas) => `<div class="tbl"><table><thead><tr>${cab.map(c => `<th>${c}</th>`).join('')}</tr></thead><tbody>${linhas.map(l => `<tr>${l.map(c => `<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+  const V = { f: '<span class="ver forte">forte</span>', m: '<span class="ver medio">útil num grupo</span>', x: '<span class="ver fraco">não separa</span>' };
+  const DEEP = {
+    'Organização': {
+      t: 'o prompt para configurar a sua máquina e onde fica cada coisa',
+      links: [['Repositório no GitHub', ''], ['Guia completo de configuração', '/blob/main/docs/CONFIGURAR_MAQUINA.md'], ['Regras do projeto (AGENTS.md)', '/blob/main/AGENTS.md'], ['Caderno de decisões', '/blob/main/DECISOES.md'], ['README', '/blob/main/README.md']],
+      html: `<h5>Antes de colar o prompt: 3 coisas que só você faz</h5><ol>
+        <li>Crie uma conta em <a href="https://github.com/signup" target="_blank" rel="noopener">github.com/signup</a>, se ainda não tiver.</li>
+        <li>Mande o seu usuário do GitHub para o Pedro e aceite o convite que chega por e-mail (vale 7 dias).</li>
+        <li>Deixe numa mesma pasta os 12 arquivos de dados, os 2 zips de mapas de calor e os 2 PDFs do case.</li></ol>
+        <p>Crie a pasta do projeto <b>fora do OneDrive, Google Drive ou iCloud</b> (ex.: <code>C:\\Projetos\\MBA</code>): sincronizadores atrapalham o Git. Abra a sua IA (Claude Code, Codex, Cursor ou um chat no navegador), cole o prompt abaixo e troque o que está entre <code>&lt;&lt; &gt;&gt;</code>.</p>`,
+      prompts: [{ t: 'Prompt de configuração (copie inteiro)', from: 'pSetup' },
+        { t: 'No dia a dia, ao começar', txt: 'Atualize o projeto Vitaliza com o que os colegas subiram (git pull).' },
+        { t: 'No dia a dia, ao terminar', txt: 'Faça commit do que eu fiz no projeto Vitaliza, com uma mensagem clara em português, e envie para o GitHub.' }],
+      fim: `<h5>Como a pasta do projeto é organizada</h5>` + tb(['Pasta', 'O que tem', 'Vai para o GitHub?'], [
+        ['<code>dados/brutos/</code>', 'Os arquivos do case como vieram. Ninguém altera.', 'Não'],
+        ['<code>dados/processados/</code>', 'Cópia limpa e bases montadas pelos scripts', 'Não (é recriada pelos scripts)'],
+        ['<code>src/</code>', 'Os scripts em Python que fazem cada etapa', 'Sim'],
+        ['<code>saidas/</code>', 'Relatórios e tabelas que os scripts geram', 'Sim'],
+        ['<code>docs/</code>', 'Guias, este painel e material de entrega', 'Sim (menos os PDFs do case)'],
+        ['<code>DECISOES.md</code>', 'Cada decisão do grupo, com o motivo e o efeito nos números', 'Sim']]) +
+        `<p><b>Três combinados:</b> cada um trabalha nos seus próprios arquivos; nunca altere <code>dados/brutos/</code>; decisões de método vão para o <code>DECISOES.md</code>.</p>` },
+    'Inventário': {
+      t: 'os 12 arquivos, um por um',
+      links: [['Inventário completo', '/blob/main/saidas/inventario.md'], ['Script', '/blob/main/src/inventario.py']],
+      html: `<p>"Uma linha é…" é a pergunta mais importante antes de juntar arquivos. Todos conferem com o dicionário.</p>` + tb(['Arquivo', 'Uma linha é', 'Linhas', 'Tipo'], [
+        ['usuarios', 'uma conta', '64.948', 'cadastro'], ['assinaturas', 'uma assinatura', '32.643', 'cadastro'], ['amizades', 'uma relação de seguir', '113.480', 'rede'],
+        ['campanha_ago26', 'um assinante sorteado na campanha', '14.120', 'experimento'], ['eventos_assinatura', 'um evento (teste, cobrança, renovação, cancelamento…)', '275.565', 'histórico'],
+        ['pagamentos', 'uma cobrança', '165.548', 'histórico'], ['uso_mensal', 'um usuário em um mês', '591.662', 'histórico'], ['atividades', 'um treino', '1.254.475', 'histórico'],
+        ['onboarding', 'as respostas de cadastro de uma conta', '63.929', 'texto'], ['pesquisa_saida', 'uma resposta de quem cancelou pelo site', '643', 'texto'],
+        ['feed_posts', 'um post na rede do app', '119.309', 'texto'], ['tickets_suporte', 'um chamado', '4.422', 'texto'],
+        ['heatmap (2 pastas)', 'a imagem de calor de um assinante', '12.426 e 13.047', 'imagem']]),
+      prompts: [{ t: 'Para ver você mesmo, peça à sua IA', txt: 'No projeto Vitaliza (pasta vitaliza_grupo_05), rode o inventário com o Python do ambiente do projeto (.venv\\Scripts\\python.exe src\\inventario.py) e me explique, em português simples, o que o saidas/inventario.md diz sobre cada arquivo. Depois desfaça a mudança no relatório com git restore saidas/inventario.md. Não faça commit.' }] },
+    'Qualidade': {
+      t: 'as 5 dimensões com exemplos reais e as 3 ações possíveis',
+      links: [['Roteiro da skill', '/blob/main/.claude/skills/qualidade-dados/SKILL.md'], ['Relatórios por arquivo', '/tree/main/saidas/qualidade'], ['DECISOES.md', '/blob/main/DECISOES.md']],
+      html: tb(['Dimensão', 'A pergunta', 'Exemplo na Vitaliza', 'Decisão'], [
+        ['Completude', 'Falta informação?', '30% dos objetivos do cadastro vazios ou "nada", "x", "asdf"', 'D-003'],
+        ['Validade', 'O valor é possível?', 'Treinos de 10 mil km; 606 datas de nascimento falsas', 'D-033, D-020'],
+        ['Consistência', 'A mesma coisa está escrita igual?', 'Cidade escrita de vários jeitos; "corrida" e "run"; "R$ 34,90" e "34.90"', 'D-017, D-032, D-025'],
+        ['Unicidade', 'Há repetidos?', 'A mesma cobrança duas vezes; o mesmo treino pelo app e pelo relógio', 'D-024, D-031'],
+        ['Temporalidade', 'A data está certa e antes do corte?', 'Lojas e Garmin gravam em UTC; posts e amizades depois de 30/09', 'D-009, D-030, D-043']]) +
+        `<h5>As 3 ações (Aula 2: limpar é decidir)</h5>` + tb(['Ação', 'Quando usar', 'Exemplo'], [
+        ['Corrigir', 'O dado está errado, mas sabemos o valor certo', 'Converter o horário UTC das lojas para Brasília (D-009)'],
+        ['Remover', 'O registro não deveria existir', 'Cobrança duplicada: fica só uma (D-024)'],
+        ['Marcar', 'O dado é suspeito, mas a pessoa é real', 'Nascimento falso: a conta fica, a idade não é usada (D-020)']]),
+      prompts: [{ t: 'Para entender um arquivo, peça à sua IA', txt: 'No projeto Vitaliza, leia saidas/qualidade/onboarding.md e as decisões D-003 a D-008 do DECISOES.md. Me explique, em português simples e com um exemplo de cada, quais problemas o arquivo tinha e o que o grupo decidiu fazer. Não altere nenhum arquivo.' }] },
+    'Limpeza': {
+      t: 'o que mudou em cada arquivo (antes → depois)',
+      links: [['Tabela de conferência', '/blob/main/saidas/limpeza_conferencia.md'], ['Script', '/blob/main/src/limpeza.py']],
+      html: tb(['Arquivo', 'O que o script fez', 'Antes → depois', 'Decisão'], [
+        ['usuarios', 'Removeu contas duplicadas da mesma pessoa', '64.948 → 64.829 contas', 'D-021'],
+        ['usuarios', 'Reescreveu as cidades na grafia oficial', '13.601 cidades reescritas → 13 cidades', 'D-017'],
+        ['eventos_assinatura', 'Converteu horários para Brasília', '186.323 horários; 753 mudaram de mês', 'D-009'],
+        ['pagamentos', 'Removeu cobranças repetidas', '165.548 → 163.607 linhas', 'D-024'],
+        ['pagamentos', 'Transformou "R$ 34,90" em número', '19.750 valores', 'D-025'],
+        ['atividades', 'Juntou o mesmo treino do app e do relógio', '1.254.475 → 1.245.092 treinos', 'D-031'],
+        ['atividades', 'Recalculou distâncias impossíveis', '944 distâncias', 'D-033'],
+        ['atividades', 'Ajustou o fuso do Garmin', '207.954 horários', 'D-030'],
+        ['amizades / feed_posts', 'Tirou o que aconteceu depois do corte', '273 relações e 122 posts', 'D-039, D-043']]) +
+        `<p><b>Como sabemos que deu certo:</b> para cada decisão, o script compara o número que a decisão previa com o que obteve. O faturamento líquido de setembro (R$ 436.442) bate com o slide da Aula 2.</p>`,
+      prompts: [{ t: 'Para refazer a limpeza, peça à sua IA', txt: 'No projeto Vitaliza, atualize o projeto (git pull) e rode, com o Python do .venv, primeiro src\\limpeza.py e depois src\\base_integrada.py. Depois me mostre a tabela de saidas/limpeza_conferencia.md e diga se algum número ficou diferente do esperado. Não altere nada em dados/brutos/ e não faça commit.' }] },
+    'Base integrada': {
+      t: 'as 49 colunas, por grupo',
+      links: [['Descrição da base', '/blob/main/saidas/base_integrada.md'], ['Script', '/blob/main/src/base_integrada.py']],
+      html: tb(['Grupo', 'Exemplos de colunas', 'De onde vem'], [
+        ['Assinatura', 'plano, canal de cobrança, tempo de casa, saída anunciada, nº de renovações', 'assinaturas + eventos'],
+        ['Cadastro', 'canal de aquisição, sistema, estado, relógio conectado; idade e sexo só para controle', 'usuarios'],
+        ['Pagamentos', 'receita líquida total, recusas em 90 dias, retentativas, pagou o preço antigo', 'pagamentos'],
+        ['Onboarding', 'objetivo informado, nível, dias por semana', 'onboarding'],
+        ['Uso (jul–set)', 'treinos e minutos em 3 meses, dias desde o último treino, % ao ar livre', 'atividades + uso_mensal'],
+        ['Rede e posts', 'seguidores, seguindo, posts em 90 dias, curtidas', 'amizades + feed_posts'],
+        ['Suporte', 'chamados em 90 dias, chamado sem solução, chamados técnicos e de cobrança', 'tickets_suporte'],
+        ['Campanha e pesquisa', 'grupo na campanha de agosto, motivo de saída declarado', 'campanha + pesquisa']]) +
+        `<h5>Dois cuidados</h5><ul><li><b>"Saída anunciada"</b> quase garante a saída: por isso esse grupo foi para a regra à parte (D-052).</li><li><b>"Motivo de saída declarado"</b> só existe para quem já cancelou: é consequência, não causa. Não entra na previsão.</li></ul>`,
+      prompts: [{ t: 'Para olhar a base, peça à sua IA', txt: 'No projeto Vitaliza, abra dados/processados/base_assinantes_corte.parquet com o Python do .venv (se a pasta dados/processados estiver vazia, rode antes src\\limpeza.py e src\\base_integrada.py). Me mostre quantas linhas e colunas tem, 5 linhas de exemplo sem e-mail nem data de nascimento, e explique cada grupo de colunas com base em saidas/base_integrada.md.' }] },
+    'Dimensões novas': {
+      t: 'as 19 dimensões criadas: como cada uma é calculada e o que agrega',
+      links: [['O que aprendemos', '/blob/main/saidas/dimensoes_leitura.md'], ['Tabela completa', '/blob/main/saidas/dimensoes_novas.md'], ['Script', '/blob/main/src/dimensoes.py']],
+      html: `<p><b>Como testamos:</b> montamos a base como era em 31/05 e vimos quem saiu em junho e julho; repetimos em 31/07 para conferir. Cada dimensão foi medida sozinha em três grupos: todos, só mensais, e anuais que renovam na janela. A nota é o AUC (0,50 = sorteio; 1,00 = perfeito). A tabela mostra a melhor nota entre os grupos.</p>` +
+        tb(['Dimensão', 'Como é calculada', 'Melhor nota', 'Veredito'], [
+        ['Renova em 60 dias', 'A próxima cobrança cai nos próximos 60 dias?', '0,76 (todos)', V.f],
+        ['Dias até a renovação', 'Data da última cobrança + ciclo do plano − data do corte', '0,74 (todos)', V.f],
+        ['Semanas ativas (8 semanas)', 'Em quantas das últimas 8 semanas a pessoa treinou pelo menos uma vez', '0,69 (anuais)', V.m],
+        ['Afetado pelo reajuste', 'Mensal que pagava R$ 34,90 antes do aumento de março', '0,65 (todos)*', V.m],
+        ['Irregularidade (8 semanas)', 'Quanto os treinos variam de semana para semana (desvio ÷ média)', '0,60 (anuais)', V.m],
+        ['Falhas de GPS (90 dias)', 'Treinos em que o GPS falhou', '0,57 (mensais)', V.m],
+        ['Variação de treinos', 'Treinos nas últimas 4 semanas − nas 4 anteriores', '0,55 (anuais)', V.x],
+        ['Seguimentos recíprocos', 'Quantas pessoas a pessoa segue e é seguida de volta', '0,54', V.x],
+        ['Queda forte', 'Treinava 4+ e caiu pela metade nas últimas 4 semanas', '0,53**', V.x],
+        ['Sessões sem treino', 'Aberturas do app no mês menos dias com treino', '0,53', V.x],
+        ['Recusa em 30 dias', 'Cartão recusado no último mês', '0,52', V.x],
+        ['Chamado sem solução', 'Tem chamado aberto na data do corte', '0,52', V.x],
+        ['Amigos que saíram / algum amigo saiu', 'Quantas pessoas que ela segue saíram nos 60 dias antes', '0,52', V.x],
+        ['Entrou com cupom / cupom renova em 60 dias', 'Pagou R$ 239,90 (preço de cupom) no anual', '0,52', V.x],
+        ['Treinos nos primeiros 14 dias', 'Para quem é novo: treinos nas duas primeiras semanas', '0,51', V.x],
+        ['Reclamou do app (90 dias)', 'Chamado com "bug", "trava", "atualização" ou "GPS"', '0,51', V.x],
+        ['Parceiro de treino saiu', 'Alguém com quem treinou junto não está mais ativo', '0,50', V.x]]) +
+        `<p style="color:var(--muted);font-size:13px">* Engana: quem não foi afetado são os mais novos, e os mais novos saem mais. Comparando o mesmo tempo de casa, o efeito some. ** Sozinha é fraca, mas aparece 3,4× mais em quem desligou nas semanas anteriores (etapa Motivos): serve como gatilho, não como retrato.</p>
+        <h5>O que isso agrega</h5><ul><li><b>Saber quando a pessoa renova</b> é a maior contribuição: um anual que só renova daqui a meses não tem como sair na janela, e o contato com ele seria desperdício.</li><li><b>Para os anuais, o uso recente pesa</b> (semanas ativas, irregularidade): a renovação é o momento de decidir.</li><li><b>Ideias que não se confirmaram também são resultado:</b> "contágio" de amigos, suporte e cartão recusado não separam quem sai. A hipótese de que "o suporte piorou e isso explica o churn" perdeu força.</li></ul>`,
+      prompts: [{ t: 'Para entender uma dimensão, peça à sua IA', txt: 'No projeto Vitaliza, leia saidas/dimensoes_leitura.md e src/dimensoes.py. Me explique, em português simples, como a dimensão "semanas_ativas_8s" é calculada, com o exemplo de uma pessoa inventada, e por que ela separa melhor os anuais do que os mensais. Não altere nenhum arquivo.' }] },
+    'Motivos': {
+      t: 'o método dos gêmeos, os perfis e a mensagem para cada um',
+      links: [['O que aprendemos', '/blob/main/saidas/motivos_leitura.md'], ['Tabelas completas', '/blob/main/saidas/motivos_desligamento.md'], ['Script', '/blob/main/src/motivos.py']],
+      html: `<h5>O método, em 4 passos</h5><ol><li>Pegamos as 6.624 pessoas que, pagando, desligaram a renovação ou cancelaram pelo site entre março e setembro de 2026.</li><li>Para cada uma, escolhemos um "gêmeo": mesmo plano, mesmo tempo de casa, ativo no mesmo dia, mas que não desligou.</li><li>Comparamos os dois nas 8 semanas anteriores: o que é comum a todo assinante aparece igual nos dois; o que aparece só em quem desliga é o sinal.</li><li>Conferimos com a pesquisa de saída (só quem cancelou pelo site responde).</li></ol>` +
+        `<h5>Treinos por semana antes de desligar</h5>` + tb(['Semana antes', '8ª', '6ª', '4ª', '3ª', '2ª', 'última'], [['Quem desligou', '2,4', '2,5', '2,2', '2,0', '1,6', '<b>1,0</b>'], ['Gêmeo', '2,2', '2,3', '2,3', '2,4', '2,5', '2,5']]) +
+        `<h5>Perfis e a mensagem que faz sentido</h5>` + tb(['Perfil', 'Como identificamos', '% de quem desligou', 'Mensagem'], [
+        ['Parou de treinar', 'Zerou ou cortou os treinos pela metade', '36,5%', 'Desafio ou plano personalizado, na janela da queda'],
+        ['Objetivo cumprido', 'Post de prova concluída no mês anterior', '9,1%', 'A próxima meta (outra prova), não desconto'],
+        ['Problema técnico', 'Chamado técnico ou GPS falhando', '6,4%', 'Contato do suporte'],
+        ['Cobrança', 'Cartão recusado ou chamado de cobrança', '0,9%', 'Ajuda para trocar a forma de pagamento'],
+        ['Sem sinal claro', 'Nenhum dos anteriores', '47,1%', 'A descobrir com a leitura de textos por IA']]) +
+        `<h5>Por que mudamos o alvo do modelo (D-053)</h5>` + tb(['Corte', 'Grupo', '"Saiu em 60 dias"', '"Desligou em 60 dias"'], [['31/05', 'anuais', '1,2%', '<b>11,5%</b>'], ['31/07', 'anuais', '1,6%', '<b>10,3%</b>'], ['31/05', 'mensais', '16,6%', '18,5%']]) +
+        `<p>Com o alvo antigo, quase nenhum anual "sai" em 60 dias e o modelo os ignoraria. Com o novo, 1 em cada 10 anuais entra no radar meses antes de sair, enquanto ainda dá para agir.</p>`,
+      prompts: [{ t: 'Para entender, peça à sua IA', txt: 'No projeto Vitaliza, leia saidas/motivos_leitura.md e me explique o método dos "gêmeos" com o exemplo inventado de duas pessoas. Depois diga quais perfis de motivo existem e que mensagem de retenção faz sentido para cada um. Não altere nenhum arquivo.' }] },
+    'Raio-x da base': {
+      t: 'cada técnica da aula e onde ela aparece',
+      links: [['Ver a seção Raio-x', '#raiox'], ['Script', '/blob/main/src/raio_x.py']],
+      html: tb(['Técnica', 'Aula', 'Exame', 'Pergunta que responde'], [
+        ['Granularidade e funil', 'Aula 2', '1', 'De quem estamos falando?'],
+        ['Cinco números, média × mediana, CV', 'Aula 2', '2', 'Como é o assinante típico?'],
+        ['Regra de 1,5 × IQR', 'Aula 2', '2', 'Quantos estão muito fora do padrão?'],
+        ['Histograma e assimetria', 'Aula 2', '3', 'Qual é o formato de cada variável?'],
+        ['Tabela de frequência', 'Aula 2', '4', 'De que é feita a base?'],
+        ['Comparação de grupos', 'Aula 2', '5', 'O que dizem bate com o que fazem?'],
+        ['Correlação de Pearson e dispersão', 'Aula 2', '6', 'O que anda junto?'],
+        ['Taxa por grupo com n, terceira variável', 'Aulas 2 e 3', '7', 'A média esconde grupos?'],
+        ['Três lentes; separar × cobrir', 'Aulas 3 e 4', '8', 'O que explica a saída?']]),
+      prompts: [{ t: 'Para atualizar e explorar, peça à sua IA', txt: 'No projeto Vitaliza, rode .venv\\Scripts\\python.exe src\\painel_dados.py para atualizar o painel e abra docs/painel.html no navegador. Depois leia src/raio_x.py e me explique, em português simples, como foi calculado o exame 7 (a média esconde grupos). Não faça commit.' }] },
+    'Clusters e personas': {
+      t: 'as variáveis candidatas e os critérios para aceitar um grupo',
+      html: tb(['Variável candidata', 'Lente', 'Por que entra'], [
+        ['Plano e tempo de casa (em faixas)', 'Contrato', 'Primeiro corte da base no raio-x'],
+        ['Dias até a renovação', 'Contrato', 'A dimensão nova mais forte'],
+        ['Treinos nas últimas 4 semanas', 'Comportamento', 'Representa o bloco de engajamento (as outras 3 medidas dizem o mesmo)'],
+        ['Variação ou queda do treino', 'Comportamento', 'O alarme é a queda, não o nível'],
+        ['Dias sem treinar (em faixas)', 'Comportamento', 'Cauda longa: identifica os "dormentes"'],
+        ['% de treinos em vídeo', 'Comportamento', 'Informação nova, quase não anda com o resto'],
+        ['Objetivo do cadastro', 'Necessidade', 'Separa muito no mensal'],
+        ['Distância entre prometido e feito', 'Necessidade', 'Hipótese nova do raio-x']]) +
+        `<h5>Os 5 critérios da Aula 3 para aceitar um segmento</h5><ul><li><b>Mensurável:</b> dá para contar quem está nele.</li><li><b>Substancial:</b> grande o bastante para valer uma ação.</li><li><b>Diferenciável:</b> a saída e o comportamento são diferentes dos outros grupos.</li><li><b>Acessível:</b> conseguimos falar com ele (app, e-mail, push).</li><li><b>Acionável:</b> existe uma ação clara para ele.</li></ul>
+        <h5>O cartão de persona (Aula 4)</h5><p>Contexto → conflito (por que pode sair) → resolução → evidência (os números do grupo) → decisão (gatilho, ação, hipótese a testar) → limite (o que os dados não dizem).</p>` },
+  };
+  const promptsAll = [];
+  const promptBox = p => { promptsAll.push(p); return `<div class="prompt"><div class="ph"><b>${p.t}</b><button class="btn copy" type="button" data-p="${promptsAll.length - 1}">Copiar</button></div><pre data-p="${promptsAll.length - 1}"></pre></div>`; };
+  const deepHtml = f => {
+    const x = DEEP[f.t]; if (!x) return '';
+    const links = x.links ? `<p class="links"><span>Arquivos</span>${x.links.map(([l, p]) => p.startsWith('#') ? `<a href="${p}">${l}</a>` : `<a href="${GH}${p}" target="_blank" rel="noopener">${l} ↗</a>`).join('')}</p>` : '';
+    return `<details class="deep"><summary>Aprofundar: ${x.t}</summary><div class="deep-body">${links}${x.html || ''}${(x.prompts || []).map(promptBox).join('')}${x.fim || ''}</div></details>`;
+  };
   const txt = { done: 'concluído', now: 'em andamento', todo: 'a fazer' };
   const lista = (a, tag = 'ul') => a && a.length ? `<${tag}>${a.map(x => `<li>${x}</li>`).join('')}</${tag}>` : '';
   const how = f => {
@@ -547,10 +859,21 @@ const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).
       </div>
       <div class="side">${f.ex ? `<div class="ex"><b>Exemplo concreto</b>${f.ex}</div>` : ''}${f.pq ? `<div class="why"><b>Por que importa</b>${f.pq}</div>` : ''}</div>
       ${f.tec ? `<p class="tech"><b>Detalhe técnico</b> · ${f.tec}</p>` : ''}
+      ${deepHtml(f)}
     </div></details>`;
   };
   document.getElementById('course').innerHTML = fases.map((f, i) =>
     `<li class="${i === fases.length - 1 ? 'finish' : ''}"><div class="km">km<b class="num">${String(i + 1).padStart(2, '0')}</b></div><div class="what"><h3>${f.t}</h3><p>${f.d}</p></div><span class="pill ${f.st}">${txt[f.st]}</span>${how(f)}</li>`).join('');
+  document.querySelectorAll('.prompt pre[data-p]').forEach(pre => {
+    const p = promptsAll[+pre.dataset.p];
+    pre.textContent = p.from ? (document.getElementById(p.from)?.textContent || '').trim() : p.txt;
+  });
+  document.getElementById('course').addEventListener('click', e => {
+    const b = e.target.closest('button.copy'); if (!b) return;
+    const txt = b.closest('.prompt').querySelector('pre').textContent;
+    const ok = () => { b.textContent = 'Copiado ✓'; setTimeout(() => b.textContent = 'Copiar', 1800); };
+    try { navigator.clipboard.writeText(txt).then(ok, () => { b.textContent = 'Selecione e copie'; }); } catch (err) { b.textContent = 'Selecione e copie'; }
+  });
   const bt = document.getElementById('toggleHow');
   bt.addEventListener('click', () => {
     const ds = [...document.querySelectorAll('#course details.how')];
