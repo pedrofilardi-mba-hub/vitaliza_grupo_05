@@ -700,8 +700,8 @@ details.deep[open]>summary::before{content:"－"}
 
 <section id="proximo">
   <div class="label">Próximo passo · km 10 · fechar a entrega de 15/11</div>
-  <h2>Personas definidas: agora relatório, notebook, deck e Drive</h2>
-  <p class="lead"><b>Onde estamos:</b> a segmentação está escolhida (D-054) e as 4 personas estão definidas (aba <a href="#personas">Personas</a>, D-055). <b>O objetivo agora:</b> fechar as peças da entrega de <b>15/11</b>, que é individual: cada integrante envia na Adalove o link de uma pasta pública do Drive.</p>
+  <h2>Peças prontas: falta revisar e montar a pasta no Drive</h2>
+  <p class="lead"><b>Onde estamos:</b> a segmentação está escolhida (D-054) e as 4 personas estão definidas (D-055). O relatório, o notebook e o mini deck estão prontos (links abaixo). <b>O objetivo agora:</b> revisar e montar a pasta da entrega de <b>15/11</b>, que é individual: cada integrante envia na Adalove o link de uma pasta pública do Drive.</p>
   <div class="flow">
     <div class="in"><h4>1 · Entra</h4><ul><li>As abas <a href="#segmento">Segmentação escolhida</a> e <a href="#personas">Personas</a></li><li><a href="https://github.com/pedrofilardi-mba-hub/vitaliza_grupo_05/blob/main/docs/personas.md" target="_blank" rel="noopener">docs/personas.md ↗</a> e <a href="https://github.com/pedrofilardi-mba-hub/vitaliza_grupo_05/blob/main/saidas/clusters.md" target="_blank" rel="noopener">saidas/clusters.md ↗</a></li><li>Os gráficos do raio-x e dos motivos</li></ul></div>
     <div class="do"><h4>2 · Fazemos</h4><ol><li>Revisar o texto das personas</li><li>Escrever o relatório executivo</li><li>Montar o notebook de EDA</li><li>Fazer o mini deck</li><li>Revisar e montar a pasta no Drive</li></ol></div>
@@ -719,8 +719,8 @@ details.deep[open]>summary::before{content:"－"}
   </div>
 
   <div class="rx-step">
-    <h3>Os prompts para a IA</h3>
-    <p class="lead">Funcionam no Claude Code, Codex ou Cursor, com o projeto aberto. Cada um gera uma peça; troque o que está entre <code>&lt;&lt; &gt;&gt;</code>.</p>
+    <h3>Os prompts para a IA (para refazer as peças)</h3>
+    <p class="lead">As peças já foram geradas. Estes prompts servem para refazer ou ajustar cada uma no Claude Code, Codex ou Cursor; troque o que está entre <code>&lt;&lt; &gt;&gt;</code>.</p>
     <div class="prompt"><div class="ph"><b>Relatório de segmentação (negócios)</b><button class="btn copy" type="button">Copiar</button></div><pre id="kmPrompt"></pre></div>
     <div class="prompt"><div class="ph"><b>Notebook de EDA (tecnologia)</b><button class="btn copy" type="button">Copiar</button></div><pre id="kmPrompt2"></pre></div>
   </div>
@@ -1034,13 +1034,13 @@ const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).
       ex: '% ao ar livre vai de 0 a 1 e minutos por treino chega a 515. Sem colocar na mesma escala, a variável com números maiores decide sozinha quem fica em cada grupo.',
       pq: 'É o que o professor pediu e o coração da entrega de 15/11.',
       tec: 'scikit-learn: <code>StandardScaler</code>, <code>KMeans</code>, <code>silhouette_score</code> · variáveis com cauda longa entram em log ou faixas' },
-    { t: 'EDA e mini deck', st: 'todo', d: 'Notebook com os gráficos + 3 a 5 slides (tecnologia, semana 5)',
+    { t: 'EDA e mini deck', st: 'done', d: 'Notebook com os gráficos + 3 a 5 slides (tecnologia, semana 5)',
       frase: 'Vamos organizar a exploração num caderno que qualquer pessoa consegue rodar e resumir o que importa em poucos slides.',
       entrou: ['Os scripts e gráficos já feitos (raio-x, dimensões, motivos, clusters)'],
       fez: ['Montar um notebook que lê a base, mostra cada gráfico e explica o que ele diz', 'Escolher os 5 achados mais fortes', 'Fazer de 3 a 5 slides para a trilha de tecnologia'],
       saiu: ['Notebook de EDA', 'Mini deck de 3 a 5 slides'],
       pq: 'É a prova de que os números vêm do código e podem ser refeitos.' },
-    { t: 'Relatório de segmentação', st: 'todo', d: 'Cartões de persona, drivers, prioridade, limites (negócios, semana 5)',
+    { t: 'Relatório de segmentação', st: 'done', d: 'Cartões de persona, drivers, prioridade, limites (negócios, semana 5)',
       frase: 'Vamos contar para a diretoria da Vitaliza quem são os grupos de clientes, por que cada um sai e onde agir primeiro.',
       entrou: ['Os segmentos e as personas', 'Os gráficos da EDA'],
       fez: ['Escrever um cartão por persona', 'Listar o que leva cada grupo a sair', 'Separar em "agir já" e "monitorar"', 'Deixar claros os limites da análise'],
@@ -1340,12 +1340,12 @@ const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).
   document.getElementById('kmDecide').innerHTML = renderQ(km);
   document.getElementById('kmDecideBox').hidden = km.length === 0;
   const passos = [
-    ['Cartões de persona (negócios) · prontos', 'Os 4 cartões estão na aba "Personas" e em docs/personas.md (D-055 aceita). Falta só revisar o texto.', 'Ajustar a citação e a ação de cada persona ao tom que o grupo quer.'],
-    ['Prioridade "agir já × monitorar" (negócios) · rascunho pronto', 'Está no fim da aba "Personas". Revisar a ordem e o canal de cada uma.', 'Novato e atleta: agir já. Corredor de rua: monitorar. Treino em casa: proteger.'],
-    ['Customer Segmentation Report (negócios)', 'Relatório executivo: quem são os clientes, as 4 personas, onde agir primeiro e os limites. Use o primeiro prompt abaixo.', 'Uma página de resumo, uma por persona, uma de prioridade e uma de limites.'],
-    ['Notebook de EDA (tecnologia)', 'Um caderno que roda os scripts e refaz os gráficos do raio-x, dos motivos e da segmentação, com o texto de cada um. Use o segundo prompt.', 'notebooks/eda_segmentacao.ipynb.'],
-    ['Mini deck de 3 a 5 slides (tecnologia)', 'Os achados mais fortes: a base, rua × casa, os 5 grupos, a saída por grupo e as personas.', 'O gráfico "% da base, da receita e das saídas" vira o slide principal.'],
-    ['Pasta no Drive e link na Adalove', 'Uma pasta pública com tudo; cada integrante envia o link (a entrega é individual).', 'Revisão final em 14/11; envio em 15/11.'],
+    ['Cartões de persona (negócios) · prontos', 'Na aba "Personas" e em docs/personas.md (D-055). Revisar o tom do texto.', 'Ajustar a citação e a ação de cada persona.'],
+    ['Prioridade "agir já × monitorar" (negócios) · pronta', 'No fim da aba "Personas" e no relatório. Revisar a ordem e o canal de cada uma.', 'Novato e atleta: agir já. Corredor de rua: monitorar. Treino em casa: proteger.'],
+    ['Relatório de segmentação (negócios) · pronto', 'Documento do Claude Docs com resumo, base, método, os 5 grupos (com gráfico), as 4 personas, prioridade e limites: <a href="https://claude.ai/artifact/XkkguCSrVKyoa9qFLAEeoX" target="_blank" rel="noopener">abrir o relatório ↗</a>. Para o Drive: exportar em PDF ou Word pelo menu do documento.', 'Compartilhar o link com o grupo antes; hoje só o Pedro abre.'],
+    ['Notebook de EDA (tecnologia) · pronto', 'Executado do início ao fim, sem erros: 7 gráficos, cada um com o que vamos ver e o que diz para o negócio: <a href="https://github.com/pedrofilardi-mba-hub/vitaliza_grupo_05/blob/main/notebooks/eda_segmentacao.ipynb" target="_blank" rel="noopener">notebooks/eda_segmentacao.ipynb ↗</a>. Gerado por src/notebook_eda.py.', 'O GitHub mostra o notebook com os gráficos; para o Drive, baixar o .ipynb.'],
+    ['Mini deck (tecnologia) · pronto', '5 slides: capa, como segmentamos, os 5 grupos, as 4 personas e a prioridade: <a href="https://claude.ai/artifact/ESnS8cpaKvmLt5epXCbqQB" target="_blank" rel="noopener">abrir o deck ↗</a>. Baixa como PowerPoint ou PDF.', 'Compartilhar o link com o grupo antes; hoje só o Pedro abre.'],
+    ['Pasta no Drive e link na Adalove · falta', 'Criar uma pasta pública no Drive com o relatório (PDF), o deck (PPTX ou PDF) e o notebook (.ipynb), mais o link do GitHub. Cada integrante envia o link da pasta na Adalove (a entrega é individual).', 'Revisão final em 14/11; envio em 15/11.'],
   ];
   document.getElementById('kmSteps').innerHTML = passos.map(([t, d, e]) => `<li><b>${t}.</b> ${d}<span class="eg">Exemplo: ${e}</span></li>`).join('');
   document.getElementById('kmPrompt').textContent = (document.getElementById('pKmeans')?.textContent || '').trim();
@@ -1377,9 +1377,10 @@ const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).
     li('done', 'Padrões e correlações com o churn (dimensões, motivos)'),
     li('done', 'Segmentação sustentada por números (K-means, D-054)'),
     li('done', '3 a 4 cartões de persona com drivers de churn (aba Personas, D-055)'),
-    li('now', 'Prioridade preliminar: agir já × monitorar (rascunho na aba Personas)'),
-    li('now', 'Gráficos da EDA (raio-x pronto no painel) e mini deck'),
-    li('todo', 'Relatório executivo com limitações'),
+    li('done', 'Prioridade preliminar: agir já × monitorar (aba Personas e relatório)'),
+    li('done', 'Notebook de EDA (notebooks/eda_segmentacao.ipynb) e mini deck de 5 slides'),
+    li('done', 'Relatório de segmentação com limitações'),
+    li('todo', 'Pasta pública no Drive e link de cada integrante na Adalove'),
   ].join('');
   document.getElementById('e10').innerHTML = [
     li('todo', 'Modelo de churn com métricas e interpretação (D-053 define o alvo)'),
