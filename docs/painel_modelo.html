@@ -110,6 +110,25 @@ td code{font-family:var(--mono);font-size:12.5px;background:var(--accent-soft);p
 .opts span{font-size:13px;background:var(--accent-soft);color:var(--ink);padding:3px 9px;border-radius:6px}
 .opts span.rec{background:var(--ok-soft);color:var(--ok);font-weight:600}
 
+.decide .q-head{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:baseline;justify-content:space-between}
+.decide .when{font-family:var(--mono);font-size:11.5px;color:var(--warn);background:var(--warn-soft);padding:2px 9px;border-radius:999px;white-space:nowrap}
+.decide p.ctx{color:var(--ink);font-size:15.5px}
+.decide p.qex{background:var(--medal-soft);border-radius:8px;padding:9px 12px;color:var(--ink);font-size:14.5px}
+.opt-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:10px}
+.opt{border:1px solid var(--line);border-radius:10px;padding:11px 13px;display:grid;gap:5px;align-content:start;background:var(--bg)}
+.opt.rec{border:2px solid var(--ok);background:var(--ok-soft)}
+.opt h4{margin:0;font-size:15.5px;font-family:var(--body);font-weight:700}
+.opt .badge{font-family:var(--mono);font-size:10.5px;font-weight:600;color:var(--ok);border:1px solid var(--ok);border-radius:999px;padding:0 6px;vertical-align:2px}
+.decide .opt p{color:var(--ink);font-size:14px}
+.decide .opt p.pc{color:var(--muted);font-size:13.5px}
+.opt .p{color:var(--ok);font-weight:700}
+.opt .c{color:var(--risk);font-weight:700}
+.decide p.sug{border-left:4px solid var(--ok);padding:4px 0 4px 12px;color:var(--ink);font-size:15px}
+.decide p.after{font-size:13.5px}
+.steps{margin:0;padding-left:22px;display:grid;gap:10px}
+.steps li{font-size:15px}
+.steps li::marker{color:var(--accent);font-weight:700;font-family:var(--display)}
+.steps .eg{display:block;color:var(--muted);font-size:13.5px;margin-top:2px}
 .two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:18px}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px;display:grid;gap:10px;align-content:start;min-width:0}
 .card ul{margin:0;padding-left:20px;display:grid;gap:6px}
@@ -231,7 +250,7 @@ details.deep[open]>summary::before{content:"－"}
 </header>
 
 <nav class="jump" aria-label="Seções">
-  <a href="#resumo">Resumo</a><a href="#percurso">Percurso</a><a href="#reuniao">Para decidir</a><a href="#raiox">Raio-x da base</a><a href="#dados">O que os dados mostram</a>
+  <a href="#resumo">Resumo</a><a href="#percurso">Percurso</a><a href="#proximo">Próximo passo</a><a href="#reuniao">Para decidir</a><a href="#raiox">Raio-x da base</a><a href="#dados">Churn: quem sai e por quê</a>
   <a href="#achados">Achados</a><a href="#decisoes">Decisões</a><a href="#qualidade">Qualidade</a><a href="#entregas">Entregas</a><a href="#limites">Limites</a>
 </nav>
 
@@ -253,9 +272,79 @@ details.deep[open]>summary::before{content:"－"}
   <ol class="course" id="course"></ol>
 </section>
 
+<section id="proximo">
+  <div class="label">Próximo passo · km 09 · segmentação com K-means</div>
+  <h2>Agrupar a base e transformar os grupos em personas</h2>
+  <p class="lead"><b>O objetivo:</b> descobrir de 3 a 6 grupos de assinantes parecidos entre si, sem contar ao algoritmo quem saiu, e só depois medir quanto cada grupo sai e quanto vale. Os grupos que passarem nos critérios da Aula 3 viram as 3 a 4 personas da entrega de <b>15/11</b> (relatório de segmentação e EDA).</p>
+  <div class="flow">
+    <div class="in"><h4>1 · Entra</h4><ul><li>A base de 31/05/2026, em que já sabemos quem desligou depois (para formar os grupos)</li><li>A base de 30/09/2026 (para aplicar os grupos hoje)</li><li>As variáveis escolhidas a partir do raio-x</li><li>As decisões pendentes abaixo</li></ul></div>
+    <div class="do"><h4>2 · Fazemos</h4><ol><li>Escolher e preparar as variáveis</li><li>Rodar o K-means e escolher o número de grupos</li><li>Descrever cada grupo</li><li>Medir a saída e o valor de cada grupo</li><li>Aplicar a 30/09 e validar</li></ol></div>
+    <div class="out"><h4>3 · Sai</h4><ul><li><code>src/clusters.py</code> e <code>saidas/clusters.md</code></li><li>Uma tabela: grupo × tamanho × saída × receita</li><li>Uma decisão nova no DECISOES.md</li><li>Os candidatos a persona, com os números</li></ul></div>
+  </div>
+
+  <div class="rx-step">
+    <h3>O passo a passo, explicado</h3>
+    <p class="lead" style="font-size:14px">Os números dos exemplos são ilustrativos: os de verdade saem quando rodarmos.</p>
+    <ol class="steps" id="kmSteps"></ol>
+  </div>
+
+  <div class="rx-step">
+    <h3>O que está pendente decidir</h3>
+    <p class="lead">A escolha da data (31/05 → 30/09) está em "Para decidir". Estas quatro são do K-means em si. Mesmo formato: o que está em jogo, opções com ✔ e ✖, e a nossa sugestão.</p>
+    <ol class="decide" id="kmDecide"></ol>
+  </div>
+
+  <div class="rx-step">
+    <h3>Exemplos de combinações possíveis</h3>
+    <p class="lead">As decisões se combinam. Três caminhos realistas, para o grupo comparar:</p>
+    <div class="tbl"><table><thead><tr><th></th><th>Cenário A · sugerido</th><th>Cenário B · mais rápido</th><th>Cenário C · mais fino</th></tr></thead><tbody>
+      <tr><td><b>Quem entra</b></td><td>Toda a base ativa</td><td>Toda a base ativa</td><td>Só quem não anunciou a saída</td></tr>
+      <tr><td><b>Datas</b></td><td>Forma em 31/05, aplica em 30/09</td><td>Só 30/09</td><td>Forma em 31/05, aplica em 30/09</td></tr>
+      <tr><td><b>Variáveis</b></td><td>8, enxutas</td><td>6, sem o objetivo</td><td>10 a 12</td></tr>
+      <tr><td><b>Objetivo do cadastro</b></td><td>Entra, com "não informado"</td><td>Fora</td><td>Entra</td></tr>
+      <tr><td><b>Mensal e anual</b></td><td>Juntos (o plano é uma variável)</td><td>Juntos</td><td>Um K-means para cada</td></tr>
+      <tr><td><b>Nº de grupos</b></td><td>Testar de 3 a 8</td><td>Fixar 4</td><td>Testar de 3 a 6 em cada plano</td></tr>
+      <tr><td><b>Ganha</b></td><td>Saída por grupo com número real e grupos explicáveis</td><td>Pronto em uma tarde</td><td>Grupos mais precisos</td></tr>
+      <tr><td><b>Perde</b></td><td>Um passo a mais (as duas datas)</td><td>Sem a taxa de saída por grupo, que é a evidência do relatório</td><td>O dobro do trabalho e foge do "base toda" do professor</td></tr>
+    </tbody></table></div>
+  </div>
+
+  <div class="rx-step">
+    <h3>O prompt para a IA executar</h3>
+    <p class="lead">Funciona no Claude Code, Codex ou Cursor, com o projeto aberto. Antes de colar, troque o que está entre <code>&lt;&lt; &gt;&gt;</code> pelo que o grupo decidir. A tabela mostra o que preencher e onde achar.</p>
+    <div class="tbl"><table><thead><tr><th>O que preencher</th><th>Onde achar</th><th>Exemplo (cenário A)</th></tr></thead><tbody>
+      <tr><td>Data para formar os grupos</td><td>"Para decidir", pergunta 2</td><td>31/05/2026</td></tr>
+      <tr><td>Data para aplicar</td><td>Data de corte do projeto</td><td>30/09/2026</td></tr>
+      <tr><td>Quem entra</td><td>Decisão 1 abaixo</td><td>Todos os assinantes ativos</td></tr>
+      <tr><td>Variáveis</td><td>Decisão 2 abaixo e Percurso → Clusters → Aprofundar</td><td>plano, tempo de casa, dias até a renovação, treinos em 4 semanas, variação de treinos, dias sem treinar, % vídeo, objetivo</td></tr>
+      <tr><td>Objetivo do cadastro</td><td>Decisão 3 abaixo</td><td>Entra, com a categoria "não informado"</td></tr>
+      <tr><td>Número de grupos a testar</td><td>Decisão 4 abaixo</td><td>de 3 a 8</td></tr>
+    </tbody></table></div>
+    <div class="prompt"><div class="ph"><b>Prompt do K-means (copie inteiro)</b><button class="btn copy" type="button">Copiar</button></div><pre id="kmPrompt"></pre></div>
+    <p class="cap" style="color:var(--muted);font-size:14px">O prompt já traz as regras fixas: não mexer em <code>dados/brutos/</code>, idade e sexo fora, o churn só entra depois de formar os grupos e nada de commit sem pedir.</p>
+  </div>
+
+  <div class="two">
+    <div class="card"><h3>Como saber se deu certo</h3><ul>
+      <li><b>Cada grupo tem pelo menos 5% da base.</b> Grupo muito pequeno não justifica uma ação própria.</li>
+      <li><b>A saída muda bastante entre os grupos</b>, por exemplo de 8% a 25%. Se todos saem perto de 15%, os grupos não ajudam a decidir.</li>
+      <li><b>Dá para descrever cada grupo em uma frase</b> sem olhar a tabela.</li>
+      <li><b>Os grupos têm tamanho parecido em 31/05 e em 30/09.</b> Se mudarem muito, a régua não é estável.</li>
+      <li><b>Os candidatos a persona aparecem</b> (o mensal sem rotina, quem bateu a meta, o anual esfriando, o cuidador da saúde).</li>
+    </ul></div>
+    <div class="card"><h3>Cuidados da Aula 3</h3><ul>
+      <li><b>O algoritmo sempre acha grupos</b>, mesmo onde não existem. Só vale o grupo que muda a decisão.</li>
+      <li><b>Escala:</b> sem padronizar, a variável com números maiores (minutos chegam a 11 mil) manda sozinha.</li>
+      <li><b>Colunas 0/1 pesam demais:</b> o objetivo com 8 categorias vira 8 colunas e pode dominar a distância.</li>
+      <li><b>LGPD:</b> idade e sexo só descrevem os grupos depois; nunca entram no cálculo nem disparam ação.</li>
+    </ul></div>
+  </div>
+</section>
+
 <section id="reuniao">
   <div class="label">Para decidir na reunião do grupo</div>
   <h2>O que precisa da conversa de hoje</h2>
+  <p class="lead">Cada pergunta explica o que está em jogo, mostra as opções com o lado bom (✔) e o cuidado (✖) de cada uma, e traz a nossa sugestão com o motivo. A opção com borda verde é a sugerida, mas a decisão é do grupo.</p>
   <ol class="decide" id="decide"></ol>
 </section>
 
@@ -263,6 +352,7 @@ details.deep[open]>summary::before{content:"－"}
   <div class="label">Raio-x da base de clientes · análise exploratória antes do K-means</div>
   <h2>Quem são os nossos assinantes, em 8 exames</h2>
   <p class="lead">Antes de agrupar, olhamos a base com as técnicas da Aula 2 (granularidade, centro e dispersão, distribuição, extremos, correlação, taxa com o denominador certo) e da Aula 3 (a média esconde grupos, as três lentes). A fotografia é a <b>base ativa de 30/09/2026</b>. Nos exames de saída usamos o <b>gabarito de 31/05</b>: quem desligou a renovação ou cancelou pelo site nos 60 dias seguintes (D-053), sem quem já tinha anunciado a saída (D-052). <span id="rxChurnBase"></span></p>
+  <p class="lead"><b>Diferença para a seção "Churn: quem sai e por quê":</b> aqui o foco é conhecer a base inteira, como um exame geral. A saída aparece só nos exames 7 e 8, como ponte para o K-means. Lá embaixo, o foco é só quem sai.</p>
   <p class="lead">Cada exame tem o gráfico, como lê-lo e um quadro verde <b>"Na ótica do negócio"</b>: o que aquilo quer dizer para a Vitaliza e o que dá para fazer. Com pressa? Vá direto ao resumo.</p>
   <nav class="rx-index" aria-label="Exames do raio-x"><a class="sum" href="#rxResumo">★ Resumo em 7 pontos</a><a href="#rx1">1 · Funil</a><a href="#rx2">2 · Assinante típico</a><a href="#rx3">3 · Distribuições</a><a href="#rx4">4 · Composição</a><a href="#rx5">5 · Promessa × prática</a><a href="#rx6">6 · O que anda junto</a><a href="#rx7">7 · A média esconde</a><a href="#rx8">8 · O que explica a saída</a></nav>
 
@@ -408,8 +498,9 @@ details.deep[open]>summary::before{content:"－"}
 </section>
 
 <section id="dados">
-  <div class="label">O que os dados mostram</div>
+  <div class="label">Churn: quem sai e por quê</div>
   <h2>Os números por trás das decisões</h2>
+  <p class="lead"><b>Diferença para o raio-x:</b> o raio-x descreve <i>todos</i> os assinantes (quem são, como se distribuem, o que anda junto). Esta seção olha só para a <i>saída</i>: a evolução do churn, o que avisa antes de alguém desligar a renovação, os perfis de quem sai e quais dimensões separam quem sai de quem fica. São os resultados das etapas Dimensões novas e Motivos do percurso, mais as conferências com o enunciado.</p>
   <div class="charts">
     <div class="chart wide"><h3>Churn mensal: a subida de 2026</h3><p class="cap">Perdas no mês ÷ assinantes pagantes no início do mês. Linhas tracejadas: média de cada ano. Bate com o enunciado (5,6% em 2025; 6,6% em 2026; pico de 8,1% em abril/2026).</p><div class="box"><canvas id="cChurn" aria-label="Gráfico de churn mensal"></canvas></div><p class="src">Fonte: eventos_assinatura (horário de Brasília, D-009) + assinaturas · src/painel_dados.py</p></div>
     <div class="chart"><h3>A decisão dá aviso</h3><p class="cap">Treinos por semana nas 8 semanas antes de desligar a renovação, contra "gêmeos" (mesmo plano e tempo de casa) que não desligaram.</p><div class="box"><canvas id="cTraj"></canvas></div><p class="src" id="srcTraj"></p></div>
@@ -505,6 +596,35 @@ details.deep[open]>summary::before{content:"－"}
 </footer>
 </div>
 
+<script type="text/plain" id="pKmeans">
+Você vai me ajudar a fazer a segmentação de clientes (K-means) do projeto Vitaliza, na pasta vitaliza_grupo_05. Explique cada passo em português simples, em uma ou duas frases, e peça minha confirmação antes de gravar arquivos.
+
+Antes de começar:
+- Leia o AGENTS.md, o DECISOES.md (em especial D-052 e D-053), saidas/dimensoes_leitura.md, saidas/motivos_leitura.md e src/raio_x.py.
+- Atualize o projeto (git pull). Se a pasta dados/processados estiver vazia, rode com o Python do .venv, nesta ordem: src\limpeza.py, src\base_integrada.py e src\dimensoes.py.
+- Nunca altere nada em dados/brutos/. Não use e-mail nem data de nascimento.
+
+Decisões do grupo:
+- Data para formar os grupos: <<ex.: 31/05/2026, arquivo dados/processados/base_corte_2026-05-31.parquet>>
+- Data para aplicar os grupos: <<ex.: 30/09/2026, arquivo dados/processados/base_corte_2026-09-30.parquet>>
+- Quem entra: <<ex.: todos os assinantes ativos; "saida_anunciada" não é variável>>
+- Variáveis: <<ex.: plano, tempo de casa, dias até a renovação, treinos nas últimas 4 semanas, variação de treinos, dias sem treinar, % de treinos em vídeo, objetivo do cadastro>>
+- Objetivo do cadastro: <<ex.: entra, com a categoria "não informado" (a classificação por palavras-chave está em src/raio_x.py)>>
+- Número de grupos a testar: <<ex.: de 3 a 8>>
+- Proibido usar no cálculo dos grupos: idade, sexo e qualquer informação de saída. A saída só entra depois, para descrever os grupos.
+
+Passos:
+1. Monte a tabela de variáveis com uma linha por assinante. Variáveis com cauda longa (ex.: dias sem treinar, minutos) entram em log ou em faixas. Categorias (plano, objetivo) viram colunas 0/1. Diga quantas linhas e colunas ficaram.
+2. Coloque tudo na mesma escala (StandardScaler) e explique por que isso é necessário. Se as colunas 0/1 forem muitas, proponha como reduzir o peso delas.
+3. Rode o K-means (scikit-learn, random_state fixo) para cada número de grupos e mostre o cotovelo e a silhueta. Recomende um número, considerando também se os grupos são fáceis de explicar.
+4. Descreva cada grupo: tamanho (n e %), mediana de cada variável, plano e objetivo mais comuns. Dê a cada grupo um nome provisório de 2 a 4 palavras.
+5. Só agora cruze com a saída: % que desligou a renovação ou cancelou pelo site nos 60 dias seguintes (D-053), sem quem já tinha anunciado a saída (D-052), e a receita líquida média de cada grupo. Mostre sempre o tamanho do grupo ao lado da taxa.
+6. Aplique os mesmos grupos à base de 30/09 sem treinar de novo (mesma escala e mesmos centros) e mostre quantos assinantes caem em cada grupo hoje.
+7. Confira, para cada grupo, os 5 critérios da Aula 3: mensurável, substancial, diferenciável, acessível e acionável.
+8. Grave o código em src/clusters.py e um relatório em saidas/clusters.md, e proponha uma decisão para o DECISOES.md com o motivo de cada escolha. Não faça commit sem eu pedir.
+
+No final, me mostre um resumo: quantos grupos, o nome e o tamanho de cada um, a taxa de saída e a receita de cada um, e quais 3 ou 4 você sugere virar personas, com o motivo.
+</script>
 <script type="text/plain" id="pSetup">
 Preciso preparar meu computador para um projeto em grupo do MBA (case Vitaliza). Faça o passo a passo abaixo comigo, explicando cada passo em português simples, em uma ou duas frases.
 
@@ -868,7 +988,7 @@ const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).
     const p = promptsAll[+pre.dataset.p];
     pre.textContent = p.from ? (document.getElementById(p.from)?.textContent || '').trim() : p.txt;
   });
-  document.getElementById('course').addEventListener('click', e => {
+  document.addEventListener('click', e => {
     const b = e.target.closest('button.copy'); if (!b) return;
     const txt = b.closest('.prompt').querySelector('pre').textContent;
     const ok = () => { b.textContent = 'Copiado ✓'; setTimeout(() => b.textContent = 'Copiar', 1800); };
@@ -885,17 +1005,118 @@ const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).
 
 // ---------- para decidir
 (function () {
+  // Cada pergunta: t, quando (prazo), ctx (o que está em jogo), ex (exemplo), op (opções: n nome, como, pro, contra, rec), sug (sugestão e por quê), depois
   const q = [
-    ['Quem faz o quê até 15/11?', 'Relatório de segmentação (negócios), notebook de EDA e mini deck (tecnologia), revisão final e montagem da pasta no Drive. Cada um envia o link na Adalove.', ['Dividir por artefato', 'Dividir por persona', 'Uma dupla por trilha']],
-    ['Como fazer o K-means?', 'Seguindo o professor: clusterizar a base toda sem usar o churn e só depois ver o churn de cada grupo. Proposta: treinar na base de 31/05 (que tem gabarito) e aplicar em 30/09; variáveis de comportamento e contrato; idade e sexo fora.', ['Base de 31/05 → aplicar em 30/09', 'Só 30/09', 'Separar mensal e anual antes']],
-    ['Quais 3 a 4 personas levar?', 'Sai do K-means, mas os candidatos já aparecem: o mensal que ainda não criou rotina; quem bateu a meta da prova; o anual que foi esfriando; o cuidador da saúde, que fica.', ['Escolher depois dos clusters']],
-    ['Validamos D-052 e D-053?', 'Foram decididas nas análises: quem já desligou vai para regra à parte; o modelo prevê quem vai desligar a renovação. Vale o grupo confirmar, porque mudam a semana 10.', ['Confirmar', 'Rediscutir']],
-    ['O que perguntar ao professor?', 'D-029: o resumo de uso mensal conta só ~70% dos treinos do detalhe em 2026. É proposital no case?', ['Levar na próxima aula']],
-    ['Que IA generativa usar na semana 10?', 'O app precisa chamar uma API (Claude, Gemini ou GPT) para escrever a mensagem. O custo sai do orçamento de CRM de R$ 40 mil/mês.', ['Claude', 'Gemini', 'GPT', 'Comparar custo antes']],
-    ['Todos com o projeto na máquina?', 'Para rodar a EDA, cada um precisa atualizar o projeto e gerar a base (o prompt está no PROGRESSO.md).', ['Fazer junto na reunião']],
+    { t: 'Quem faz o quê até 15/11?', quando: 'decidir hoje',
+      ctx: 'A entrega da semana 5 tem duas trilhas: <b>negócios</b> (relatório de segmentação com as personas) e <b>tecnologia</b> (notebook com a análise exploratória e um mini deck de 3 a 5 slides). Ela não vale nota, só feedback, mas é o ensaio da entrega de 20/12, que vale. Tudo vai para uma pasta pública no Google Drive, e cada integrante envia o link na Adalove.',
+      op: [
+        { n: 'Dividir por artefato', como: 'Cada pessoa ou dupla fica com uma peça: relatório, notebook, deck, revisão e pasta no Drive.', pro: 'Responsabilidade clara; ninguém edita o mesmo arquivo que o outro.', contra: 'Quem faz uma peça pode entender pouco das outras.', rec: true },
+        { n: 'Dividir por persona', como: 'Cada um escreve uma persona de ponta a ponta: números, cartão e ação.', pro: 'Todo mundo mergulha nos dados.', contra: 'Só começa depois do K-means, e alguém precisa costurar os textos no fim.' },
+        { n: 'Uma dupla por trilha', como: 'Uma dupla de negócios, uma de tecnologia e uma pessoa que revisa e monta o Drive.', pro: 'Espelha as duas trilhas do guia de entregas.', contra: 'Depende de as duplas conversarem bastante entre si.' }],
+      sug: 'Dividir por artefato, com uma pessoa responsável pela revisão final e pela pasta no Drive. O prazo é curto e o K-means ainda vai sair: com peças separadas, o notebook e o deck já podem começar usando o raio-x, enquanto os grupos não ficam prontos.',
+      depois: 'Anotamos os nomes na seção Entregas deste painel.' },
+    { t: 'Como fazer o K-means?', quando: 'decidir hoje',
+      ctx: 'O K-means junta pessoas parecidas em grupos. O professor pediu para agrupar <b>a base toda sem contar ao algoritmo quem saiu</b> e só depois olhar quanto cada grupo sai. A dúvida é em que data formar os grupos.',
+      ex: 'Para dizer "o grupo dos mensais novos sai 25%", precisamos de uma data em que já sabemos quem saiu depois. Em 30/09 ainda não sabemos: a saída acontece até 29/11, fora dos dados.',
+      op: [
+        { n: 'Formar em 31/05 e aplicar em 30/09', como: 'Os grupos nascem na base de 31/05 (sabemos quem saiu em junho e julho) e a mesma régua é aplicada à base de hoje.', pro: 'Dá para provar com número real que os grupos têm saídas diferentes.', contra: 'Um passo a mais de trabalho.', rec: true },
+        { n: 'Só 30/09', como: 'Agrupar a base de hoje e pronto.', pro: 'Mais simples.', contra: 'Não dá para medir a saída de cada grupo: o relatório ficaria sem a evidência principal.' },
+        { n: 'Separar mensal e anual antes', como: 'Um K-means para cada plano.', pro: 'O plano já é o maior corte; os grupos ficam mais finos.', contra: 'Dobra o trabalho, e o professor pediu a base toda.' }],
+      sug: 'Formar em 31/05 e aplicar em 30/09. É o único jeito de colocar no relatório "este grupo sai X%" com número real. As variáveis candidatas estão no Percurso, etapa Clusters, em "Aprofundar". Idade e sexo ficam fora: só descrevem os grupos depois.',
+      depois: 'Rodamos o K-means e trazemos os grupos para o painel.' },
+    { t: 'Quais 3 a 4 personas levar?', quando: 'depois do K-means',
+      ctx: 'Persona é o retrato de um grupo que os números confirmaram (Aula 4). Por isso ela só nasce depois do K-means. Juntas, as personas precisam <b>separar</b> (cada uma diferente das outras) e <b>cobrir</b> (somar boa parte da base). Mas o raio-x e os motivos já mostram candidatos.',
+      op: [
+        { n: 'O mensal que ainda não criou rotina', como: 'Até 3 meses de casa, plano mensal.', pro: 'O grupo que mais sai: cerca de 1 em cada 4 com até 1 mês.', contra: 'Dentro dele há motivações muito diferentes.' },
+        { n: 'Quem bateu a meta', como: 'Entrou para uma prova ou meta de prazo e postou que conseguiu.', pro: 'Motivo claro e mensagem clara: a próxima meta.', contra: 'Grupo menor.' },
+        { n: 'O anual que foi esfriando', como: 'Plano anual, treino caindo nas semanas antes da renovação.', pro: 'Muita receita em jogo de uma vez.', contra: 'Só dá para agir perto da renovação.' },
+        { n: 'O cuidador da saúde', como: 'Entrou por saúde ou bem-estar e fica.', pro: 'Mostra quem não precisa de gasto com retenção.', contra: 'É um grupo para proteger, não para "salvar".' }],
+      sug: 'Esperar o K-means e conferir se esses candidatos aparecem nos grupos. Se aparecerem, é um ótimo sinal: duas análises diferentes chegaram ao mesmo lugar.',
+      depois: 'Cada persona vira um cartão no formato da Aula 4.' },
+    { t: 'Confirmamos as decisões D-052 e D-053?', quando: 'decidir hoje',
+      ctx: 'Duas decisões tomadas nas análises mudam o desenho do modelo da semana 10, então vale o grupo inteiro concordar.',
+      ex: '<b>D-052:</b> 2.250 assinantes já desligaram a renovação. Entre os mensais nessa situação, 99% saem: prever isso não ajuda ninguém. Eles vão para uma regra à parte, cuja ação é tentar reverter a decisão.<br><b>D-053:</b> o modelo passa a prever "vai desligar a renovação nos próximos 60 dias", e não "vai sair". Um anual que renova em março só sai em março, mas pode decidir em novembro. O alvo novo avisa em novembro, quando ainda dá tempo de agir.',
+      op: [
+        { n: 'Confirmar', como: 'Seguimos com as duas decisões.', pro: 'Já é o que todas as análises usam (dimensões, motivos, raio-x).', contra: 'Nenhum, a não ser que alguém veja um problema.', rec: true },
+        { n: 'Rediscutir', como: 'Alguém traz um ponto contra.', pro: 'Agora é a hora: depois do modelo fica caro mudar.', contra: 'Seria preciso refazer partes das análises.' }],
+      sug: 'Confirmar. As duas decisões deixam o modelo focado em quem ainda não decidiu sair, enquanto ainda dá para agir.',
+      depois: 'O status das duas fica "aceita pelo grupo" no DECISOES.md.' },
+    { t: 'O que perguntar ao professor?', quando: 'próxima aula',
+      ctx: 'Há duas fontes sobre o uso do app: o <b>resumo mensal</b> (uso_mensal) e o <b>detalhe de cada treino</b> (atividades). Em 2026, o resumo conta só cerca de 70% dos treinos que aparecem no detalhe. Testamos 4 explicações e nenhuma bate.',
+      ex: 'Se usássemos o resumo, um assinante que treinou 10 vezes em agosto apareceria com 7. O modelo poderia enxergar uma "queda" de treino que não existiu.',
+      op: [
+        { n: 'Levar a pergunta', como: '"A diferença entre uso_mensal e atividades em 2026 é proposital no case?"', pro: 'Se for proposital, citar no relatório mostra que percebemos.', contra: 'Nenhum.', rec: true }],
+      sug: 'Levar na próxima aula. Enquanto isso, a regra da D-029 continua: para 2026 usamos o detalhe dos treinos, e o resumo só para 2025 e para as aberturas do app.',
+      depois: 'Registramos a resposta na D-029.' },
+    { t: 'Que IA generativa usar na semana 10?', quando: 'até o início de dezembro',
+      ctx: 'O app final precisa chamar uma IA generativa para duas coisas: <b>ler textos</b> (cadastro, posts, chamados) e <b>escrever a mensagem de retenção</b>. O custo sai do orçamento de CRM, de R$ 40 mil por mês, e o case pede o custo por assinante dentro do cálculo de retorno.',
+      op: [
+        { n: 'Claude, Gemini ou GPT direto', como: 'Escolher uma pela preferência do grupo.', pro: 'Rápido.', contra: 'Sem número para justificar a escolha no plano de ROI.' },
+        { n: 'Comparar antes', como: 'Testar as três em uma amostra pequena (ex.: 100 textos) e medir custo e qualidade.', pro: 'A escolha vira argumento no relatório, e o custo entra no ROI com número real.', contra: 'Leva um pouco mais de tempo.', rec: true }],
+      sug: 'Comparar numa amostra pequena. Não precisa decidir hoje: a decisão só é necessária em dezembro.',
+      depois: 'A escolha e o custo por assinante entram no DECISOES.md.' },
+    { t: 'Todos com o projeto na máquina?', quando: 'nesta semana',
+      ctx: 'Para rodar o notebook da análise exploratória e conferir os números, cada pessoa precisa do projeto e da base montada na própria máquina. O passo a passo, com o prompt pronto para copiar, está no Percurso, etapa Organização, em "Aprofundar".',
+      op: [
+        { n: 'Fazer junto na reunião', como: '20 a 30 minutos no fim da reunião, cada um com a própria IA.', pro: 'As dúvidas se resolvem na hora.', contra: 'Ocupa parte da reunião.', rec: true },
+        { n: 'Cada um em casa', como: 'Cada um segue o prompt quando puder.', pro: 'Não ocupa a reunião.', contra: 'Quem travar fica parado até alguém ajudar.' }],
+      sug: 'Fazer junto na reunião. É um passo único: depois disso, atualizar o projeto é um pedido de uma linha à IA.',
+      depois: 'Todos conseguem rodar o painel e o notebook.' },
   ];
-  document.getElementById('decide').innerHTML = q.map(([t, p, o]) =>
-    `<li><h3>${t}</h3><p>${p}</p><div class="opts">${o.map((x, i) => `<span class="${i === 0 && o.length > 1 ? 'rec' : ''}">${x}</span>`).join('')}</div></li>`).join('');
+  const renderQ = arr => arr.map(x => `<li>
+    <div class="q-head"><h3>${x.t}</h3><span class="when">${x.quando}</span></div>
+    <p class="ctx"><b>O que está em jogo.</b> ${x.ctx}</p>
+    ${x.ex ? `<p class="qex"><b>Exemplo.</b> ${x.ex}</p>` : ''}
+    <div class="opt-grid">${x.op.map(o => `<div class="opt ${o.rec ? 'rec' : ''}"><h4>${o.n}${o.rec ? ' <span class="badge">sugerida</span>' : ''}</h4><p>${o.como}</p><p class="pc"><span class="p">✔</span> ${o.pro}</p><p class="pc"><span class="c">✖</span> ${o.contra}</p></div>`).join('')}</div>
+    <p class="sug"><b>Nossa sugestão:</b> ${x.sug}</p>
+    ${x.depois ? `<p class="after"><b>Depois de decidir:</b> ${x.depois}</p>` : ''}
+  </li>`).join('');
+  document.getElementById('decide').innerHTML = renderQ(q);
+
+  // ---- próximo passo: K-means
+  const km = [
+    { t: 'Quem entra nos grupos?', quando: 'decidir antes de rodar',
+      ctx: 'Dos 14.753 assinantes ativos, 2.250 já desligaram a renovação. Pela D-052, eles ficam fora do <i>modelo de churn</i>. A dúvida é se ficam fora também da <i>segmentação</i>.',
+      ex: 'Se eles entram, um grupo pode juntar muita gente que já decidiu sair, e a taxa de saída desse grupo fica inflada. Por isso, mesmo com todos nos grupos, a saída de cada grupo é medida só entre quem ainda não tinha decidido.',
+      op: [
+        { n: 'Toda a base ativa', como: 'Os 14.753 formam os grupos; "saída anunciada" não é variável.', pro: 'Segue o pedido do professor e dá o retrato completo para o relatório.', contra: 'Precisa medir a saída por grupo sem os 2.250, para não inflar.', rec: true },
+        { n: 'Sem quem já desligou', como: 'Só os 12.503 que ainda não decidiram.', pro: 'Grupos focados em quem ainda dá para salvar.', contra: 'O retrato da base fica incompleto e foge do "base toda".' }],
+      sug: 'Toda a base ativa. A segmentação descreve a base inteira; a regra da D-052 continua valendo na hora de medir a saída e no modelo.' },
+    { t: 'Quantas e quais variáveis?', quando: 'decidir antes de rodar',
+      ctx: 'O K-means mede a "distância" entre as pessoas somando as diferenças em cada variável. Cada variável a mais é um voto a mais na hora de decidir quem fica perto de quem.',
+      ex: 'Se entrarem treinos, minutos, semanas ativas e aberturas do app, que dizem quase a mesma coisa (exame 6 do raio-x), "quanto a pessoa treina" vota quatro vezes e contrato e objetivo quase não contam.',
+      op: [
+        { n: 'Enxuta: 6 a 8', como: 'Uma ou duas de cada lente: contrato, comportamento e necessidade.', pro: 'Grupos fáceis de explicar; cada lente pesa parecido.', contra: 'Pode deixar de fora alguma nuance.', rec: true },
+        { n: 'Ampla: 15 ou mais', como: 'Tudo o que separou um pouco nas dimensões.', pro: 'Usa toda a informação.', contra: 'Medidas repetidas dominam e os grupos ficam difíceis de nomear.' }],
+      sug: 'Enxuta, com 8 variáveis: plano, tempo de casa, dias até a renovação, treinos nas últimas 4 semanas, variação de treinos, dias sem treinar, % de treinos em vídeo e objetivo do cadastro.' },
+    { t: 'Como tratar o objetivo do cadastro?', quando: 'decidir antes de rodar',
+      ctx: '30% dos assinantes não informaram o objetivo (ou escreveram "nada", "x"). Mas o objetivo é o que mais separa a saída no plano mensal (exame 7).',
+      op: [
+        { n: 'Entra, com "não informado"', como: 'O "não informado" vira uma categoria como as outras.', pro: 'Usa a lente da necessidade, que é forte no mensal.', contra: 'São 8 categorias, que podem pesar demais; pode ser preciso juntar em 3 blocos (meta com prazo ou aparência; saúde ou bem-estar; outro ou não informado).', rec: true },
+        { n: 'Fica fora do cálculo', como: 'Usado só para descrever os grupos depois.', pro: 'Grupos mais estáveis.', contra: 'Perde a lente que explica por que a pessoa entrou.' }],
+      sug: 'Entra, agrupado em 3 blocos. Mantém a lente da necessidade sem deixar 8 colunas dominarem a distância.' },
+    { t: 'Quantos grupos?', quando: 'decidir depois de rodar',
+      ctx: 'O K-means não escolhe sozinho quantos grupos existem: nós dizemos o número. A silhueta mede se cada pessoa está mais perto do próprio grupo do que dos outros (perto de 1 é ótimo; perto de 0, os grupos se misturam).',
+      ex: 'Com 2 grupos, o resultado quase repete "mensal × anual" e não ensina nada. Com 10, ninguém consegue lembrar o que cada um é. O relatório pede 3 a 4 personas, mas elas podem vir de 5 ou 6 grupos, juntando os parecidos.',
+      op: [
+        { n: 'Testar de 3 a 8 e escolher', como: 'Olhar a silhueta e se os grupos são fáceis de explicar.', pro: 'Escolha com número e com sentido de negócio.', contra: 'Exige olhar vários resultados.', rec: true },
+        { n: 'Fixar 4', como: 'Quatro grupos, um por persona.', pro: 'Rápido.', contra: 'Pode forçar grupos que não existem: o algoritmo sempre acha grupos.' }],
+      sug: 'Testar de 3 a 8. A IA recomenda um número pelo cotovelo e pela silhueta, e o grupo confere se cada um cabe numa frase.' },
+  ];
+  document.getElementById('kmDecide').innerHTML = renderQ(km);
+  const passos = [
+    ['Preparar as variáveis', 'Uma linha por assinante. Variáveis com cauda longa (dias sem treinar, minutos) entram em log ou em faixas; categorias viram colunas 0/1.', 'Uma pessoa com 270 dias sem treinar não pode valer 100 vezes mais que uma com 2 dias.'],
+    ['Colocar tudo na mesma escala', 'Cada variável passa a ter média 0 e a mesma dispersão.', 'Sem isso, minutos (até 11 mil) mandam mais que o plano (0 ou 1).'],
+    ['Rodar o K-means para 3 a 8 grupos', 'O algoritmo sorteia centros, junta cada pessoa ao centro mais próximo e repete até estabilizar.', 'É como formar mesas numa festa: cada pessoa senta perto de quem é mais parecida com ela.'],
+    ['Escolher o número de grupos', 'Cotovelo (quando adicionar grupos para de ajudar) e silhueta (quão separados eles estão).', 'Se a melhora de 4 para 5 grupos é pequena, ficamos com 4.'],
+    ['Descrever cada grupo', 'Tamanho, mediana de cada variável, plano e objetivo mais comuns, um nome provisório.', '"Mensais novos de meta com prazo: 9% da base, 1 mês de casa, 3 treinos por semana."'],
+    ['Só agora, medir a saída e o valor', 'Taxa de desligamento em 60 dias (D-053) e receita líquida média de cada grupo, sempre com o tamanho ao lado.', '"Este grupo sai 27% e vale R$ 40 por mês": é aqui que nasce a prioridade.'],
+    ['Aplicar a 30/09', 'Usar a mesma régua (escala e centros de 31/05) na base de hoje, sem treinar de novo.', 'Mostra quantos assinantes estão hoje em cada grupo, para a ação.'],
+    ['Validar com os 5 critérios', 'Mensurável, substancial, diferenciável, acessível, acionável (Aula 3).', 'Um grupo com 1% da base não é substancial: junta-se a outro.'],
+    ['Virar personas', 'Os 3 ou 4 grupos que passarem viram cartões no formato da Aula 4.', 'Contexto, conflito, evidência, gatilho, ação e limite.'],
+  ];
+  document.getElementById('kmSteps').innerHTML = passos.map(([t, d, e]) => `<li><b>${t}.</b> ${d}<span class="eg">Exemplo: ${e}</span></li>`).join('');
+  document.getElementById('kmPrompt').textContent = (document.getElementById('pKmeans')?.textContent || '').trim();
 })();
 
 // ---------- qualidade e entregas
