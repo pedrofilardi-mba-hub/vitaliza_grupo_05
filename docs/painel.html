@@ -1,0 +1,643 @@
+<title>Painel Vitaliza · Grupo 05</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: a race course. Header = start line; phases = km markers to the finish (20/12); sections stacked in one column with a sticky jump bar. */
+:root{
+  --bg:#f3f6f8; --surface:#ffffff; --ink:#122028; --muted:#5a6b74; --line:#d8e1e6;
+  --accent:#2457c5; --accent-soft:#e3ebfb; --medal:#d99a1e; --medal-soft:#fbf1dc;
+  --ok:#1d8a5b; --ok-soft:#ddf2e8; --warn:#b7791f; --warn-soft:#fbefd9; --risk:#c2412d; --risk-soft:#fbe4df; --idle:#7b8a93; --idle-soft:#e9eef1;
+  --display:"Barlow Condensed","Arial Narrow",Arial,sans-serif; --body:"Source Sans 3","Segoe UI",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e171c; --surface:#16222a; --ink:#e7eef2; --muted:#9fb1ba; --line:#28363f;
+  --accent:#7aa2f7; --accent-soft:#1d2c47; --medal:#f0b84a; --medal-soft:#3a2f17;
+  --ok:#4cc38a; --ok-soft:#173528; --warn:#e3a645; --warn-soft:#3a2d15; --risk:#f07a63; --risk-soft:#3d1f1a; --idle:#8a9aa3; --idle-soft:#202d35; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e171c; --surface:#16222a; --ink:#e7eef2; --muted:#9fb1ba; --line:#28363f;
+  --accent:#7aa2f7; --accent-soft:#1d2c47; --medal:#f0b84a; --medal-soft:#3a2f17;
+  --ok:#4cc38a; --ok-soft:#173528; --warn:#e3a645; --warn-soft:#3a2d15; --risk:#f07a63; --risk-soft:#3d1f1a; --idle:#8a9aa3; --idle-soft:#202d35; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 64px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:1120px;margin:0 auto;display:grid;gap:56px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.08}
+h2{font-size:clamp(28px,4vw,38px);font-weight:700;letter-spacing:.01em}
+h3{font-size:22px;font-weight:600}
+p{margin:0}
+.label{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.num{font-variant-numeric:tabular-nums}
+a{color:var(--accent)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+section{display:grid;gap:20px;scroll-margin-top:72px}
+.lead{color:var(--muted);max-width:68ch}
+
+/* start line */
+header.start{padding-top:40px;display:grid;gap:18px;border-bottom:3px dashed var(--line);padding-bottom:28px}
+.bib{display:inline-flex;align-items:baseline;gap:10px;font-family:var(--mono);font-size:13px;color:var(--muted)}
+.bib b{font-family:var(--display);font-size:20px;color:var(--ink);background:var(--medal-soft);border:2px solid var(--medal);padding:2px 10px;border-radius:6px}
+header h1{font-size:clamp(40px,7vw,72px);font-weight:700;letter-spacing:.005em}
+header h1 span{color:var(--accent)}
+.thesis{font-size:clamp(18px,2.2vw,21px);max-width:62ch}
+.deadlines{display:flex;flex-wrap:wrap;gap:12px}
+.deadline{display:flex;gap:12px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 14px}
+.deadline .days{font-family:var(--display);font-size:30px;font-weight:700;line-height:1}
+.deadline.next .days{color:var(--risk)}
+.deadline small{display:block;color:var(--muted);font-size:13px}
+
+/* jump bar */
+nav.jump{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding:10px 0;border-bottom:1px solid var(--line);
+  display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+nav.jump a{flex:0 0 auto;font-size:14px;text-decoration:none;color:var(--muted);padding:6px 10px;border-radius:999px}
+nav.jump a:hover{background:var(--accent-soft);color:var(--ink)}
+
+/* splits (KPIs) */
+.splits{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.split{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;gap:4px;align-content:start}
+.split .v{font-family:var(--display);font-size:40px;font-weight:700;line-height:1}
+.split .v small{font-size:20px;color:var(--muted);font-weight:600}
+.split .ref{font-size:13px;color:var(--muted)}
+.check{color:var(--ok);font-weight:700}
+
+/* course (phases) */
+.course{list-style:none;margin:0;padding:0;display:grid;gap:0;position:relative}
+.course li{display:grid;grid-template-columns:72px 1fr auto;gap:14px;align-items:start;padding:14px 0;border-bottom:1px solid var(--line)}
+.km{font-family:var(--display);font-weight:700;font-size:18px;color:var(--muted);display:flex;flex-direction:column;align-items:flex-start}
+.km b{font-size:30px;line-height:1;color:var(--ink)}
+.course .what{min-width:0}
+.course .what p{color:var(--muted);font-size:15px}
+.pill{font-family:var(--mono);font-size:12px;padding:3px 9px;border-radius:999px;white-space:nowrap;border:1px solid transparent}
+.pill.done{background:var(--ok-soft);color:var(--ok);border-color:color-mix(in srgb,var(--ok) 30%,transparent)}
+.pill.now{background:var(--warn-soft);color:var(--warn);border-color:color-mix(in srgb,var(--warn) 35%,transparent)}
+.pill.todo{background:var(--idle-soft);color:var(--idle)}
+.pill.risk{background:var(--risk-soft);color:var(--risk)}
+.course li.finish{border-bottom:3px double var(--ink)}
+
+/* charts */
+.charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,480px),1fr));gap:18px}
+.chart{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px;display:grid;gap:10px;min-width:0}
+.chart .cap{color:var(--muted);font-size:14px}
+.chart .box{position:relative;height:280px}
+.chart.wide{grid-column:1/-1}
+.chart.wide .box{height:320px}
+.src{font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+
+/* findings */
+.findings{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:14px}
+.finding{border-left:4px solid var(--accent);padding:4px 0 4px 14px;display:grid;gap:6px}
+.finding.no{border-left-color:var(--idle)}
+.finding h3{font-size:21px}
+.finding p{color:var(--muted);font-size:15px}
+
+/* tables */
+.tbl{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:640px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+tr:last-child td{border-bottom:0}
+td code{font-family:var(--mono);font-size:12.5px;background:var(--accent-soft);padding:1px 5px;border-radius:4px}
+
+/* decide */
+.decide{list-style:none;margin:0;padding:0;display:grid;gap:12px;counter-reset:q}
+.decide li{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 16px 16px 60px;position:relative;counter-increment:q;display:grid;gap:6px}
+.decide li::before{content:counter(q);position:absolute;left:16px;top:14px;font-family:var(--display);font-weight:700;font-size:26px;color:var(--medal);
+  width:32px;height:32px;display:grid;place-items:center;border:2px solid var(--medal);border-radius:50%}
+.decide p{color:var(--muted);font-size:15px}
+.opts{display:flex;flex-wrap:wrap;gap:6px}
+.opts span{font-size:13px;background:var(--accent-soft);color:var(--ink);padding:3px 9px;border-radius:6px}
+.opts span.rec{background:var(--ok-soft);color:var(--ok);font-weight:600}
+
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:18px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px;display:grid;gap:10px;align-content:start;min-width:0}
+.card ul{margin:0;padding-left:20px;display:grid;gap:6px}
+.card li{font-size:15px}
+footer{color:var(--muted);font-size:13px;border-top:3px dashed var(--line);padding-top:18px;display:grid;gap:6px}
+/* raio-x */
+.rx-step{display:grid;gap:14px}
+.rx-step>h3{font-size:24px;display:flex;gap:10px;align-items:baseline}
+.rx-step>h3 .tec{font-family:var(--mono);font-size:11.5px;font-weight:400;color:var(--medal);border:1px solid var(--medal);padding:1px 7px;border-radius:999px;letter-spacing:.04em;text-transform:uppercase}
+.rx-step>p.lead{font-size:15.5px}
+.lesson{background:var(--medal-soft);border-radius:10px;padding:12px 14px;font-size:15px}
+.lesson b{color:var(--ink)}
+.bars{display:grid;gap:7px}
+.bars .row{display:grid;grid-template-columns:minmax(110px,38%) 1fr 48px;gap:8px;align-items:center;font-size:14px}
+.bars .track{height:12px;background:var(--idle-soft);border-radius:6px;overflow:hidden}
+.bars .fill{height:100%;background:var(--accent);border-radius:6px}
+.bars .v{text-align:right;font-variant-numeric:tabular-nums;color:var(--muted)}
+.heat td,.heat th{text-align:center;padding:8px 6px;font-variant-numeric:tabular-nums}
+.heat td:first-child,.heat th:first-child{text-align:left}
+.heat td.c{font-weight:600;border-left:2px solid var(--surface)}
+.heat td.c small{display:block;font-weight:400;font-size:11px;color:var(--muted)}
+.heat td.c.few{opacity:.45}
+table.heat{min-width:440px}
+table.corr{min-width:760px;font-size:12.5px}
+table.corr th{font-size:10.5px;letter-spacing:0;text-transform:none;writing-mode:vertical-rl;transform:rotate(180deg);height:110px;vertical-align:bottom;text-align:left;padding:6px 4px}
+table.corr th:first-child,table.corr td:first-child{writing-mode:horizontal-tb;transform:none;height:auto;white-space:nowrap;font-family:var(--body);font-size:13px;color:var(--ink)}
+table.stats td.r{text-align:right;font-variant-numeric:tabular-nums}
+.tag{font-size:12px;padding:2px 8px;border-radius:6px;white-space:nowrap}
+.tag.sim{background:var(--accent-soft);color:var(--accent)}
+.tag.cauda{background:var(--warn-soft);color:var(--warn)}
+.tag.forte{background:var(--risk-soft);color:var(--risk)}
+.legend-heat{display:flex;gap:8px;align-items:center;font-size:12.5px;color:var(--muted);flex-wrap:wrap}
+.legend-heat i{display:inline-block;width:46px;height:10px;border-radius:4px}
+@media (max-width:560px){.course li{grid-template-columns:56px 1fr}.course li .pill{grid-column:2}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style>
+
+<div class="wrap">
+<header class="start">
+  <div class="bib">Grupo <b>05</b> MBA IA e Dados · Inteli · Módulo 2 · Case Vitaliza</div>
+  <h1>Painel do projeto <span>Vitaliza</span></h1>
+  <p class="thesis">Quem vai sair, em quem vale a pena agir, com qual mensagem e quanto isso rende. Este painel mostra onde estamos nessa prova: o que já foi feito, o que decidimos, o que os dados mostram e o que falta até a linha de chegada.</p>
+  <div class="deadlines" id="deadlines"></div>
+  <p class="src" id="atualizado"></p>
+</header>
+
+<nav class="jump" aria-label="Seções">
+  <a href="#resumo">Resumo</a><a href="#percurso">Percurso</a><a href="#reuniao">Para decidir</a><a href="#raiox">Raio-x da base</a><a href="#dados">O que os dados mostram</a>
+  <a href="#achados">Achados</a><a href="#decisoes">Decisões</a><a href="#qualidade">Qualidade</a><a href="#entregas">Entregas</a><a href="#limites">Limites</a>
+</nav>
+
+<section id="resumo">
+  <div class="label">Resumo</div>
+  <h2>A base está pronta e conferida. Agora: segmentar e virar personas.</h2>
+  <p class="lead">Limpamos os 12 arquivos do data room com regras registradas, montamos a base no corte de 30/09/2026 e conferimos contra o enunciado e a Aula 2. Depois estudamos o que separa quem sai e por que as pessoas desligam a renovação. O próximo passo é o K-means da base toda, que vira as personas da entrega de 15/11.</p>
+  <div class="splits" id="splits"></div>
+</section>
+
+<section id="percurso">
+  <div class="label">Percurso · status por fase</div>
+  <h2>Do quilômetro zero à linha de chegada</h2>
+  <ol class="course" id="course"></ol>
+</section>
+
+<section id="reuniao">
+  <div class="label">Para decidir na reunião do grupo</div>
+  <h2>O que precisa da conversa de hoje</h2>
+  <ol class="decide" id="decide"></ol>
+</section>
+
+<section id="raiox">
+  <div class="label">Raio-x da base de clientes · análise exploratória antes do K-means</div>
+  <h2>Quem são os nossos assinantes, em 8 exames</h2>
+  <p class="lead">Antes de agrupar, olhamos a base com as técnicas da Aula 2 (granularidade, centro e dispersão, distribuição, extremos, correlação, taxa com o denominador certo) e da Aula 3 (a média esconde grupos, as três lentes). A fotografia é a <b>base ativa de 30/09/2026</b>. Nos exames de saída usamos o <b>gabarito de 31/05</b>: quem desligou a renovação ou cancelou pelo site nos 60 dias seguintes (D-053), sem quem já tinha anunciado a saída (D-052). <span id="rxChurnBase"></span></p>
+
+  <div class="rx-step">
+    <h3>1. Uma linha por quê? <span class="tec">granularidade</span></h3>
+    <p class="lead">Cada arquivo conta uma coisa diferente: contas, testes, pagantes, assinantes ativos. Antes de qualquer taxa, é preciso saber de qual "população" estamos falando.</p>
+    <div class="charts"><div class="chart wide"><h3>Do cadastro ao assinante ativo</h3><p class="cap">Cada barra é uma população diferente. O K-means e as personas usam só a última (ou a penúltima).</p><div class="box" style="height:240px"><canvas id="cFunil"></canvas></div><p class="src">Fonte: usuarios, eventos_assinatura, assinaturas, base_corte_2026-09-30 · src/raio_x.py</p></div></div>
+    <p class="lesson"><b>Por que importa:</b> "churn de 15%" muda de sentido conforme o denominador. Se dividirmos as saídas pelas 64 mil contas, e não pelos 12 mil pagantes, o número cai para menos de 3% e esconde o problema.</p>
+  </div>
+
+  <div class="rx-step">
+    <h3>2. Centro, dispersão e extremos <span class="tec">5 números · média × mediana · CV · 1,5×IQR</span></h3>
+    <p class="lead">Para cada variável numérica: os cinco números (mínimo, 1º quartil, mediana, 3º quartil, máximo), média, desvio padrão, coeficiente de variação (desvio ÷ média) e quantos ficam fora da cerca de 1,5 × IQR.</p>
+    <div class="tbl"><table class="stats"><thead><tr><th>Variável</th><th>n</th><th>mín</th><th>Q1</th><th>mediana</th><th>Q3</th><th>máx</th><th>média</th><th>CV</th><th>extremos</th><th>leitura</th></tr></thead><tbody id="tStats"></tbody></table></div>
+    <p class="lesson"><b>Como ler:</b> quando a média fica bem acima da mediana, alguns valores muito altos puxam a média (cauda à direita). Exemplo: "dias desde o último treino" tem mediana 2 e média ~13, porque uma minoria parou há meses. Nesses casos, a mediana descreve melhor o assinante típico, e o K-means precisa da variável transformada (log ou faixas), senão os extremos dominam os grupos.</p>
+  </div>
+
+  <div class="rx-step">
+    <h3>3. O formato de cada distribuição <span class="tec">histograma</span></h3>
+    <div class="charts">
+      <div class="chart"><h3>Idade: quase simétrica</h3><p class="cap">Concentrada entre 35 e 55 anos, mediana 46. Não é um app de jovens.</p><div class="box" style="height:220px"><canvas id="hIdade"></canvas></div></div>
+      <div class="chart"><h3>Tempo de casa: muitos novos e uma cauda longa</h3><p class="cap">Metade tem menos de 9 meses; 1 em cada 12 tem mais de 3 anos.</p><div class="box" style="height:220px"><canvas id="hCasa"></canvas></div></div>
+      <div class="chart"><h3>Treinos nas últimas 4 semanas</h3><p class="cap" id="capTreinos">Mediana de 8 (2 por semana); 12% não treinaram nenhuma vez no mês.</p><div class="box" style="height:220px"><canvas id="hTreinos"></canvas></div></div>
+      <div class="chart"><h3>Dias desde o último treino: cauda à direita</h3><p class="cap">A maioria treinou nesta semana, mas há um rabo de quem sumiu há 1 a 9 meses e continua pagando.</p><div class="box" style="height:220px"><canvas id="hDias"></canvas></div></div>
+    </div>
+  </div>
+
+  <div class="rx-step">
+    <h3>4. De que é feita a base <span class="tec">tabela de frequência</span></h3>
+    <div class="charts" id="rxComp"></div>
+    <p class="lesson"><b>Por que importa:</b> 30% não disseram o objetivo (ou escreveram "nada", "x"). Qualquer segmento que dependa do objetivo cobre no máximo 70% da base, e a leitura com IA dos textos pode ajudar a fechar essa lacuna.</p>
+  </div>
+
+  <div class="rx-step">
+    <h3>5. O que dizem × o que fazem <span class="tec">comparação de grupos</span></h3>
+    <div class="charts"><div class="chart wide"><h3>Prometeram treinar X dias por semana; treinam em média…</h3><p class="cap">Dias por semana declarados no onboarding × treinos reais por semana nas últimas 4 semanas. A linha tracejada é "cumpriu a promessa".</p><div class="box" style="height:260px"><canvas id="cDecl"></canvas></div><p class="src">Fonte: onboarding (dias_por_semana normalizado, D-005) + atividades</p></div></div>
+    <p class="lesson"><b>Leitura:</b> todo mundo treina menos do que prometeu, e a distância cresce com a promessa: quem disse 5 dias treina ~3. A promessa ainda ordena as pessoas (r ≈ 0,46), então serve como variável, mas "distância entre promessa e prática" pode ser uma dimensão melhor para o K-means do que a promessa sozinha.</p>
+  </div>
+
+  <div class="rx-step">
+    <h3>6. O que anda junto <span class="tec">correlação de Pearson</span></h3>
+    <p class="lead">r vai de −1 a 1. Perto de 0: as variáveis não andam juntas em linha reta. Azul: sobem juntas; vermelho: quando uma sobe, a outra desce.</p>
+    <div class="tbl"><table class="corr" id="tCorr"></table></div>
+    <div class="charts"><div class="chart wide"><h3 id="hDisp">Quem abre o app treina mais</h3><p class="cap">Amostra de 500 assinantes ativos. Cada ponto é uma pessoa.</p><div class="box" style="height:280px"><canvas id="cDisp"></canvas></div><p class="src">Correlação não é causa: abrir o app não faz treinar; quem treina abre o app para registrar.</p></div></div>
+    <p class="lesson"><b>Para o K-means:</b> treinos, minutos, semanas ativas e sessões no app andam muito juntos (r de 0,5 a 0,8). Se entrarem todos, o "quanto treina" vale quatro vezes no cálculo da distância. Melhor escolher um ou dois. Idade, tempo de casa e % de vídeo quase não se correlacionam com o resto: trazem informação nova.</p>
+  </div>
+
+  <div class="rx-step">
+    <h3>7. A média esconde grupos <span class="tec">cruzamentos · terceira variável</span></h3>
+    <p class="lead">Taxa de desligamento em 60 dias em cada combinação, com o tamanho do grupo (n). Células com menos de 200 pessoas ficam apagadas: a taxa delas oscila muito.</p>
+    <div class="legend-heat"><span>menor</span><i style="background:linear-gradient(90deg,var(--ok-soft),var(--risk))"></i><span>maior saída</span></div>
+    <div class="two">
+      <div class="card"><h3>Plano × tempo de casa</h3><div class="tbl" style="border:0"><table class="heat" id="mPlanoCasa"></table></div><p class="cap" style="color:var(--muted);font-size:14px">Mensal novo sai 3,7× mais que anual veterano. O contrato e o tempo de casa são o primeiro corte da base.</p></div>
+      <div class="card"><h3>Objetivo × plano</h3><div class="tbl" style="border:0"><table class="heat" id="mObjPlano"></table></div><p class="cap" style="color:var(--muted);font-size:14px">No mensal, quem entrou por meta com prazo, desempenho ou estética sai quase 3× mais que quem entrou por bem-estar. No anual a diferença encolhe: o contrato segura.</p></div>
+    </div>
+    <div class="card"><h3>Tempo de casa × frequência de treino (a terceira variável)</h3><div class="tbl" style="border:0"><table class="heat" id="mCasaFreq"></table></div><p style="color:var(--muted);font-size:14px">Olhando a base toda, quem treina pouco parece sair mais. Mas, dentro de cada faixa de tempo de casa, a frequência quase não muda a taxa: quem está há mais de um ano sai ~9% treinando muito ou pouco. Boa parte do "efeito do treino" era tempo de casa disfarçado. O que avisa a saída é a <b>queda</b> do treino (exame 8), não o nível.</p></div>
+  </div>
+
+  <div class="rx-step">
+    <h3>8. Que lente explica a saída? <span class="tec">três lentes · separar × cobrir</span></h3>
+    <div class="charts">
+      <div class="chart"><h3>Quanto cada lente separa quem sai</h3><p class="cap">AUC de uma regressão logística só com as variáveis de cada lente, validação cruzada em 5 partes. 0,50 = moeda; 1,00 = perfeito.</p><div class="box" style="height:260px"><canvas id="cLentes"></canvas></div><p class="src">Gabarito de 31/05 · src/raio_x.py</p></div>
+      <div class="card"><h3>O que isso diz</h3><ul>
+        <li><b>Quem é</b> (idade, estado, celular) quase não separa. E, pela LGPD e pela Aula 3, idade e sexo nunca viram gatilho de ação.</li>
+        <li><b>Contrato</b> é a lente mais forte sozinha: plano, tempo de casa, canal de pagamento.</li>
+        <li><b>Comportamento</b> e <b>necessidade</b> (o porquê de ter contratado) somam ao contrato: juntas, as lentes chegam a 0,68.</li>
+        <li>Nenhuma lente sozinha basta, o que é um bom sinal para o K-means: os grupos devem combinar contrato, comportamento e objetivo.</li>
+      </ul></div>
+    </div>
+    <p class="lead">Cada hipótese vira uma tabela: a taxa de quem tem a característica, a de quem não tem, e quanto das saídas ela cobre. Um bom segmento precisa <b>separar</b> (taxa bem diferente) e <b>cobrir</b> (pegar uma parte relevante das saídas).</p>
+    <div class="tbl"><table><thead><tr><th>Hipótese</th><th>n</th><th>% da base</th><th>Taxa dentro</th><th>Taxa fora</th><th>Diferença</th><th>Cobre das saídas</th></tr></thead><tbody id="tHip"></tbody></table></div>
+    <p class="lesson"><b>Cruzamento aponta suspeitos, não culpados.</b> "Mensal novo com meta de prazo" separa muito (29% × 14%) mas cobre só 7% das saídas; "plano mensal" cobre 59%, mas separa menos. É essa troca que o K-means vai organizar. Surpresas: ficar mais de 14 dias sem treinar quase não muda a taxa (muitos param e seguem pagando), e o anual perto de renovar desliga <i>menos</i> que a média nesta janela.</p>
+  </div>
+</section>
+
+<section id="dados">
+  <div class="label">O que os dados mostram</div>
+  <h2>Os números por trás das decisões</h2>
+  <div class="charts">
+    <div class="chart wide"><h3>Churn mensal: a subida de 2026</h3><p class="cap">Perdas no mês ÷ assinantes pagantes no início do mês. Linhas tracejadas: média de cada ano. Bate com o enunciado (5,6% em 2025; 6,6% em 2026; pico de 8,1% em abril/2026).</p><div class="box"><canvas id="cChurn" aria-label="Gráfico de churn mensal"></canvas></div><p class="src">Fonte: eventos_assinatura (horário de Brasília, D-009) + assinaturas · src/painel_dados.py</p></div>
+    <div class="chart"><h3>A decisão dá aviso</h3><p class="cap">Treinos por semana nas 8 semanas antes de desligar a renovação, contra "gêmeos" (mesmo plano e tempo de casa) que não desligaram.</p><div class="box"><canvas id="cTraj"></canvas></div><p class="src" id="srcTraj"></p></div>
+    <div class="chart"><h3>O que é mais comum em quem desliga</h3><p class="cap">% de cada grupo com o sinal antes do desligamento. Preço e cartão recusado não diferenciam.</p><div class="box"><canvas id="cSinais"></canvas></div><p class="src">Fonte: atividades, feed_posts, tickets, pagamentos · src/motivos.py</p></div>
+    <div class="chart"><h3>Por que contratou muda quem fica</h3><p class="cap">Objetivo declarado no onboarding: quem desligou × gêmeos. Meta com prazo e estética saem mais; saúde e bem-estar ficam.</p><div class="box"><canvas id="cObj"></canvas></div><p class="src">Fonte: onboarding (classificação provisória por palavras-chave)</p></div>
+    <div class="chart"><h3>Perfis de quem desligou</h3><p class="cap">Primeiro sinal que se aplica: prova concluída → parou de treinar → técnico → cobrança. Quase metade sem sinal claro: espaço para a leitura de textos com IA.</p><div class="box"><canvas id="cPerfis"></canvas></div><p class="src" id="srcPerfis"></p></div>
+    <div class="chart"><h3>Mensais: o tempo de casa pesa</h3><p class="cap">Saída em 60 dias por tempo de casa (corte de 31/05, mensais sem saída anunciada).</p><div class="box"><canvas id="cTempo"></canvas></div><p class="src">Fonte: base_corte_2026-05-31 · src/dimensoes.py</p></div>
+    <div class="chart"><h3>Mensais: o canal de pagamento pesa</h3><p class="cap">Saída em 60 dias por canal. Google Play sai mais que App Store.</p><div class="box"><canvas id="cCanal"></canvas></div><p class="src">Fonte: base_corte_2026-05-31 · src/dimensoes.py</p></div>
+    <div class="chart wide"><h3>O que separa quem sai (AUC de cada dimensão, sozinha)</h3><p class="cap">0,50 = não separa nada; 1,00 = separa perfeitamente (régua do slide 9 da Aula 2). Em cada grupo, sem quem já anunciou a saída. ★ = dimensão nova, criada por nós.</p><div class="box"><canvas id="cAuc"></canvas></div><p class="src">Fonte: saidas/dimensoes_auc.csv · cortes 31/05 e 31/07</p></div>
+    <div class="chart"><h3>Base ativa em 30/09/2026</h3><p class="cap">Plano e canal de pagamento. Igual ao enunciado (57% anual; 36,6% App Store, 33,6% Google Play, 20,3% cartão, 9,5% Pix).</p><div class="box"><canvas id="cBase"></canvas></div><p class="src">Fonte: base_assinantes_corte · src/base_integrada.py</p></div>
+    <div class="chart"><h3>Como limpamos: 53 decisões</h3><p class="cap">Decisões por dimensão de qualidade (Wang & Strong) e por tipo de ação (Aula 2: limpar é decidir).</p><div class="box"><canvas id="cDec"></canvas></div><p class="src">Fonte: DECISOES.md</p></div>
+  </div>
+</section>
+
+<section id="achados">
+  <div class="label">Achados principais</div>
+  <h2>O que já sabemos, e o que caiu</h2>
+  <div class="findings">
+    <div class="finding"><h3>Quem desligou a renovação vai sair</h3><p id="fAnun"></p></div>
+    <div class="finding"><h3>A decisão dá 4 semanas de aviso</h3><p>Quem desliga treinava igual aos outros, mas os treinos caem nas 4 semanas anteriores, até cerca de 1 por semana. Há uma janela para agir antes da decisão.</p></div>
+    <div class="finding"><h3>"Objetivo cumprido" é real</h3><p>Post de prova concluída no mês anterior é cerca de 8 vezes mais comum em quem desliga. Para essa pessoa, a oferta certa é uma nova meta, não desconto.</p></div>
+    <div class="finding"><h3>O contrato manda mais que o comportamento</h3><p>"Renova nos próximos 60 dias?" é a dimensão que mais separa. Um anual longe da renovação não tem como sair. Tempo de casa e canal pesam nos mensais.</p></div>
+    <div class="finding no"><h3>Não se confirmou: preço</h3><p>Comparando pessoas com o mesmo tempo de casa, quem sofreu o reajuste de março desligou na mesma proporção de quem não sofreu.</p></div>
+    <div class="finding no"><h3>Não se confirmou: suporte, amigos, cartão</h3><p>Chamado sem solução, amigos que saíram e cartão recusado não separam quem sai. Isso também é informação para o objetivo 2.</p></div>
+  </div>
+</section>
+
+<section id="decisoes">
+  <div class="label">Decisões-chave</div>
+  <h2>O que já está decidido</h2>
+  <p class="lead">Todas as decisões, com motivo e efeito nos números, estão no <a href="https://github.com/pedrofilardi-mba-hub/vitaliza_grupo_05/blob/main/DECISOES.md" target="_blank" rel="noopener">DECISOES.md</a>. Decisões erradas não são apagadas: ganham o status "substituída" e uma correção.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Decisão</th><th>O que decide</th><th>Por que importa</th></tr></thead>
+    <tbody>
+      <tr><td><code>D-002</code></td><td>Corte em 30/09/2026; nada posterior entra nas variáveis</td><td>Evita que o modelo "veja o futuro"</td></tr>
+      <tr><td><code>D-009 · D-026 · D-030</code></td><td>Horários das lojas e do Garmin convertidos de UTC para Brasília</td><td>753 eventos caíam no mês errado; com a conversão, as datas batem 100% entre arquivos</td></tr>
+      <tr><td><code>D-013</code></td><td>60 contas internas (cortesia) fora das métricas</td><td>A base de pagantes é 14.753, não 14.813</td></tr>
+      <tr><td><code>D-014 · D-015</code></td><td>Churn só a partir de 07/2024; a foto de 01/10 nunca serve para prever</td><td>Sobreviventes e vazamento</td></tr>
+      <tr><td><code>D-024</code></td><td>1.941 cobranças repetidas removidas</td><td>Faturamento de setembro bate com a Aula 2 (R$ 492.572 bruto; R$ 436.442 líquido)</td></tr>
+      <tr><td><code>D-028 · D-029</code></td><td>Painel mensal padronizado por assinante ativo; regra de fonte resumo × detalhe</td><td>A "queda de uso" na virada do ano era mudança de registro</td></tr>
+      <tr><td><code>D-031 · D-033 · D-034</code></td><td>Treinos em dobro removidos; distâncias e durações recalculadas pelo ritmo</td><td>Reproduz os números da Aula 2 (9.383 duplicatas; 951 distâncias; 3.649 durações)</td></tr>
+      <tr><td><code>D-038</code></td><td>Regra para medir a campanha: grupo inteiro contra o controle, pela saída</td><td>Base do objetivo 6 (qual mensagem funciona)</td></tr>
+      <tr><td><code>D-046 · D-047</code></td><td>Motivo revisado pelo comentário ("objetivo cumprido"); nunca generalizar a pesquisa</td><td>Só quem cancela pelo site responde</td></tr>
+      <tr><td><code>D-052</code></td><td>Quem já desligou a renovação vai para uma regra à parte</td><td>99% dos mensais nessa situação saem; não precisa de modelo</td></tr>
+      <tr><td><code>D-053</code></td><td>O modelo prevê quem vai desligar a renovação em 60 dias</td><td>Avisa antes da decisão e inclui os anuais</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="qualidade">
+  <div class="label">Qualidade dos dados · 12 arquivos</div>
+  <h2>O que cada arquivo tinha de errado</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Arquivo</th><th>Principal problema</th><th>Decisões</th><th>Status</th></tr></thead>
+    <tbody id="tQual"></tbody>
+  </table></div>
+</section>
+
+<section id="entregas">
+  <div class="label">Entregas</div>
+  <h2>O que o guia pede, e onde estamos</h2>
+  <div class="two">
+    <div class="card"><div class="label">Semana 5 · 15/11 · feedback, sem nota</div><h3>Segmentação e EDA</h3><ul id="e5"></ul></div>
+    <div class="card"><div class="label">Semana 10 · 20/12 · com nota</div><h3>Modelo, app e plano de intervenção</h3><ul id="e10"></ul></div>
+  </div>
+  <p class="lead">Entrega: pasta pública no Google Drive com os arquivos; <b>cada integrante envia o link na Adalove</b> (a entrega é individual).</p>
+</section>
+
+<section id="limites">
+  <div class="label">Limites e pendências</div>
+  <h2>O que ainda não dá para afirmar</h2>
+  <div class="two">
+    <div class="card"><h3>Limites da análise</h3><ul>
+      <li>Textos classificados por palavras-chave, de forma provisória; a leitura com IA e a conferência com amostra feita à mão vêm no objetivo 5.</li>
+      <li>Cruzamentos apontam suspeitos, não provam causa. Só a campanha de agosto é um experimento sorteado.</li>
+      <li>O histórico só começa em 07/2024: clientes antigos são "sobreviventes" (D-014).</li>
+      <li>Resumo mensal e detalhe de treinos discordam em 2026 (D-029); aguarda resposta do professor.</li>
+      <li>Quase metade de quem desliga não mostra sinal claro nos dados.</li>
+    </ul></div>
+    <div class="card"><h3>Pendências</h3><ul>
+      <li>K-means da base toda e escolha de 3 a 4 personas.</li>
+      <li>Notebook de EDA com os gráficos e o mini deck (tecnologia).</li>
+      <li>Relatório de segmentação com cartões de persona, prioridade e limites (negócios).</li>
+      <li>Pergunta ao professor sobre a D-029.</li>
+      <li>Detalhar a regra à parte (D-052): mensagem, canal e oferta.</li>
+    </ul></div>
+  </div>
+</section>
+
+<footer>
+  <p>Código, decisões e relatórios: <a href="https://github.com/pedrofilardi-mba-hub/vitaliza_grupo_05" target="_blank" rel="noopener">github.com/pedrofilardi-mba-hub/vitaliza_grupo_05</a> · resumo em texto: <a href="https://github.com/pedrofilardi-mba-hub/vitaliza_grupo_05/blob/main/docs/PROGRESSO.md" target="_blank" rel="noopener">PROGRESSO.md</a></p>
+  <p>Os dados da Vitaliza são fictícios, gerados para o curso. Os números deste painel são agregados e saem de <code>src/painel_dados.py</code>.</p>
+</footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+const D = {"gerado_em": "07/11/2026 10:31", "churn_mensal": [{"mes": "2025-01", "ativos_inicio": 8540, "perdas": 534, "churn": 0.0625}, {"mes": "2025-02", "ativos_inicio": 9418, "perdas": 529, "churn": 0.0562}, {"mes": "2025-03", "ativos_inicio": 10014, "perdas": 552, "churn": 0.0551}, {"mes": "2025-04", "ativos_inicio": 10577, "perdas": 522, "churn": 0.0494}, {"mes": "2025-05", "ativos_inicio": 10937, "perdas": 543, "churn": 0.0496}, {"mes": "2025-06", "ativos_inicio": 11317, "perdas": 562, "churn": 0.0497}, {"mes": "2025-07", "ativos_inicio": 11640, "perdas": 679, "churn": 0.0583}, {"mes": "2025-08", "ativos_inicio": 11811, "perdas": 774, "churn": 0.0655}, {"mes": "2025-09", "ativos_inicio": 12020, "perdas": 704, "churn": 0.0586}, {"mes": "2025-10", "ativos_inicio": 12413, "perdas": 742, "churn": 0.0598}, {"mes": "2025-11", "ativos_inicio": 12771, "perdas": 723, "churn": 0.0566}, {"mes": "2025-12", "ativos_inicio": 13023, "perdas": 695, "churn": 0.0534}, {"mes": "2026-01", "ativos_inicio": 13140, "perdas": 959, "churn": 0.073}, {"mes": "2026-02", "ativos_inicio": 13728, "perdas": 830, "churn": 0.0605}, {"mes": "2026-03", "ativos_inicio": 14111, "perdas": 989, "churn": 0.0701}, {"mes": "2026-04", "ativos_inicio": 14237, "perdas": 1154, "churn": 0.0811}, {"mes": "2026-05", "ativos_inicio": 14119, "perdas": 1026, "churn": 0.0727}, {"mes": "2026-06", "ativos_inicio": 14102, "perdas": 866, "churn": 0.0614}, {"mes": "2026-07", "ativos_inicio": 14059, "perdas": 948, "churn": 0.0674}, {"mes": "2026-08", "ativos_inicio": 14032, "perdas": 834, "churn": 0.0594}, {"mes": "2026-09", "ativos_inicio": 14319, "perdas": 714, "churn": 0.0499}], "base": {"assinantes": 14753, "plano": {"anual": 0.575, "mensal": 0.425}, "canal": {"app_store": 0.366, "google_play": 0.336, "web_cartao": 0.203, "web_pix": 0.095}, "saida_anunciada": 2250}, "mensal_tempo_casa": [{"faixa": "até 1 mês", "n": 644, "saida": 0.227}, {"faixa": "1–3 meses", "n": 987, "saida": 0.176}, {"faixa": "3–6 meses", "n": 1204, "saida": 0.204}, {"faixa": "6–12 meses", "n": 1209, "saida": 0.16}, {"faixa": "+12 meses", "n": 1644, "saida": 0.114}], "mensal_canal": [{"canal": "app_store", "n": 2044, "saida": 0.125}, {"canal": "google_play", "n": 1850, "saida": 0.185}, {"canal": "web_cartao", "n": 1098, "saida": 0.19}, {"canal": "web_pix", "n": 696, "saida": 0.201}], "anunciados": {"n": 2137, "mensal": 0.993, "anual": 0.208}, "dimensoes": [{"dimensao": "renova_em_60d", "nova": true, "familia": "contrato", "todos": 0.756, "mensais": null, "anuais_renovam": null}, {"dimensao": "plano", "nova": false, "familia": "contrato", "todos": 0.747, "mensais": null, "anuais_renovam": null}, {"dimensao": "dias_ate_renovacao", "nova": true, "familia": "contrato", "todos": 0.739, "mensais": 0.538, "anuais_renovam": 0.615}, {"dimensao": "dias_desde_ultimo_treino", "nova": false, "familia": "comportamento", "todos": 0.516, "mensais": 0.538, "anuais_renovam": 0.737}, {"dimensao": "treinos_4s", "nova": false, "familia": "comportamento", "todos": 0.512, "mensais": 0.514, "anuais_renovam": 0.726}, {"dimensao": "semanas_ativas_8s", "nova": true, "familia": "comportamento", "todos": 0.511, "mensais": 0.531, "anuais_renovam": 0.695}, {"dimensao": "minutos_3m", "nova": false, "familia": "comportamento", "todos": 0.511, "mensais": 0.506, "anuais_renovam": 0.69}, {"dimensao": "sessoes_mes", "nova": false, "familia": "comportamento", "todos": 0.509, "mensais": 0.513, "anuais_renovam": 0.682}, {"dimensao": "treinos_4s_anteriores", "nova": false, "familia": "comportamento", "todos": 0.521, "mensais": 0.508, "anuais_renovam": 0.665}, {"dimensao": "afetado_reajuste", "nova": true, "familia": "contrato", "todos": 0.652, "mensais": 0.53, "anuais_renovam": null}, {"dimensao": "tempo_casa_meses", "nova": false, "familia": "contrato", "todos": 0.61, "mensais": 0.581, "anuais_renovam": 0.574}, {"dimensao": "irregularidade_8s", "nova": true, "familia": "comportamento", "todos": 0.538, "mensais": 0.541, "anuais_renovam": 0.601}, {"dimensao": "pct_video_90d", "nova": false, "familia": "comportamento", "todos": 0.554, "mensais": 0.574, "anuais_renovam": 0.6}, {"dimensao": "posts_90d", "nova": false, "familia": "rede social", "todos": 0.538, "mensais": 0.541, "anuais_renovam": 0.578}], "trajetoria": [{"semana": 8, "desligou": 2.42, "gemeo": 2.17}, {"semana": 7, "desligou": 2.51, "gemeo": 2.23}, {"semana": 6, "desligou": 2.45, "gemeo": 2.27}, {"semana": 5, "desligou": 2.32, "gemeo": 2.32}, {"semana": 4, "desligou": 2.19, "gemeo": 2.34}, {"semana": 3, "desligou": 2.0, "gemeo": 2.4}, {"semana": 2, "desligou": 1.57, "gemeo": 2.48}, {"semana": 1, "desligou": 1.01, "gemeo": 2.51}], "sinais": [{"sinal": "Treinos caíram pela metade", "desligou": 0.333, "gemeo": 0.097}, {"sinal": "Post de prova concluída (30 dias)", "desligou": 0.091, "gemeo": 0.012}, {"sinal": "Nenhum treino em 4 semanas", "desligou": 0.088, "gemeo": 0.043}, {"sinal": "Chamado técnico (60 dias)", "desligou": 0.043, "gemeo": 0.019}, {"sinal": "Cartão recusado (60 dias)", "desligou": 0.015, "gemeo": 0.019}, {"sinal": "Pagava o preço antigo (reajuste)", "desligou": 0.454, "gemeo": 0.449}], "perfis": [{"perfil": "sem_sinal_claro", "n": 3117}, {"perfil": "parou_de_treinar", "n": 2416}, {"perfil": "objetivo_cumprido", "n": 606}, {"perfil": "problema_tecnico", "n": 425}, {"perfil": "cobranca", "n": 60}], "objetivos": [{"objetivo": "prova_com_prazo", "desligou": 0.082, "gemeo": 0.046}, {"objetivo": "desempenho", "desligou": 0.099, "gemeo": 0.069}, {"objetivo": "estetica", "desligou": 0.152, "gemeo": 0.105}, {"objetivo": "companhia", "desligou": 0.121, "gemeo": 0.134}, {"objetivo": "saude", "desligou": 0.131, "gemeo": 0.183}, {"objetivo": "bem_estar", "desligou": 0.067, "gemeo": 0.113}], "desligamentos": 6624, "decisoes": {"total": 53, "substituidas": 2, "acoes": {"marcar": 20, "corrigir": 19, "remover": 6, "regra": 2}, "dimensoes": {"completude": 7, "validade": 14, "consistência": 17, "unicidade": 5, "temporalidade": 10}}, "raiox": {"funil": [{"etapa": "Contas criadas (até 30/09)", "n": 64829}, {"etapa": "Começaram o teste grátis (desde 07/2024)", "n": 46996}, {"etapa": "Pagaram alguma vez", "n": 32583}, {"etapa": "Pagantes ativos em 30/09", "n": 14753}, {"etapa": "… sem saída anunciada (modelo, D-052)", "n": 12503}], "estatisticas": [{"variavel": "Idade (anos)", "n": 13856, "min": 18.0, "q1": 39.0, "mediana": 46.0, "q3": 55.0, "max": 74.0, "media": 47.486359699769054, "dp": 11.079840240753038, "cv": 0.23332679764894515, "extremos_iqr": 0, "zeros": 0.0}, {"variavel": "Tempo de casa (meses)", "n": 14753, "min": 0.0, "q1": 4.0, "mediana": 8.6, "q3": 18.2, "max": 72.7, "media": 13.729444858672812, "dp": 15.22116078711649, "cv": 1.108650855427805, "extremos_iqr": 1125, "zeros": 0.003999186606114011}, {"variavel": "Treinos nas últimas 4 semanas", "n": 14753, "min": 0.0, "q1": 3.0, "mediana": 8.0, "q3": 13.0, "max": 57.0, "media": 8.844031722361553, "dp": 7.09599749026569, "cv": 0.8023487152724619, "extremos_iqr": 227, "zeros": 0.12011116383108521}, {"variavel": "Minutos de treino em 3 meses", "n": 14753, "min": 0.0, "q1": 467.7, "mediana": 1031.8, "q3": 1666.2, "max": 11634.8, "media": 1183.7922814410629, "dp": 975.5609577355386, "cv": 0.8240980896986095, "extremos_iqr": 382, "zeros": 0.04995594116450891}, {"variavel": "Dias desde o último treino", "n": 14577, "min": 0.0, "q1": 0.0, "mediana": 2.0, "q3": 7.0, "max": 271.0, "media": 12.778486657062496, "dp": 32.66006321550711, "cv": 2.555863154378796, "extremos_iqr": 2075, "zeros": 0.25012005213692806}, {"variavel": "Aberturas do app no mês", "n": 14753, "min": 0.0, "q1": 3.0, "mediana": 6.0, "q3": 14.0, "max": 76.0, "media": 9.132854334711585, "dp": 8.539248440617204, "cv": 0.9350032451696683, "extremos_iqr": 397, "zeros": 0.039924083237307666}, {"variavel": "Seguidores na rede", "n": 14753, "min": 0.0, "q1": 0.0, "mediana": 1.0, "q3": 2.0, "max": 13.0, "media": 1.6596624415373145, "dp": 1.5064522543789265, "cv": 0.9076859346069962, "extremos_iqr": 276, "zeros": 0.25493120043381007}, {"variavel": "Posts em 90 dias", "n": 14753, "min": 0.0, "q1": 0.0, "mediana": 1.0, "q3": 2.0, "max": 9.0, "media": 1.5035585982512032, "dp": 1.3816778085138284, "cv": 0.9189384505006091, "extremos_iqr": 189, "zeros": 0.2684199823764658}, {"variavel": "Dias por semana declarados no onboarding", "n": 13262, "min": 1.0, "q1": 2.0, "mediana": 3.0, "q3": 4.0, "max": 7.0, "media": 3.5155331020962146, "dp": 1.4794242766716934, "cv": 0.4208250167775561, "extremos_iqr": 0, "zeros": 0.0}], "hist": {"idade": {"labels": ["18–24", "25–29", "30–34", "35–39", "40–44", "45–49", "50–54", "55–59", "60–64", "65–69", "70+"], "valores": [67, 381, 1166, 1942, 2407, 2380, 1969, 1428, 947, 552, 617]}, "tempo_casa": {"labels": ["<1", "1", "2", "3–5", "6–8", "9–11", "12–17", "18–23", "24–35", "36+"], "valores": [1119, 1057, 818, 2144, 2421, 1617, 1800, 1843, 712, 1222]}, "treinos_4s": {"labels": ["0", "1–2", "3–4", "5–8", "9–12", "13–16", "17–24", "25+"], "valores": [1772, 1436, 1267, 3376, 3051, 1877, 1528, 446], "nota": "176 sem nenhum treino registrado em 2026"}, "dias_sem_treinar": {"labels": ["0–1", "2–3", "4–7", "8–14", "15–30", "31–60", "61–90", "90+"], "valores": [6055, 2716, 2286, 1196, 838, 592, 325, 569]}}, "composicao": {"objetivo": [{"valor": "nao_informado", "pct": 0.301}, {"valor": "saude", "pct": 0.17}, {"valor": "companhia", "pct": 0.121}, {"valor": "estetica", "pct": 0.117}, {"valor": "bem_estar", "pct": 0.098}, {"valor": "desempenho", "pct": 0.078}, {"valor": "prova_com_prazo", "pct": 0.064}, {"valor": "outro", "pct": 0.051}], "canal_aquisicao": [{"valor": "organico", "pct": 0.314}, {"valor": "influenciador", "pct": 0.169}, {"valor": "meta_ads", "pct": 0.164}, {"valor": "indicacao", "pct": 0.151}, {"valor": "google_ads", "pct": 0.104}, {"valor": "parceria_corporativa", "pct": 0.098}], "relogio": [{"valor": "nenhum", "pct": 0.618}, {"valor": "garmin", "pct": 0.195}, {"valor": "apple_watch", "pct": 0.187}], "nivel": [{"valor": "intermediario", "pct": 0.403}, {"valor": "iniciante", "pct": 0.362}, {"valor": "avancado", "pct": 0.165}, {"valor": "nao_informado", "pct": 0.07}], "uf": [{"valor": "SP", "pct": 0.491}, {"valor": "RJ", "pct": 0.116}, {"valor": "MG", "pct": 0.069}, {"valor": "PR", "pct": 0.061}, {"valor": "DF", "pct": 0.05}, {"valor": "RS", "pct": 0.049}], "sistema": [{"valor": "android", "pct": 0.507}, {"valor": "ios", "pct": 0.493}]}, "declarado_real": [{"declarado": 1, "n": 820, "real_media": 1.23, "real_mediana": 1.25}, {"declarado": 2, "n": 2595, "real_media": 1.46, "real_mediana": 1.5}, {"declarado": 3, "n": 3804, "real_media": 1.84, "real_mediana": 1.75}, {"declarado": 4, "n": 3062, "real_media": 2.32, "real_mediana": 2.25}, {"declarado": 5, "n": 1657, "real_media": 2.89, "real_mediana": 3.0}, {"declarado": 6, "n": 600, "real_media": 3.65, "real_mediana": 4.0}, {"declarado": 7, "n": 724, "real_media": 4.65, "real_mediana": 5.0}], "correlacao": {"nomes": ["Tempo de casa", "Treinos 4 sem.", "Minutos 3 meses", "Semanas ativas", "Dias sem treinar", "Sessões no app", "Seguidores", "Posts 90 dias", "% vídeo", "Idade", "Dias declarados"], "matriz": [[1.0, -0.04, 0.06, 0.05, 0.05, -0.03, 0.33, 0.03, 0.0, 0.06, -0.01], [-0.04, 1.0, 0.77, 0.67, -0.42, 0.75, -0.03, 0.38, 0.03, -0.0, 0.46], [0.06, 0.77, 1.0, 0.69, -0.36, 0.59, 0.08, 0.48, -0.08, 0.0, 0.47], [0.05, 0.67, 0.69, 1.0, -0.62, 0.51, 0.07, 0.39, 0.09, 0.01, 0.17], [0.05, -0.42, -0.36, -0.62, 1.0, -0.31, 0.04, -0.2, -0.09, 0.0, -0.06], [-0.03, 0.75, 0.59, 0.51, -0.31, 1.0, -0.03, 0.29, 0.03, 0.0, 0.35], [0.33, -0.03, 0.08, 0.07, 0.04, -0.03, 1.0, 0.07, 0.01, 0.02, -0.01], [0.03, 0.38, 0.48, 0.39, -0.2, 0.29, 0.07, 1.0, 0.01, 0.01, 0.25], [0.0, 0.03, -0.08, 0.09, -0.09, 0.03, 0.01, 0.01, 1.0, 0.02, -0.05], [0.06, -0.0, 0.0, 0.01, 0.0, 0.0, 0.02, 0.01, 0.02, 1.0, -0.01], [-0.01, 0.46, 0.47, 0.17, -0.06, 0.35, -0.01, 0.25, -0.05, -0.01, 1.0]]}, "dispersao": {"x": "Aberturas do app no mês", "y": "Treinos nas últimas 4 semanas", "r": 0.75, "pontos": [[14, 7], [23, 14], [9, 6], [8, 7], [18, 12], [5, 9], [0, 0], [6, 1], [1, 1], [2, 0], [8, 5], [27, 18], [1, 2], [0, 3], [15, 10], [4, 5], [25, 19], [12, 9], [2, 2], [25, 20], [14, 10], [55, 41], [4, 12], [17, 13], [5, 2], [1, 0], [3, 1], [8, 17], [2, 12], [10, 7], [8, 5], [8, 5], [2, 0], [4, 7], [15, 12], [19, 12], [16, 13], [22, 17], [16, 11], [14, 11], [42, 32], [14, 11], [3, 2], [0, 0], [7, 4], [1, 0], [3, 6], [3, 9], [4, 16], [5, 5], [4, 5], [3, 3], [11, 6], [17, 13], [10, 7], [22, 16], [3, 7], [3, 4], [32, 24], [5, 3], [5, 2], [4, 6], [14, 10], [10, 7], [34, 22], [1, 1], [4, 22], [42, 33], [23, 18], [0, 0], [4, 11], [31, 24], [10, 7], [8, 21], [18, 14], [11, 22], [14, 9], [1, 1], [4, 3], [2, 4], [3, 9], [6, 4], [6, 15], [2, 1], [5, 9], [0, 0], [17, 13], [23, 17], [10, 21], [7, 5], [15, 12], [8, 17], [14, 11], [6, 14], [2, 1], [2, 14], [2, 1], [6, 11], [18, 13], [27, 19], [3, 5], [13, 10], [3, 6], [18, 14], [16, 11], [9, 21], [8, 6], [18, 13], [6, 16], [4, 2], [1, 0], [32, 26], [4, 8], [22, 18], [8, 11], [4, 10], [8, 7], [35, 27], [0, 0], [17, 14], [2, 9], [2, 1], [5, 7], [20, 14], [3, 7], [1, 1], [42, 32], [14, 10], [3, 14], [20, 14], [6, 2], [8, 19], [0, 0], [10, 6], [10, 8], [2, 1], [13, 10], [14, 10], [11, 8], [2, 6], [5, 3], [2, 1], [5, 3], [16, 12], [9, 19], [3, 0], [11, 8], [3, 2], [25, 18], [5, 9], [13, 9], [2, 0], [3, 15], [36, 28], [5, 16], [16, 13], [4, 7], [16, 13], [8, 5], [2, 7], [15, 11], [4, 10], [16, 10], [4, 21], [27, 22], [9, 6], [12, 8], [5, 4], [5, 2], [2, 1], [4, 16], [39, 28], [5, 13], [2, 6], [2, 0], [4, 9], [0, 0], [2, 3], [11, 6], [2, 0], [24, 18], [17, 10], [11, 7], [8, 16], [11, 7], [1, 0], [17, 13], [2, 0], [2, 1], [1, 1], [4, 14], [9, 12], [12, 9], [2, 8], [8, 4], [28, 23], [7, 4], [28, 22], [7, 34], [9, 17], [8, 5], [6, 9], [1, 1], [27, 19], [17, 12], [5, 3], [4, 1], [5, 7], [8, 5], [43, 33], [2, 8], [8, 6], [2, 0], [20, 15], [3, 5], [16, 10], [14, 11], [3, 5], [4, 9], [25, 17], [8, 6], [14, 9], [12, 8], [20, 10], [11, 6], [4, 2], [16, 11], [10, 8], [4, 7], [27, 21], [19, 15], [22, 13], [6, 4], [3, 2], [2, 9], [19, 13], [24, 19], [11, 8], [11, 8], [15, 10], [1, 0], [0, 0], [21, 15], [2, 4], [2, 6], [6, 4], [3, 0], [18, 12], [3, 0], [4, 10], [2, 0], [4, 9], [2, 6], [4, 8], [6, 21], [19, 16], [11, 8], [2, 1], [22, 16], [3, 4], [1, 0], [8, 6], [13, 9], [13, 8], [8, 5], [32, 23], [23, 17], [6, 15], [12, 9], [34, 23], [15, 11], [2, 0], [3, 3], [7, 16], [2, 2], [16, 13], [13, 10], [0, 1], [9, 6], [5, 1], [4, 19], [4, 10], [16, 11], [4, 14], [8, 6], [5, 1], [18, 11], [0, 0], [1, 0], [24, 19], [18, 13], [7, 4], [3, 0], [2, 0], [1, 0], [27, 21], [6, 12], [7, 5], [1, 0], [4, 6], [10, 8], [5, 4], [4, 11], [1, 0], [4, 7], [12, 8], [1, 8], [6, 8], [2, 1], [5, 8], [3, 2], [0, 0], [1, 0], [2, 0], [4, 18], [4, 3], [2, 1], [1, 0], [4, 2], [2, 1], [16, 12], [0, 1], [2, 0], [0, 0], [18, 11], [6, 4], [5, 10], [36, 24], [2, 0], [28, 23], [0, 2], [1, 0], [3, 1], [4, 8], [4, 11], [46, 33], [2, 7], [6, 3], [13, 9], [23, 17], [3, 8], [21, 17], [11, 6], [11, 8], [4, 11], [3, 6], [3, 6], [22, 17], [2, 4], [3, 0], [11, 8], [2, 0], [10, 7], [6, 15], [22, 17], [21, 14], [2, 4], [4, 2], [16, 12], [2, 0], [1, 0], [6, 4], [22, 16], [4, 6], [2, 10], [6, 2], [1, 0], [2, 4], [13, 9], [9, 5], [1, 0], [12, 9], [3, 7], [2, 2], [11, 30], [0, 0], [1, 3], [10, 20], [4, 12], [5, 16], [4, 8], [26, 19], [13, 10], [8, 18], [9, 7], [57, 43], [5, 15], [0, 1], [1, 0], [13, 10], [0, 0], [4, 1], [4, 0], [13, 10], [2, 1], [8, 32], [1, 0], [16, 12], [22, 14], [16, 11], [9, 19], [6, 4], [4, 2], [2, 1], [1, 1], [2, 7], [21, 17], [8, 5], [9, 5], [11, 8], [1, 1], [2, 6], [2, 4], [3, 1], [32, 23], [6, 12], [5, 6], [8, 4], [4, 6], [1, 0], [5, 3], [3, 6], [4, 10], [15, 12], [12, 7], [17, 12], [4, 12], [13, 10], [2, 1], [6, 26], [2, 14], [7, 6], [4, 8], [10, 8], [16, 12], [34, 24], [0, 0], [10, 21], [2, 0], [2, 2], [1, 0], [0, 0], [28, 22], [1, 1], [17, 13], [4, 10], [8, 6], [4, 3], [7, 5], [4, 2], [6, 14], [4, 8], [6, 4], [8, 6], [7, 6], [10, 24], [19, 14], [2, 1], [6, 9], [8, 5], [31, 20], [14, 11], [28, 19], [1, 0], [9, 6], [28, 23], [2, 1], [14, 9], [20, 14], [7, 13], [1, 0], [6, 12], [3, 2], [17, 14], [5, 14], [6, 9], [7, 5], [18, 14], [5, 4], [2, 1], [16, 10], [2, 6], [4, 11], [40, 31], [0, 0], [3, 14], [0, 0], [7, 18], [3, 4], [4, 11], [23, 17], [2, 8], [1, 4], [10, 18], [11, 9], [5, 9], [4, 8], [0, 1], [6, 2], [12, 8]]}, "churn_base": {"n": 11965, "taxa": 0.1482, "corte": "31/05/2026"}, "mapa_plano_casa": {"linhas": ["mensal", "anual"], "colunas": ["até 1 mês", "1–3 meses", "3–6 meses", "6–12 meses", "+12 meses"], "celulas": [{"l": "mensal", "c": "até 1 mês", "taxa": 0.2484, "n": 644}, {"l": "mensal", "c": "1–3 meses", "taxa": 0.1884, "n": 987}, {"l": "mensal", "c": "3–6 meses", "taxa": 0.2417, "n": 1204}, {"l": "mensal", "c": "6–12 meses", "taxa": 0.177, "n": 1209}, {"l": "mensal", "c": "+12 meses", "taxa": 0.1235, "n": 1644}, {"l": "anual", "c": "até 1 mês", "taxa": 0.1212, "n": 363}, {"l": "anual", "c": "1–3 meses", "taxa": 0.1737, "n": 731}, {"l": "anual", "c": "3–6 meses", "taxa": 0.1673, "n": 1058}, {"l": "anual", "c": "6–12 meses", "taxa": 0.1332, "n": 1411}, {"l": "anual", "c": "+12 meses", "taxa": 0.0674, "n": 2714}]}, "mapa_casa_freq": {"linhas": ["até 1 mês", "1–3 meses", "3–6 meses", "6–12 meses", "+12 meses"], "colunas": ["menos de 1x", "1 a 2x", "2 a 3x", "mais de 3x"], "celulas": [{"l": "até 1 mês", "c": "menos de 1x", "taxa": 0.2583, "n": 151}, {"l": "até 1 mês", "c": "1 a 2x", "taxa": 0.2014, "n": 427}, {"l": "até 1 mês", "c": "2 a 3x", "taxa": 0.1762, "n": 227}, {"l": "até 1 mês", "c": "mais de 3x", "taxa": 0.1931, "n": 202}, {"l": "1–3 meses", "c": "menos de 1x", "taxa": 0.1917, "n": 120}, {"l": "1–3 meses", "c": "1 a 2x", "taxa": 0.1801, "n": 544}, {"l": "1–3 meses", "c": "2 a 3x", "taxa": 0.1617, "n": 470}, {"l": "1–3 meses", "c": "mais de 3x", "taxa": 0.1986, "n": 584}, {"l": "3–6 meses", "c": "menos de 1x", "taxa": 0.1833, "n": 251}, {"l": "3–6 meses", "c": "1 a 2x", "taxa": 0.1808, "n": 741}, {"l": "3–6 meses", "c": "2 a 3x", "taxa": 0.2317, "n": 561}, {"l": "3–6 meses", "c": "mais de 3x", "taxa": 0.2228, "n": 709}, {"l": "6–12 meses", "c": "menos de 1x", "taxa": 0.1896, "n": 443}, {"l": "6–12 meses", "c": "1 a 2x", "taxa": 0.1301, "n": 807}, {"l": "6–12 meses", "c": "2 a 3x", "taxa": 0.1406, "n": 647}, {"l": "6–12 meses", "c": "mais de 3x", "taxa": 0.1687, "n": 723}, {"l": "+12 meses", "c": "menos de 1x", "taxa": 0.0959, "n": 834}, {"l": "+12 meses", "c": "1 a 2x", "taxa": 0.0925, "n": 1351}, {"l": "+12 meses", "c": "2 a 3x", "taxa": 0.0779, "n": 1001}, {"l": "+12 meses", "c": "mais de 3x", "taxa": 0.0879, "n": 1172}]}, "mapa_objetivo_plano": {"linhas": ["prova_com_prazo", "desempenho", "estetica", "companhia", "saude", "bem_estar", "outro", "nao_informado", "sem_onboarding"], "colunas": ["mensal", "anual"], "celulas": [{"l": "prova_com_prazo", "c": "mensal", "taxa": 0.2973, "n": 222}, {"l": "prova_com_prazo", "c": "anual", "taxa": 0.1295, "n": 471}, {"l": "desempenho", "c": "mensal", "taxa": 0.2888, "n": 329}, {"l": "desempenho", "c": "anual", "taxa": 0.1518, "n": 606}, {"l": "estetica", "c": "mensal", "taxa": 0.2796, "n": 626}, {"l": "estetica", "c": "anual", "taxa": 0.1096, "n": 675}, {"l": "companhia", "c": "mensal", "taxa": 0.187, "n": 754}, {"l": "companhia", "c": "anual", "taxa": 0.1074, "n": 754}, {"l": "saude", "c": "mensal", "taxa": 0.1397, "n": 1095}, {"l": "saude", "c": "anual", "taxa": 0.088, "n": 1057}, {"l": "bem_estar", "c": "mensal", "taxa": 0.1053, "n": 693}, {"l": "bem_estar", "c": "anual", "taxa": 0.0854, "n": 574}, {"l": "outro", "c": "mensal", "taxa": 0.1648, "n": 267}, {"l": "outro", "c": "anual", "taxa": 0.1352, "n": 318}, {"l": "nao_informado", "c": "mensal", "taxa": 0.1804, "n": 1702}, {"l": "nao_informado", "c": "anual", "taxa": 0.124, "n": 1822}]}, "lentes": [{"lente": "Quem é (demografia)", "auc": 0.558}, {"lente": "Por que contratou (necessidade)", "auc": 0.56}, {"lente": "Contrato", "auc": 0.637}, {"lente": "O que faz (comportamento)", "auc": 0.599}, {"lente": "Todas juntas", "auc": 0.675}], "hipoteses": [{"hipotese": "Mensal até 3 meses + meta com prazo, desempenho ou estética", "n": 453, "pct_base": 0.038, "taxa_dentro": 0.287, "taxa_fora": 0.143, "diferenca_pp": 14.4, "cobertura": 0.073}, {"hipotese": "Mensal com até 1 mês de casa", "n": 644, "pct_base": 0.054, "taxa_dentro": 0.248, "taxa_fora": 0.142, "diferenca_pp": 10.6, "cobertura": 0.09}, {"hipotese": "Plano mensal", "n": 5688, "pct_base": 0.475, "taxa_dentro": 0.185, "taxa_fora": 0.115, "diferenca_pp": 7.1, "cobertura": 0.594}, {"hipotese": "Treinos caíram pela metade (4 semanas)", "n": 1179, "pct_base": 0.099, "taxa_dentro": 0.208, "taxa_fora": 0.142, "diferenca_pp": 6.6, "cobertura": 0.138}, {"hipotese": "Menos de 30 anos (só descrição; não vira gatilho)", "n": 375, "pct_base": 0.031, "taxa_dentro": 0.205, "taxa_fora": 0.146, "diferenca_pp": 5.9, "cobertura": 0.043}, {"hipotese": "Entrou por meta com prazo, desempenho ou estética", "n": 2929, "pct_base": 0.245, "taxa_dentro": 0.192, "taxa_fora": 0.134, "diferenca_pp": 5.8, "cobertura": 0.318}, {"hipotese": "Até 3 meses de casa", "n": 2725, "pct_base": 0.228, "taxa_dentro": 0.19, "taxa_fora": 0.136, "diferenca_pp": 5.4, "cobertura": 0.292}, {"hipotese": "Paga pelo Google Play", "n": 3984, "pct_base": 0.333, "taxa_dentro": 0.173, "taxa_fora": 0.136, "diferenca_pp": 3.8, "cobertura": 0.39}, {"hipotese": "Mais de 14 dias sem treinar", "n": 754, "pct_base": 0.063, "taxa_dentro": 0.156, "taxa_fora": 0.148, "diferenca_pp": 0.9, "cobertura": 0.067}, {"hipotese": "Anual que renova em 60 dias", "n": 630, "pct_base": 0.053, "taxa_dentro": 0.106, "taxa_fora": 0.151, "diferenca_pp": -4.4, "cobertura": 0.038}]}};
+const pc = (v, d = 1) => (v * 100).toFixed(d).replace('.', ',') + '%';
+const nm = v => Number(v).toLocaleString('pt-BR');
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+
+// ---------- prazos
+(function () {
+  const hoje = new Date(); hoje.setHours(0, 0, 0, 0);
+  const prazos = [['Semana 5 · segmentação e EDA', '2026-11-15'], ['Semana 10 · modelo, app e plano', '2026-12-20']];
+  const el = document.getElementById('deadlines');
+  prazos.forEach(([n, d], i) => {
+    const dias = Math.round((new Date(d + 'T00:00:00') - hoje) / 864e5);
+    el.insertAdjacentHTML('beforeend', `<div class="deadline ${i === 0 ? 'next' : ''}"><span class="days num">${dias}</span><span><b>${dias === 1 ? 'dia' : 'dias'}</b> até ${d.slice(8, 10)}/${d.slice(5, 7)}<small>${n}</small></span></div>`);
+  });
+  document.getElementById('atualizado').textContent = 'Dados atualizados em ' + (D.gerado_em || '—') + ' · painel gerado a partir do repositório do grupo';
+})();
+
+// ---------- splits
+(function () {
+  const s = D.churn_mensal || [];
+  const avg = y => { const v = s.filter(x => x.mes.startsWith(y)).map(x => x.churn); return v.reduce((a, b) => a + b, 0) / v.length; };
+  const items = [
+    [nm(D.base?.assinantes ?? 0), 'assinantes pagantes em 30/09', '<span class="check">✓</span> enunciado: 14.753'],
+    [pc(avg('2025')) + ' <small>→ ' + pc(avg('2026')) + '</small>', 'churn mensal médio, 2025 → 2026', '<span class="check">✓</span> enunciado: 5,6% → 6,6%'],
+    ['12<small>/12</small>', 'arquivos avaliados nas 5 dimensões', 'relatórios em saidas/qualidade/'],
+    [String(D.decisoes?.total ?? '—'), 'decisões registradas', `${D.decisoes?.substituidas ?? 0} corrigidas, sem apagar`],
+    ['R$ 436.442', 'faturamento líquido de set/2026', '<span class="check">✓</span> Aula 2, slide 9'],
+    [nm(D.base?.saida_anunciada ?? 0), 'já desligaram a renovação', 'regra à parte (D-052)'],
+  ];
+  document.getElementById('splits').innerHTML = items.map(([v, l, r]) => `<div class="split"><div class="v num">${v}</div><div>${l}</div><div class="ref">${r}</div></div>`).join('');
+})();
+
+// ---------- percurso
+(function () {
+  const fases = [
+    ['Organização', 'Repositório no GitHub, regras do projeto (AGENTS.md), guia para configurar as máquinas', 'done'],
+    ['Inventário', 'Os 12 arquivos conferidos contra o dicionário: o data room está completo', 'done'],
+    ['Qualidade', 'Skill de qualidade nas 5 dimensões aplicada aos 12 arquivos', 'done'],
+    ['Limpeza', 'Script aplica as decisões e confere cada número; os brutos nunca mudam', 'done'],
+    ['Base integrada', '1 linha por assinante ativo em 30/09, 49 colunas, bate com o enunciado', 'done'],
+    ['Dimensões novas', '19 dimensões testadas com gabarito histórico (31/05 e 31/07)', 'done'],
+    ['Motivos', 'Por que desligam: trajetória, sinais, perfis; desenho do modelo (D-052, D-053)', 'done'],
+    ['Raio-x da base', 'Análise exploratória da base toda com as técnicas das Aulas 2 e 3: distribuições, extremos, correlação, cruzamentos, três lentes', 'done'],
+    ['Clusters e personas', 'K-means da base toda (sem usar o churn) → churn e valor por grupo → 3 a 4 personas', 'now'],
+    ['EDA e mini deck', 'Notebook com os gráficos + 3 a 5 slides (tecnologia, semana 5)', 'todo'],
+    ['Relatório de segmentação', 'Cartões de persona, drivers, prioridade, limites (negócios, semana 5)', 'todo'],
+    ['Modelo de churn', 'Logística, árvores, boosting; métricas e interpretação (semana 10)', 'todo'],
+    ['App preditivo-generativo', 'Marimo + API de IA generativa para a mensagem de retenção (semana 10)', 'todo'],
+    ['Plano de intervenção e ROI', 'Segmentos-alvo, oferta, custo da IA, KPIs (semana 10)', 'todo'],
+  ];
+  const txt = { done: 'concluído', now: 'em andamento', todo: 'a fazer' };
+  document.getElementById('course').innerHTML = fases.map(([t, d, st], i) =>
+    `<li class="${i === fases.length - 1 ? 'finish' : ''}"><div class="km">km<b class="num">${String(i + 1).padStart(2, '0')}</b></div><div class="what"><h3>${t}</h3><p>${d}</p></div><span class="pill ${st}">${txt[st]}</span></li>`).join('');
+})();
+
+// ---------- para decidir
+(function () {
+  const q = [
+    ['Quem faz o quê até 15/11?', 'Relatório de segmentação (negócios), notebook de EDA e mini deck (tecnologia), revisão final e montagem da pasta no Drive. Cada um envia o link na Adalove.', ['Dividir por artefato', 'Dividir por persona', 'Uma dupla por trilha']],
+    ['Como fazer o K-means?', 'Seguindo o professor: clusterizar a base toda sem usar o churn e só depois ver o churn de cada grupo. Proposta: treinar na base de 31/05 (que tem gabarito) e aplicar em 30/09; variáveis de comportamento e contrato; idade e sexo fora.', ['Base de 31/05 → aplicar em 30/09', 'Só 30/09', 'Separar mensal e anual antes']],
+    ['Quais 3 a 4 personas levar?', 'Sai do K-means, mas os candidatos já aparecem: o mensal que ainda não criou rotina; quem bateu a meta da prova; o anual que foi esfriando; o cuidador da saúde, que fica.', ['Escolher depois dos clusters']],
+    ['Validamos D-052 e D-053?', 'Foram decididas nas análises: quem já desligou vai para regra à parte; o modelo prevê quem vai desligar a renovação. Vale o grupo confirmar, porque mudam a semana 10.', ['Confirmar', 'Rediscutir']],
+    ['O que perguntar ao professor?', 'D-029: o resumo de uso mensal conta só ~70% dos treinos do detalhe em 2026. É proposital no case?', ['Levar na próxima aula']],
+    ['Que IA generativa usar na semana 10?', 'O app precisa chamar uma API (Claude, Gemini ou GPT) para escrever a mensagem. O custo sai do orçamento de CRM de R$ 40 mil/mês.', ['Claude', 'Gemini', 'GPT', 'Comparar custo antes']],
+    ['Todos com o projeto na máquina?', 'Para rodar a EDA, cada um precisa atualizar o projeto e gerar a base (o prompt está no PROGRESSO.md).', ['Fazer junto na reunião']],
+  ];
+  document.getElementById('decide').innerHTML = q.map(([t, p, o]) =>
+    `<li><h3>${t}</h3><p>${p}</p><div class="opts">${o.map((x, i) => `<span class="${i === 0 && o.length > 1 ? 'rec' : ''}">${x}</span>`).join('')}</div></li>`).join('');
+})();
+
+// ---------- qualidade e entregas
+(function () {
+  const arq = [
+    ['onboarding', '30% dos objetivos vazios ou "nada", "x", "asdf"', 'D-003 a D-008'],
+    ['eventos_assinatura', 'Lojas em UTC: 753 eventos no mês errado', 'D-009 a D-012'],
+    ['assinaturas', 'Contas internas; sobreviventes; foto de 01/10', 'D-013 a D-016, D-023'],
+    ['usuarios', 'Cidade de 36 jeitos; nascimentos falsos; 959 contas duplicadas', 'D-017 a D-023'],
+    ['pagamentos', '1.941 cobranças repetidas; valores em texto', 'D-024 a D-027, D-051'],
+    ['uso_mensal', 'Regra mudou em 2026; discorda do detalhe', 'D-028, D-029'],
+    ['atividades', 'Duplicatas app × relógio; 10 mil km; Garmin em UTC', 'D-030 a D-035'],
+    ['campanha_ago26', 'Sorteio bem feito; regra para medir o efeito', 'D-036 a D-038'],
+    ['amizades', '273 relações depois do corte', 'D-039'],
+    ['tickets_suporte', 'Categoria do atendente varia em 1/3', 'D-040 a D-042'],
+    ['feed_posts', '122 posts depois do corte', 'D-043 a D-045'],
+    ['pesquisa_saida', 'Motivo marcado ≠ comentário; só o site responde', 'D-046 a D-049'],
+  ];
+  const gh = 'https://github.com/pedrofilardi-mba-hub/vitaliza_grupo_05/blob/main/saidas/qualidade/';
+  document.getElementById('tQual').innerHTML = arq.map(([a, p, d]) =>
+    `<tr><td><a href="${gh}${a}.md" target="_blank" rel="noopener"><code>${a}</code></a></td><td>${p}</td><td class="num">${d}</td><td><span class="pill done">decidido</span></td></tr>`).join('');
+  const li = (st, t) => `<li><span class="pill ${st}">${{ done: 'pronto', now: 'em andamento', todo: 'a fazer' }[st]}</span> ${t}</li>`;
+  document.getElementById('e5').innerHTML = [
+    li('done', 'Carregar e limpar a base (código + decisões)'),
+    li('done', 'Padrões e correlações com o churn (dimensões, motivos)'),
+    li('now', 'Segmentação sustentada por números (K-means)'),
+    li('todo', '3 a 4 cartões de persona com drivers de churn'),
+    li('todo', 'Prioridade preliminar: agir já × monitorar'),
+    li('now', 'Gráficos da EDA (raio-x pronto no painel) e mini deck'),
+    li('todo', 'Relatório executivo com limitações'),
+  ].join('');
+  document.getElementById('e10').innerHTML = [
+    li('todo', 'Modelo de churn com métricas e interpretação (D-053 define o alvo)'),
+    li('todo', 'App web: risco do usuário + mensagem gerada por IA'),
+    li('todo', 'Plano de intervenção por segmento, com ROI e custo da IA'),
+  ].join('');
+})();
+
+document.getElementById('fAnun').textContent = D.anunciados
+  ? `${pc(D.anunciados.mensal)} dos mensais que já tinham desligado saíram em 60 dias (anuais: ${pc(D.anunciados.anual)}). Vão para uma regra à parte (D-052), e o modelo foca em quem ainda não decidiu.` : '';
+document.getElementById('srcTraj').textContent = `Fonte: ${nm(D.desligamentos || 0)} desligamentos entre mar e set/2026 e seus gêmeos · src/motivos.py`;
+document.getElementById('srcPerfis').textContent = `Fonte: ${nm(D.desligamentos || 0)} desligamentos · src/motivos.py`;
+
+// ---------- raio-x: tabelas
+const RX = D.raiox || {};
+const nomeVal = { nao_informado: 'Não informado', saude: 'Saúde', companhia: 'Companhia', estetica: 'Estética', bem_estar: 'Bem-estar', desempenho: 'Desempenho',
+  prova_com_prazo: 'Prova com prazo', outro: 'Outro', sem_onboarding: 'Sem onboarding', organico: 'Orgânico', influenciador: 'Influenciador', meta_ads: 'Meta Ads',
+  indicacao: 'Indicação', google_ads: 'Google Ads', parceria_corporativa: 'Parceria corporativa', nenhum: 'Nenhum', garmin: 'Garmin', apple_watch: 'Apple Watch',
+  intermediario: 'Intermediário', iniciante: 'Iniciante', avancado: 'Avançado', android: 'Android', ios: 'iOS', mensal: 'Mensal', anual: 'Anual' };
+const nv = v => nomeVal[v] || v;
+const dec = (v, d = 1) => v == null ? '—' : Number(v).toLocaleString('pt-BR', { maximumFractionDigits: d });
+(function () {
+  if (RX.churn_base) document.getElementById('rxChurnBase').textContent =
+    `Nesse gabarito, ${pc(RX.churn_base.taxa)} dos ${nm(RX.churn_base.n)} assinantes desligaram em 60 dias: é a régua de comparação dos exames 7 e 8.`;
+  document.getElementById('tStats').innerHTML = (RX.estatisticas || []).map(s => {
+    const assim = (s.media - s.mediana) / (s.dp || 1);
+    const tag = assim > 0.25 ? '<span class="tag cauda">cauda à direita</span>' : '<span class="tag sim">quase simétrica</span>';
+    const ext = s.extremos_iqr ? `${nm(s.extremos_iqr)} <small style="color:var(--muted)">(${pc(s.extremos_iqr / s.n)})</small>` : '0';
+    return `<tr><td>${s.variavel}</td><td class="r">${nm(s.n)}</td><td class="r">${dec(s.min)}</td><td class="r">${dec(s.q1)}</td><td class="r"><b>${dec(s.mediana)}</b></td><td class="r">${dec(s.q3)}</td><td class="r">${dec(s.max)}</td><td class="r">${dec(s.media)}</td><td class="r">${dec(s.cv, 2)}</td><td class="r">${ext}</td><td>${tag}${s.cv > 1 ? ' <span class="tag forte">muito dispersa</span>' : ''}</td></tr>`;
+  }).join('');
+  const titComp = { objetivo: 'Por que contratou (onboarding)', canal_aquisicao: 'Como chegou', relogio: 'Relógio conectado', nivel: 'Nível declarado', uf: 'Estado (6 maiores)', sistema: 'Celular' };
+  const comp = RX.composicao || {};
+  document.getElementById('rxComp').innerHTML = Object.keys(titComp).filter(k => comp[k]).map(k => {
+    const mx = Math.max(...comp[k].map(x => x.pct));
+    return `<div class="chart"><h3>${titComp[k]}</h3><div class="bars">${comp[k].map(x => `<div class="row"><span>${nv(x.valor)}</span><span class="track"><span class="fill" style="display:block;width:${(x.pct / mx * 100).toFixed(1)}%"></span></span><span class="v">${pc(x.pct, 0)}</span></div>`).join('')}</div></div>`;
+  }).join('');
+  const hip = RX.hipoteses || [];
+  document.getElementById('tHip').innerHTML = hip.map(h => `<tr><td>${h.hipotese}</td><td class="num">${nm(h.n)}</td><td class="num">${pc(h.pct_base)}</td><td class="num"><b>${pc(h.taxa_dentro)}</b></td><td class="num">${pc(h.taxa_fora)}</td><td class="num" style="color:${h.diferenca_pp > 5 ? 'var(--risk)' : h.diferenca_pp < 0 ? 'var(--ok)' : 'var(--muted)'}">${h.diferenca_pp > 0 ? '+' : ''}${dec(h.diferenca_pp)} p.p.</td><td class="num">${pc(h.cobertura, 0)}</td></tr>`).join('');
+  if (RX.dispersao) document.getElementById('hDisp').textContent = `Quem abre o app treina mais (r = ${dec(RX.dispersao.r, 2)})`;
+  const nt = RX.hist?.treinos_4s?.nota; if (nt) document.getElementById('capTreinos').textContent += ' ' + nt.charAt(0).toUpperCase() + nt.slice(1) + '.';
+})();
+function heatTables() {
+  const risk = css('--risk'), soft = css('--ok-soft');
+  const fill = (id, m, nomeL) => {
+    const el = document.getElementById(id); if (!el || !m) return;
+    const cel = {}; m.celulas.forEach(c => cel[c.l + '|' + c.c] = c);
+    const tx = m.celulas.map(c => c.taxa), lo = Math.min(...tx), hi = Math.max(...tx);
+    const linhas = m.linhas.filter(l => m.colunas.some(c => cel[l + '|' + c]));
+    el.innerHTML = `<thead><tr><th></th>${m.colunas.map(c => `<th>${nv(c)}</th>`).join('')}</tr></thead><tbody>` + linhas.map(l => `<tr><td>${nomeL ? nv(l) : l}</td>` + m.colunas.map(c => {
+      const x = cel[l + '|' + c]; if (!x) return '<td>—</td>';
+      const p = Math.round((x.taxa - lo) / ((hi - lo) || 1) * 100);
+      const bg = `color-mix(in srgb, ${risk} ${p}%, ${soft})`;
+      return `<td class="c ${x.n < 200 ? 'few' : ''}" style="background:${bg};color:${p > 55 ? '#fff' : 'var(--ink)'}">${pc(x.taxa)}<small style="${p > 55 ? 'color:#ffffffcc' : ''}">n=${nm(x.n)}</small></td>`;
+    }).join('') + '</tr>').join('') + '</tbody>';
+  };
+  fill('mPlanoCasa', RX.mapa_plano_casa, true);
+  fill('mObjPlano', RX.mapa_objetivo_plano, true);
+  fill('mCasaFreq', RX.mapa_casa_freq, false);
+  const cr = RX.correlacao; const t = document.getElementById('tCorr');
+  if (cr && t) {
+    const acc = css('--accent'), surf = css('--surface');
+    t.innerHTML = `<thead><tr><th></th>${cr.nomes.map(n => `<th>${n}</th>`).join('')}</tr></thead><tbody>` + cr.matriz.map((row, i) => `<tr><td>${cr.nomes[i]}</td>` + row.map((r, j) => {
+      const p = Math.round(Math.min(Math.abs(r), 1) * 100);
+      const bg = i === j ? css('--idle-soft') : `color-mix(in srgb, ${r >= 0 ? acc : risk} ${p}%, ${surf})`;
+      return `<td class="num" style="text-align:center;background:${bg};color:${p > 50 && i !== j ? '#fff' : 'var(--ink)'}">${i === j ? '' : dec(r, 2)}</td>`;
+    }).join('') + '</tr>').join('') + '</tbody>';
+  }
+}
+
+// ---------- gráficos
+const charts = [];
+function draw() {
+  if (!window.Chart) return;
+  charts.forEach(c => c.destroy()); charts.length = 0;
+  const C = { ink: css('--ink'), muted: css('--muted'), line: css('--line'), acc: css('--accent'), medal: css('--medal'), risk: css('--risk'), ok: css('--ok'), idle: css('--idle'), warn: css('--warn') };
+  Chart.defaults.color = C.muted; Chart.defaults.borderColor = C.line;
+  Chart.defaults.font.family = css('--body'); Chart.defaults.font.size = 12.5;
+  const pct = { ticks: { callback: v => (v * 100).toFixed(0) + '%' }, grid: { color: C.line } };
+  const tip = { callbacks: { label: c => `${c.dataset.label}: ${typeof c.raw === 'number' && c.raw <= 1 ? pc(c.raw) : nm(c.raw)}` } };
+  const mk = (id, cfg) => { const el = document.getElementById(id); if (el) charts.push(new Chart(el, cfg)); };
+
+  const s = D.churn_mensal || [];
+  const meses = s.map(x => { const [y, m] = x.mes.split('-'); return ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'][+m - 1] + '/' + y.slice(2); });
+  const avg = y => { const v = s.filter(x => x.mes.startsWith(y)).map(x => x.churn); return v.reduce((a, b) => a + b, 0) / v.length; };
+  mk('cChurn', { type: 'line', data: { labels: meses, datasets: [
+    { label: 'Churn mensal', data: s.map(x => x.churn), borderColor: C.acc, backgroundColor: C.acc + '22', fill: true, tension: .25, pointRadius: s.map(x => x.mes === '2026-04' ? 6 : 3), pointBackgroundColor: s.map(x => x.mes === '2026-04' ? C.risk : C.acc) },
+    { label: 'Média 2025', data: s.map(x => x.mes.startsWith('2025') ? avg('2025') : null), borderColor: C.idle, borderDash: [6, 4], pointRadius: 0 },
+    { label: 'Média 2026', data: s.map(x => x.mes.startsWith('2026') ? avg('2026') : null), borderColor: C.risk, borderDash: [6, 4], pointRadius: 0 },
+  ] }, options: { maintainAspectRatio: false, scales: { y: { ...pct, min: 0.03, max: 0.09 }, x: { grid: { display: false } } },
+    plugins: { tooltip: { callbacks: { label: c => c.datasetIndex === 0 ? `${pc(c.raw)} · ${nm(s[c.dataIndex].perdas)} perdas / ${nm(s[c.dataIndex].ativos_inicio)} ativos` : `${c.dataset.label}: ${pc(c.raw)}` } }, legend: { position: 'bottom' } } } });
+
+  const t = (D.trajetoria || []).slice().sort((a, b) => b.semana - a.semana);
+  mk('cTraj', { type: 'line', data: { labels: t.map(x => x.semana === 1 ? 'última' : x.semana + 'ª antes'), datasets: [
+    { label: 'Desligou', data: t.map(x => x.desligou), borderColor: C.risk, backgroundColor: C.risk, tension: .3 },
+    { label: 'Gêmeo (não desligou)', data: t.map(x => x.gemeo), borderColor: C.acc, backgroundColor: C.acc, tension: .3, borderDash: [5, 4] },
+  ] }, options: { maintainAspectRatio: false, scales: { y: { min: 0, title: { display: true, text: 'treinos por semana' } }, x: { grid: { display: false } } }, plugins: { legend: { position: 'bottom' } } } });
+
+  const si = D.sinais || [];
+  mk('cSinais', { type: 'bar', data: { labels: si.map(x => x.sinal), datasets: [
+    { label: 'Desligou', data: si.map(x => x.desligou), backgroundColor: C.risk },
+    { label: 'Gêmeo', data: si.map(x => x.gemeo), backgroundColor: C.idle },
+  ] }, options: { indexAxis: 'y', maintainAspectRatio: false, scales: { x: pct, y: { grid: { display: false } } }, plugins: { tooltip: tip, legend: { position: 'bottom' } } } });
+
+  const ob = D.objetivos || [];
+  const nomeObj = { prova_com_prazo: 'Prova com prazo', desempenho: 'Desempenho', estetica: 'Estética', companhia: 'Companhia', saude: 'Saúde', bem_estar: 'Bem-estar' };
+  mk('cObj', { type: 'bar', data: { labels: ob.map(x => nomeObj[x.objetivo] || x.objetivo), datasets: [
+    { label: 'Desligou', data: ob.map(x => x.desligou), backgroundColor: C.risk },
+    { label: 'Gêmeo', data: ob.map(x => x.gemeo), backgroundColor: C.acc },
+  ] }, options: { maintainAspectRatio: false, scales: { y: pct, x: { grid: { display: false } } }, plugins: { tooltip: tip, legend: { position: 'bottom' } } } });
+
+  const pf = D.perfis || [];
+  const nomePf = { sem_sinal_claro: 'Sem sinal claro', parou_de_treinar: 'Parou de treinar', objetivo_cumprido: 'Objetivo cumprido', problema_tecnico: 'Problema técnico', cobranca: 'Cobrança' };
+  mk('cPerfis', { type: 'doughnut', data: { labels: pf.map(x => nomePf[x.perfil] || x.perfil), datasets: [{ data: pf.map(x => x.n), backgroundColor: [C.idle, C.risk, C.medal, C.acc, C.warn], borderColor: css('--surface') }] },
+    options: { maintainAspectRatio: false, plugins: { legend: { position: 'right' }, tooltip: { callbacks: { label: c => `${c.label}: ${nm(c.raw)} (${pc(c.raw / pf.reduce((a, b) => a + b.n, 0))})` } } } } });
+
+  const tc = D.mensal_tempo_casa || [];
+  mk('cTempo', { type: 'bar', data: { labels: tc.map(x => x.faixa), datasets: [{ label: 'Saiu em 60 dias', data: tc.map(x => x.saida), backgroundColor: tc.map((x, i) => i === 0 ? C.risk : C.acc) }] },
+    options: { maintainAspectRatio: false, scales: { y: pct, x: { grid: { display: false } } }, plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => `${pc(c.raw)} · n=${nm(tc[c.dataIndex].n)}` } } } } });
+
+  const cn = D.mensal_canal || [];
+  const nomeCn = { app_store: 'App Store', google_play: 'Google Play', web_cartao: 'Cartão (site)', web_pix: 'Pix (site)' };
+  mk('cCanal', { type: 'bar', data: { labels: cn.map(x => nomeCn[x.canal] || x.canal), datasets: [{ label: 'Saiu em 60 dias', data: cn.map(x => x.saida), backgroundColor: C.acc }] },
+    options: { maintainAspectRatio: false, scales: { y: pct, x: { grid: { display: false } } }, plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => `${pc(c.raw)} · n=${nm(cn[c.dataIndex].n)}` } } } } });
+
+  const au = D.dimensoes || [];
+  const nomeDim = { renova_em_60d: 'Renova em 60 dias', plano: 'Plano', dias_ate_renovacao: 'Dias até a renovação', dias_desde_ultimo_treino: 'Dias sem treinar',
+    treinos_4s: 'Treinos (4 semanas)', semanas_ativas_8s: 'Semanas ativas (8)', minutos_3m: 'Minutos (3 meses)', sessoes_mes: 'Sessões no app (mês)',
+    treinos_4s_anteriores: 'Treinos (4 sem. antes)', afetado_reajuste: 'Afetado pelo reajuste', tempo_casa_meses: 'Tempo de casa',
+    irregularidade_8s: 'Irregularidade (8 sem.)', pct_video_90d: '% treinos em vídeo', posts_90d: 'Posts (90 dias)', canal_cobranca: 'Canal de pagamento',
+    gps_falhas_90d: 'Falhas de GPS (90 dias)', sistema: 'Sistema do celular', canal_aquisicao: 'Canal de aquisição' };
+  mk('cAuc', { type: 'bar', data: { labels: au.map(x => (x.nova ? '★ ' : '') + (nomeDim[x.dimensao] || x.dimensao)), datasets: [
+    { label: 'Todos', data: au.map(x => x.todos), backgroundColor: C.idle },
+    { label: 'Mensais', data: au.map(x => x.mensais), backgroundColor: C.acc },
+    { label: 'Anuais que renovam (31/07)', data: au.map(x => x.anuais_renovam), backgroundColor: C.medal },
+  ] }, options: { indexAxis: 'y', maintainAspectRatio: false, scales: { x: { min: .5, max: .8, ticks: { callback: v => v.toFixed(2).replace('.', ',') }, grid: { color: C.line } }, y: { grid: { display: false } } },
+    plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: c => `${c.dataset.label}: ${c.raw == null ? '—' : c.raw.toFixed(2).replace('.', ',')}` } } } } });
+
+  const b = D.base || {};
+  mk('cBase', { type: 'bar', data: { labels: ['Plano', 'Canal'], datasets: [
+    { label: 'Anual', data: [b.plano?.anual, null], backgroundColor: C.acc, stack: 's' },
+    { label: 'Mensal', data: [b.plano?.mensal, null], backgroundColor: C.acc + '77', stack: 's' },
+    { label: 'App Store', data: [null, b.canal?.app_store], backgroundColor: C.ink, stack: 's' },
+    { label: 'Google Play', data: [null, b.canal?.google_play], backgroundColor: C.idle, stack: 's' },
+    { label: 'Cartão', data: [null, b.canal?.web_cartao], backgroundColor: C.medal, stack: 's' },
+    { label: 'Pix', data: [null, b.canal?.web_pix], backgroundColor: C.ok, stack: 's' },
+  ] }, options: { indexAxis: 'y', maintainAspectRatio: false, scales: { x: { ...pct, max: 1, stacked: true }, y: { stacked: true, grid: { display: false } } }, plugins: { tooltip: tip, legend: { position: 'bottom' } } } });
+
+  const dd = D.decisoes?.dimensoes || {}, ac = D.decisoes?.acoes || {};
+  const dimN = ['completude', 'validade', 'consistência', 'unicidade', 'temporalidade'];
+  mk('cDec', { type: 'bar', data: { labels: dimN.map(x => x[0].toUpperCase() + x.slice(1)).concat(['', 'Corrigir', 'Marcar', 'Remover', 'Regra']), datasets: [
+    { label: 'Por dimensão', data: dimN.map(x => dd[x] || 0).concat([null, null, null, null, null]), backgroundColor: C.acc },
+    { label: 'Por ação', data: [null, null, null, null, null, null, ac.corrigir || 0, ac.marcar || 0, ac.remover || 0, ac.regra || 0], backgroundColor: C.medal },
+  ] }, options: { maintainAspectRatio: false, scales: { y: { beginAtZero: true, ticks: { precision: 0 } }, x: { grid: { display: false }, stacked: true } }, plugins: { legend: { position: 'bottom' } } } });
+
+  // ---- raio-x
+  heatTables();
+  const fu = RX.funil || [];
+  mk('cFunil', { type: 'bar', data: { labels: fu.map(x => x.etapa), datasets: [{ label: 'Pessoas', data: fu.map(x => x.n), backgroundColor: fu.map((x, i) => i >= 3 ? C.acc : C.idle) }] },
+    options: { indexAxis: 'y', maintainAspectRatio: false, scales: { x: { grid: { color: C.line }, ticks: { callback: v => nm(v) } }, y: { grid: { display: false } } },
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => `${nm(c.raw)} (${pc(c.raw / fu[0].n)} das contas)` } } } } });
+  const H = RX.hist || {};
+  const hcfg = (h, cor, xt) => ({ type: 'bar', data: { labels: h?.labels || [], datasets: [{ label: 'Assinantes', data: h?.valores || [], backgroundColor: cor, barPercentage: 1, categoryPercentage: .94 }] },
+    options: { maintainAspectRatio: false, scales: { y: { beginAtZero: true, grid: { color: C.line }, ticks: { callback: v => nm(v) } }, x: { grid: { display: false }, title: { display: true, text: xt } } },
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => `${nm(c.raw)} assinantes (${pc(c.raw / h.valores.reduce((a, b) => a + b, 0))})` } } } } });
+  mk('hIdade', hcfg(H.idade, C.acc, 'anos'));
+  mk('hCasa', hcfg(H.tempo_casa, C.acc, 'meses de casa'));
+  mk('hTreinos', hcfg(H.treinos_4s, C.acc, 'treinos em 4 semanas'));
+  mk('hDias', hcfg(H.dias_sem_treinar, H.dias_sem_treinar?.labels.map((x, i) => i >= 4 ? C.risk : C.acc), 'dias desde o último treino'));
+  const dr = RX.declarado_real || [];
+  mk('cDecl', { type: 'bar', data: { labels: dr.map(x => x.declarado + (x.declarado === 1 ? ' dia' : ' dias')), datasets: [
+    { type: 'line', label: 'Promessa (declarado)', data: dr.map(x => x.declarado), borderColor: C.idle, borderDash: [6, 4], pointRadius: 0 },
+    { label: 'Treinos reais por semana (média)', data: dr.map(x => x.real_media), backgroundColor: C.acc },
+  ] }, options: { maintainAspectRatio: false, scales: { y: { beginAtZero: true, max: 7.5, grid: { color: C.line }, title: { display: true, text: 'treinos por semana' } }, x: { grid: { display: false }, title: { display: true, text: 'declarou no onboarding' } } },
+    plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: c => c.datasetIndex === 1 ? `${dec(c.raw, 2)} por semana · n=${nm(dr[c.dataIndex].n)}` : `Prometeu ${c.raw}` } } } } });
+  const dp = RX.dispersao;
+  if (dp) mk('cDisp', { type: 'scatter', data: { datasets: [{ label: 'Assinante', data: dp.pontos.map(([x, y]) => ({ x: x + (Math.random() - .5) * .6, y: y + (Math.random() - .5) * .6 })), backgroundColor: C.acc + '55', pointRadius: 3 }] },
+    options: { maintainAspectRatio: false, scales: { x: { title: { display: true, text: dp.x }, grid: { color: C.line } }, y: { title: { display: true, text: dp.y }, grid: { color: C.line } } }, plugins: { legend: { display: false }, tooltip: { enabled: false } } } });
+  const le = RX.lentes || [];
+  mk('cLentes', { type: 'bar', data: { labels: le.map(x => x.lente), datasets: [{ label: 'AUC', data: le.map(x => x.auc), backgroundColor: le.map(x => x.lente === 'Todas juntas' ? C.medal : C.acc) }] },
+    options: { indexAxis: 'y', maintainAspectRatio: false, scales: { x: { min: .5, max: .75, ticks: { callback: v => v.toFixed(2).replace('.', ',') }, grid: { color: C.line } }, y: { grid: { display: false } } },
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => 'AUC ' + c.raw.toFixed(3).replace('.', ',') } } } } });
+}
+draw();
+try { matchMedia('(prefers-color-scheme: dark)').addEventListener('change', draw); } catch (e) {}
+new MutationObserver(draw).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+</script>
