@@ -708,7 +708,7 @@ details.deep[open]>summary::before{content:"－"}
     <div class="out"><h4>3 · Sai</h4><ul><li>Customer Segmentation Report (negócios)</li><li>Notebook de EDA e mini deck de 3 a 5 slides (tecnologia)</li><li>O link de cada integrante na Adalove</li></ul></div>
   </div>
 
-  <div class="rx-step">
+  <div class="rx-step" id="kmDecideBox">
     <h3>O que está pendente decidir</h3>
     <ol class="decide" id="kmDecide"></ol>
   </div>
@@ -731,6 +731,11 @@ details.deep[open]>summary::before{content:"－"}
   <h2>O que precisa da conversa de hoje</h2>
   <p class="lead">Cada pergunta explica o que está em jogo, mostra as opções com o lado bom (✔) e o cuidado (✖) de cada uma, e traz a nossa sugestão com o motivo. A opção com borda verde é a sugerida, mas a decisão é do grupo.</p>
   <ol class="decide" id="decide"></ol>
+  <div class="card" id="decideVazio" hidden><h3>Nenhuma decisão pendente agora</h3><ul>
+    <li><b>Decididas em 07/11:</b> a segmentação (D-054, cenário escolhido), as 4 personas (D-055) e a confirmação, pelo grupo, da regra à parte para quem já desligou a renovação (D-052) e do alvo do modelo (D-053).</li>
+    <li><b>Voltam quando chegar a etapa delas:</b> a escolha da IA generativa (semana 10) e os detalhes do modelo de churn.</li>
+    <li>Todas as decisões, com motivo e efeito na contagem, estão no <a href="https://github.com/pedrofilardi-mba-hub/vitaliza_grupo_05/blob/main/DECISOES.md" target="_blank" rel="noopener">DECISOES.md ↗</a> e na seção <a href="#decisoes">Decisões</a>.</li>
+  </ul></div>
 </section>
 
 <section id="dados">
@@ -813,15 +818,14 @@ details.deep[open]>summary::before{content:"－"}
       <li>Textos classificados por palavras-chave, de forma provisória; a leitura com IA e a conferência com amostra feita à mão vêm no objetivo 5.</li>
       <li>Cruzamentos apontam suspeitos, não provam causa. Só a campanha de agosto é um experimento sorteado.</li>
       <li>O histórico só começa em 07/2024: clientes antigos são "sobreviventes" (D-014).</li>
-      <li>Resumo mensal e detalhe de treinos discordam em 2026 (D-029); aguarda resposta do professor.</li>
+      <li>Resumo mensal e detalhe de treinos discordam em 2026 (D-029): usamos o detalhe dos treinos e citamos a diferença como limite.</li>
       <li>Quase metade de quem desliga não mostra sinal claro nos dados.</li>
     </ul></div>
     <div class="card"><h3>Pendências</h3><ul>
       <li>Fechar relatório, notebook, deck e pasta no Drive (personas definidas, D-055).</li>
       <li>Notebook de EDA com os gráficos e o mini deck (tecnologia).</li>
       <li>Relatório de segmentação com cartões de persona, prioridade e limites (negócios).</li>
-      <li>Pergunta ao professor sobre a D-029.</li>
-      <li>Detalhar a regra à parte (D-052): mensagem, canal e oferta.</li>
+            <li>Detalhar a regra à parte (D-052): mensagem, canal e oferta.</li>
     </ul></div>
   </div>
 </section>
@@ -1254,52 +1258,6 @@ const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).
 (function () {
   // Cada pergunta: t, quando (prazo), ctx (o que está em jogo), ex (exemplo), op (opções: n nome, como, pro, contra, rec), sug (sugestão e por quê), depois
   const q = [
-    { t: 'Quem faz o quê até 15/11?', quando: 'decidir hoje',
-      ctx: 'A entrega da semana 5 tem duas trilhas: <b>negócios</b> (relatório de segmentação com as personas) e <b>tecnologia</b> (notebook com a análise exploratória e um mini deck de 3 a 5 slides). Ela não vale nota, só feedback, mas é o ensaio da entrega de 20/12, que vale. Tudo vai para uma pasta pública no Google Drive, e cada integrante envia o link na Adalove.',
-      op: [
-        { n: 'Dividir por artefato', como: 'Cada pessoa ou dupla fica com uma peça: relatório, notebook, deck, revisão e pasta no Drive.', pro: 'Responsabilidade clara; ninguém edita o mesmo arquivo que o outro.', contra: 'Quem faz uma peça pode entender pouco das outras.', rec: true },
-        { n: 'Dividir por persona', como: 'Cada um escreve uma persona de ponta a ponta: números, cartão e ação.', pro: 'Todo mundo mergulha nos dados.', contra: 'Só começa depois do K-means, e alguém precisa costurar os textos no fim.' },
-        { n: 'Uma dupla por trilha', como: 'Uma dupla de negócios, uma de tecnologia e uma pessoa que revisa e monta o Drive.', pro: 'Espelha as duas trilhas do guia de entregas.', contra: 'Depende de as duplas conversarem bastante entre si.' }],
-      sug: 'Dividir por artefato, com uma pessoa responsável pela revisão final e pela pasta no Drive. O prazo é curto e o K-means ainda vai sair: com peças separadas, o notebook e o deck já podem começar usando o raio-x, enquanto os grupos não ficam prontos.',
-      depois: 'Anotamos os nomes na seção Entregas deste painel.' },
-    { t: 'Quais 3 a 4 personas levar?', quando: 'até 10/11',
-      ctx: 'Persona é o retrato de um grupo que os números confirmaram (Aula 4). Por isso ela só nasce depois do K-means. Juntas, as personas precisam <b>separar</b> (cada uma diferente das outras) e <b>cobrir</b> (somar boa parte da base). A segmentação está escolhida (D-054): 5 grupos, detalhados na aba "Segmentação escolhida". As 4 personas abaixo saem deles; a única dúvida é juntar intensos e longões em "O atleta" (aba "Próximo passo").',
-      op: [
-        { n: 'O novato que ainda está chegando', como: '20% da base: 1,3 mês de casa, nenhum seguidor, 58% mensal, 27% vindos de influenciador. Sai 19,0% (a maior saída).', pro: 'Ação clara: onboarding e criar rede; 28% de todas as saídas.', contra: 'É uma fase, não um tipo: em alguns meses vira outro grupo.' },
-        { n: 'Quem treina em casa', como: '30%: só 15% dos treinos ao ar livre; mais objetivo de bem-estar. Sai 10,5% (a menor saída).', pro: 'O maior grupo e 30% da receita mensal; ação clara: conteúdo em vídeo novo.', contra: 'Pode misturar quem prefere casa com quem não tem onde treinar.' },
-        { n: 'O corredor de rua no ritmo leve', como: '28%: 13 meses de casa, 1,4 treino por semana; 13% sem treinar há 3 meses. Sai 13,6%, e 26% já desligaram a renovação.', pro: 'Maior receita por pessoa (mediana R$ 472): o núcleo da Vitaliza.', contra: 'Grupo grande: pode esconder subgrupos.' },
-        { n: 'O atleta (intensos + longões)', como: '22%: 3,9 treinos por semana ou 84 minutos por treino; mais avançados e focados em prova. Saem 17,9% e 15,5%.', pro: 'Perfil nítido; mensagem de planilha e prova.', contra: 'Junta dois jeitos de treinar (muito ou longe).' }],
-      sug: 'Decidido: as quatro (D-055; cartões na aba "Personas"). Elas cobrem 100% da base e conversam com o raio-x e os motivos de saída (o novato que não criou rotina, quem entrou por prova): análises diferentes chegando ao mesmo lugar.',
-      depois: 'Cada persona vira um cartão no formato da Aula 4.' },
-    { t: 'Confirmamos as decisões D-052 e D-053?', quando: 'decidir hoje',
-      ctx: 'Duas decisões tomadas nas análises mudam o desenho do modelo da semana 10, então vale o grupo inteiro concordar.',
-      ex: '<b>D-052:</b> 2.250 assinantes já desligaram a renovação. Entre os mensais nessa situação, 99% saem: prever isso não ajuda ninguém. Eles vão para uma regra à parte, cuja ação é tentar reverter a decisão.<br><b>D-053:</b> o modelo passa a prever "vai desligar a renovação nos próximos 60 dias", e não "vai sair". Um anual que renova em março só sai em março, mas pode decidir em novembro. O alvo novo avisa em novembro, quando ainda dá tempo de agir.',
-      op: [
-        { n: 'Confirmar', como: 'Seguimos com as duas decisões.', pro: 'Já é o que todas as análises usam (dimensões, motivos, raio-x).', contra: 'Nenhum, a não ser que alguém veja um problema.', rec: true },
-        { n: 'Rediscutir', como: 'Alguém traz um ponto contra.', pro: 'Agora é a hora: depois do modelo fica caro mudar.', contra: 'Seria preciso refazer partes das análises.' }],
-      sug: 'Confirmar. As duas decisões deixam o modelo focado em quem ainda não decidiu sair, enquanto ainda dá para agir.',
-      depois: 'O status das duas fica "aceita pelo grupo" no DECISOES.md.' },
-    { t: 'O que perguntar ao professor?', quando: 'próxima aula',
-      ctx: 'Há duas fontes sobre o uso do app: o <b>resumo mensal</b> (uso_mensal) e o <b>detalhe de cada treino</b> (atividades). Em 2026, o resumo conta só cerca de 70% dos treinos que aparecem no detalhe. Testamos 4 explicações e nenhuma bate.',
-      ex: 'Se usássemos o resumo, um assinante que treinou 10 vezes em agosto apareceria com 7. O modelo poderia enxergar uma "queda" de treino que não existiu.',
-      op: [
-        { n: 'Levar a pergunta', como: '"A diferença entre uso_mensal e atividades em 2026 é proposital no case?"', pro: 'Se for proposital, citar no relatório mostra que percebemos.', contra: 'Nenhum.', rec: true }],
-      sug: 'Levar na próxima aula. Enquanto isso, a regra da D-029 continua: para 2026 usamos o detalhe dos treinos, e o resumo só para 2025 e para as aberturas do app.',
-      depois: 'Registramos a resposta na D-029.' },
-    { t: 'Que IA generativa usar na semana 10?', quando: 'até o início de dezembro',
-      ctx: 'O app final precisa chamar uma IA generativa para duas coisas: <b>ler textos</b> (cadastro, posts, chamados) e <b>escrever a mensagem de retenção</b>. O custo sai do orçamento de CRM, de R$ 40 mil por mês, e o case pede o custo por assinante dentro do cálculo de retorno.',
-      op: [
-        { n: 'Claude, Gemini ou GPT direto', como: 'Escolher uma pela preferência do grupo.', pro: 'Rápido.', contra: 'Sem número para justificar a escolha no plano de ROI.' },
-        { n: 'Comparar antes', como: 'Testar as três em uma amostra pequena (ex.: 100 textos) e medir custo e qualidade.', pro: 'A escolha vira argumento no relatório, e o custo entra no ROI com número real.', contra: 'Leva um pouco mais de tempo.', rec: true }],
-      sug: 'Comparar numa amostra pequena. Não precisa decidir hoje: a decisão só é necessária em dezembro.',
-      depois: 'A escolha e o custo por assinante entram no DECISOES.md.' },
-    { t: 'Todos com o projeto na máquina?', quando: 'nesta semana',
-      ctx: 'Para rodar o notebook da análise exploratória e conferir os números, cada pessoa precisa do projeto e da base montada na própria máquina. O passo a passo, com o prompt pronto para copiar, está no Percurso, etapa Organização, em "Aprofundar".',
-      op: [
-        { n: 'Fazer junto na reunião', como: '20 a 30 minutos no fim da reunião, cada um com a própria IA.', pro: 'As dúvidas se resolvem na hora.', contra: 'Ocupa parte da reunião.', rec: true },
-        { n: 'Cada um em casa', como: 'Cada um segue o prompt quando puder.', pro: 'Não ocupa a reunião.', contra: 'Quem travar fica parado até alguém ajudar.' }],
-      sug: 'Fazer junto na reunião. É um passo único: depois disso, atualizar o projeto é um pedido de uma linha à IA.',
-      depois: 'Todos conseguem rodar o painel e o notebook.' },
   ];
   const renderQ = arr => arr.map(x => `<li>
     <div class="q-head"><h3>${x.t}</h3><span class="when">${x.quando}</span></div>
@@ -1309,7 +1267,8 @@ const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).
     <p class="sug"><b>Nossa sugestão:</b> ${x.sug}</p>
     ${x.depois ? `<p class="after"><b>Depois de decidir:</b> ${x.depois}</p>` : ''}
   </li>`).join('');
-  document.getElementById('decide').innerHTML = renderQ(q);
+  document.getElementById('decide').innerHTML = q.length ? renderQ(q) : '';
+  document.getElementById('decideVazio').hidden = q.length > 0;
 
   // ---- próximo passo: escolher a segmentação (cenários do K-means)
   const CEN = {
@@ -1377,15 +1336,9 @@ const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).
 
   // próximo passo: fechar a entrega de 15/11
   const km = [
-    { t: 'Quem faz o quê até 15/11?', quando: 'decidir até 09/11',
-      ctx: 'As personas estão definidas (D-055). Faltam quatro peças: relatório (negócios), notebook e mini deck (tecnologia) e a pasta no Drive. Os prompts abaixo fazem o grosso de cada uma; cada peça precisa de um dono que revise.',
-      ex: 'Uma pessoa roda o prompt do relatório e ajusta o tom; outra roda o do notebook e confere se os números batem com o painel; uma terceira faz o deck a partir dos gráficos; uma quarta revisa tudo e monta a pasta.',
-      op: [
-        { n: 'Um dono por peça', como: 'Relatório, notebook, deck e revisão + Drive, cada um com uma pessoa.', pro: 'Responsabilidade clara; ninguém edita o arquivo do outro.', contra: 'Quem faz uma peça pode entender pouco das outras.', rec: true },
-        { n: 'Uma dupla por trilha', como: 'Uma dupla de negócios (relatório) e uma de tecnologia (notebook e deck).', pro: 'Espelha as duas trilhas do guia.', contra: 'Fica sem um dono claro para a revisão final e a pasta.' }],
-      sug: 'Um dono por peça, com revisão final em 14/11. A pergunta também está em "Para decidir".' },
   ];
   document.getElementById('kmDecide').innerHTML = renderQ(km);
+  document.getElementById('kmDecideBox').hidden = km.length === 0;
   const passos = [
     ['Cartões de persona (negócios) · prontos', 'Os 4 cartões estão na aba "Personas" e em docs/personas.md (D-055 aceita). Falta só revisar o texto.', 'Ajustar a citação e a ação de cada persona ao tom que o grupo quer.'],
     ['Prioridade "agir já × monitorar" (negócios) · rascunho pronto', 'Está no fim da aba "Personas". Revisar a ordem e o canal de cada uma.', 'Novato e atleta: agir já. Corredor de rua: monitorar. Treino em casa: proteger.'],

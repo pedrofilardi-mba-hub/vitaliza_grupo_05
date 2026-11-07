@@ -536,6 +536,7 @@ Decisões de qualidade de dados ("limpar é decidir": corrigir, remover ou marca
 - Alternativas consideradas: manter no modelo com `saida_anunciada` como variável (inflaria a métrica e desperdiçaria a capacidade de contato com quem já decidiu).
 - Efeito na contagem: em 30/09/2026, 14.753 assinantes ativos → 12.503 no modelo + 2.250 na regra à parte.
 - Impacto: objetivos 4 (quem entra no modelo), 6 (regra de contato) e 7 (retorno da ação).
+- Confirmação: confirmada pelo grupo em 2026-11-07. Os detalhes do modelo de churn serão trabalhados na etapa do modelo (objetivo 4).
 ## D-053: gabarito do modelo passa a ser "vai desligar a renovação nos próximos 60 dias"
 - Data: 2026-11-03 · Responsável: Pedro Filardi · Status: aceita
 - Dimensão: — (desenho do modelo, objetivo 4)
@@ -545,6 +546,7 @@ Decisões de qualidade de dados ("limpar é decidir": corrigir, remover ou marca
 - Alternativas consideradas: manter "a assinatura terminou nos 60 dias" (ignora os anuais e avisa tarde).
 - Efeito na contagem: no corte de 31/05, 11.965 assinantes sem saída anunciada, dos quais 14,8% desligaram em 60 dias (contra 8,5% que saíram).
 - Impacto: objetivo 4 (o que o modelo prevê), objetivo 6 (quando e quem contatar) e objetivo 7 (o retorno considera quem desligaria e foi revertido).
+- Confirmação: confirmada pelo grupo em 2026-11-07. Os detalhes do modelo de churn serão trabalhados na etapa do modelo (objetivo 4).
 ## D-054: segmentação da base com K-means · cenário escolhido (5 variáveis de comportamento, sem o plano, 5 grupos)
 - Data: 2026-11-07 · Responsável: Pedro Filardi · Status: aceita
 - Dimensão: — (segmentação, objetivo 3)
