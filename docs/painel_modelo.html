@@ -137,6 +137,20 @@ td code{font-family:var(--mono);font-size:12.5px;background:var(--accent-soft);p
 .badge.off{color:var(--muted);border-color:var(--line)}
 .cen{border:1px solid var(--line);border-radius:12px;background:var(--surface);padding:16px;margin-top:16px;display:grid;gap:10px}
 .cen.escolhido{border:2px solid var(--ok)}
+.persona{border:1px solid var(--line);border-radius:14px;background:var(--surface);padding:18px;margin-top:16px;display:grid;gap:12px}
+.p-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap}
+.p-head h3{margin:0;font-size:20px}
+.p-sub{margin:2px 0 0;color:var(--muted);font-size:13.5px}
+.persona blockquote{margin:0;padding:8px 14px;border-left:4px solid var(--accent);background:var(--accent-soft);border-radius:0 8px 8px 0;font-style:italic;font-size:15px}
+.p-nums{display:flex;flex-wrap:wrap;gap:8px}
+.p-nums span{font-size:13px;border:1px solid var(--line);border-radius:999px;padding:3px 10px;color:var(--muted)}
+.p-nums b{color:var(--ink)}
+.p-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px 18px}
+.p-grid .wide{grid-column:1/-1}
+.p-grid h4{margin:0 0 4px;font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+.p-grid p{margin:0;font-size:14.5px}
+.p-grid ul{margin:0;padding-left:18px;display:grid;gap:4px;font-size:14.5px}
+.p-lim p{color:var(--muted)}
 .seg-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
 .seg-card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;display:grid;gap:6px;align-content:start}
 .seg-card h4{margin:0;font-size:16px}
@@ -286,14 +300,14 @@ details.deep[open]>summary::before{content:"－"}
 </header>
 
 <nav class="jump" aria-label="Seções">
-  <a href="#resumo">Resumo</a><a href="#percurso">Percurso</a><a href="#proximo">Próximo passo</a><a href="#reuniao">Para decidir</a><a href="#raiox">Raio-x da base</a><a href="#segprocesso">Segmentação: como escolhemos</a><a href="#segmento">Segmentação escolhida</a><a href="#dados">Churn: quem sai e por quê</a>
+  <a href="#resumo">Resumo</a><a href="#percurso">Percurso</a><a href="#proximo">Próximo passo</a><a href="#reuniao">Para decidir</a><a href="#raiox">Raio-x da base</a><a href="#segprocesso">Segmentação: como escolhemos</a><a href="#segmento">Segmentação escolhida</a><a href="#personas">Personas</a><a href="#dados">Churn: quem sai e por quê</a>
   <a href="#achados">Achados</a><a href="#decisoes">Decisões</a><a href="#qualidade">Qualidade</a><a href="#entregas">Entregas</a><a href="#limites">Limites</a>
 </nav>
 
 <section id="resumo">
   <div class="label">Resumo</div>
-  <h2>A base está segmentada em 5 grupos. Agora: personas e a entrega de 15/11.</h2>
-  <p class="lead">Limpamos os 12 arquivos do data room com regras registradas, montamos a base no corte de 30/09/2026 e conferimos contra o enunciado e a Aula 2. Depois estudamos o que separa quem sai e por que as pessoas desligam a renovação. Com o K-means, separamos a base em 5 grupos de comportamento (D-054), cada um descrito por perfil, valor e saída. O próximo passo é escrever as personas e fechar a entrega de 15/11.</p>
+  <h2>Base segmentada e personas em rascunho. Agora: fechar a entrega de 15/11.</h2>
+  <p class="lead">Limpamos os 12 arquivos do data room com regras registradas, montamos a base no corte de 30/09/2026 e conferimos contra o enunciado e a Aula 2. Depois estudamos o que separa quem sai e por que as pessoas desligam a renovação. Com o K-means, separamos a base em 5 grupos de comportamento (D-054), cada um descrito por perfil, valor e saída. Os grupos viraram 4 personas, com gatilho e ação para cada uma. Falta o grupo confirmar e fechar relatório, notebook e deck para 15/11.</p>
   <div class="splits" id="splits"></div>
 </section>
 
@@ -309,26 +323,13 @@ details.deep[open]>summary::before{content:"－"}
 </section>
 
 <section id="proximo">
-  <div class="label">Próximo passo · km 10 · personas e entrega de 15/11</div>
-  <h2>Transformar os 5 grupos em personas e fechar a entrega</h2>
-  <p class="lead"><b>Onde estamos:</b> a segmentação está escolhida (D-054) e cada assinante já tem o seu grupo. <b>O objetivo agora:</b> escrever <b>3 a 4 cartões de persona</b> com os números de cada grupo, os fatores que levam à saída e a prioridade, e juntar tudo na entrega de <b>15/11</b>: relatório de segmentação (negócios), notebook de EDA e mini deck (tecnologia), numa pasta pública do Drive.</p>
+  <div class="label">Próximo passo · km 10 · fechar a entrega de 15/11</div>
+  <h2>Personas definidas: agora relatório, notebook, deck e Drive</h2>
+  <p class="lead"><b>Onde estamos:</b> a segmentação está escolhida (D-054) e as 4 personas estão definidas (aba <a href="#personas">Personas</a>, D-055). <b>O objetivo agora:</b> fechar as peças da entrega de <b>15/11</b>, que é individual: cada integrante envia na Adalove o link de uma pasta pública do Drive.</p>
   <div class="flow">
-    <div class="in"><h4>1 · Entra</h4><ul><li>Os 5 grupos e as análises da aba <a href="#segmento">Segmentação escolhida</a></li><li>Os motivos de desligamento (seção "Churn: quem sai e por quê")</li><li>O formato de persona da Aula 4</li></ul></div>
-    <div class="do"><h4>2 · Fazemos</h4><ol><li>Decidir se juntamos grupos numa persona</li><li>Escrever os cartões</li><li>Montar a prioridade "agir já × monitorar"</li><li>Notebook, deck e relatório</li><li>Pasta no Drive e link na Adalove</li></ol></div>
-    <div class="out"><h4>3 · Sai</h4><ul><li>3 a 4 cartões de persona</li><li>Customer Segmentation Report</li><li>Notebook de EDA e mini deck de 3 a 5 slides</li><li>O link de cada integrante na Adalove</li></ul></div>
-  </div>
-
-  <div class="rx-step">
-    <h3>O cartão de persona (Aula 4), com um exemplo</h3>
-    <p class="lead">Persona não é um "personagem inventado": é o retrato de um grupo que os números confirmaram. Cada parte do cartão responde a uma pergunta:</p>
-    <div class="tbl"><table><thead><tr><th>Parte</th><th>Pergunta</th><th>Exemplo: "O novato que ainda está chegando"</th></tr></thead><tbody>
-      <tr><td><b>Contexto</b></td><td>Quem é e como usa o app?</td><td>20% da base. 1,3 mês de casa, 1 treino por semana, nenhum seguidor. 58% no mensal; o dobro dos outros grupos veio por influenciador.</td></tr>
-      <tr><td><b>Conflito</b></td><td>Por que pode sair?</td><td>Ainda não criou rotina nem rede. Um problema técnico no começo pesa muito.</td></tr>
-      <tr><td><b>Evidência</b></td><td>Que números sustentam isso?</td><td>Sai 19,0% em 60 dias (base: 14,8%) e responde por 28% das saídas. Com chamado técnico, 36%.</td></tr>
-      <tr><td><b>Resolução</b></td><td>O que o faria ficar?</td><td>Primeiras semanas guiadas, conexão com outras pessoas, suporte rápido.</td></tr>
-      <tr><td><b>Decisão</b></td><td>Gatilho, ação e hipótese a testar</td><td>Gatilho: 2 semanas sem treinar ou chamado técnico no 1º mês. Ação: push de "primeira meta" e sugestão de quem seguir. Hipótese: quem segue alguém nas 4 primeiras semanas fica mais.</td></tr>
-      <tr><td><b>Limite</b></td><td>O que os dados não dizem?</td><td>Não sabemos o que o influenciador prometeu; a saída é de 31/05 com a régua de hoje.</td></tr>
-    </tbody></table></div>
+    <div class="in"><h4>1 · Entra</h4><ul><li>As abas <a href="#segmento">Segmentação escolhida</a> e <a href="#personas">Personas</a></li><li><a href="https://github.com/pedrofilardi-mba-hub/vitaliza_grupo_05/blob/main/docs/personas.md" target="_blank" rel="noopener">docs/personas.md ↗</a> e <a href="https://github.com/pedrofilardi-mba-hub/vitaliza_grupo_05/blob/main/saidas/clusters.md" target="_blank" rel="noopener">saidas/clusters.md ↗</a></li><li>Os gráficos do raio-x e dos motivos</li></ul></div>
+    <div class="do"><h4>2 · Fazemos</h4><ol><li>Revisar o texto das personas</li><li>Escrever o relatório executivo</li><li>Montar o notebook de EDA</li><li>Fazer o mini deck</li><li>Revisar e montar a pasta no Drive</li></ol></div>
+    <div class="out"><h4>3 · Sai</h4><ul><li>Customer Segmentation Report (negócios)</li><li>Notebook de EDA e mini deck de 3 a 5 slides (tecnologia)</li><li>O link de cada integrante na Adalove</li></ul></div>
   </div>
 
   <div class="rx-step">
@@ -342,13 +343,10 @@ details.deep[open]>summary::before{content:"－"}
   </div>
 
   <div class="rx-step">
-    <h3>O prompt para a IA escrever os cartões de persona</h3>
-    <p class="lead">Funciona no Claude Code, Codex ou Cursor, com o projeto aberto. Troque o que está entre <code>&lt;&lt; &gt;&gt;</code> pelo que o grupo decidir.</p>
-    <div class="tbl"><table><thead><tr><th>O que preencher</th><th>Onde achar</th><th>Exemplo</th></tr></thead><tbody>
-      <tr><td>Personas</td><td>Decisão abaixo de "O que está pendente decidir"</td><td>Novato; Treino em casa; Rua no ritmo leve; O atleta (Intensos + Longões)</td></tr>
-      <tr><td>Público do relatório</td><td>Guia da entrega</td><td>Diretoria da Vitaliza (negócios)</td></tr>
-    </tbody></table></div>
-    <div class="prompt"><div class="ph"><b>Prompt dos cartões de persona (copie inteiro)</b><button class="btn copy" type="button">Copiar</button></div><pre id="kmPrompt"></pre></div>
+    <h3>Os prompts para a IA</h3>
+    <p class="lead">Funcionam no Claude Code, Codex ou Cursor, com o projeto aberto. Cada um gera uma peça; troque o que está entre <code>&lt;&lt; &gt;&gt;</code>.</p>
+    <div class="prompt"><div class="ph"><b>Relatório de segmentação (negócios)</b><button class="btn copy" type="button">Copiar</button></div><pre id="kmPrompt"></pre></div>
+    <div class="prompt"><div class="ph"><b>Notebook de EDA (tecnologia)</b><button class="btn copy" type="button">Copiar</button></div><pre id="kmPrompt2"></pre></div>
   </div>
 </section>
 
@@ -699,6 +697,42 @@ details.deep[open]>summary::before{content:"－"}
   </div>
 </section>
 
+<section id="personas">
+  <div class="label">Personas · para 15/11 · decisão D-055</div>
+  <h2>Quatro personas: quem são, por que saem e o que fazer</h2>
+  <p class="lead">Cada persona é o retrato de um grupo da <a href="#segmento">segmentação escolhida</a>, no formato da Aula 4: <b>contexto</b> (quem é), <b>conflito</b> (por que pode sair), <b>evidência</b> (os números), <b>resolução</b> (o que a faria ficar), <b>decisão</b> (gatilho, ação e hipótese a testar) e <b>limite</b> (o que os dados não dizem). "O atleta" junta Intensos e Longões (decisão D-055: os grupos continuam separados na base; a junção é só na persona). Texto completo em <a href="https://github.com/pedrofilardi-mba-hub/vitaliza_grupo_05/blob/main/docs/personas.md" target="_blank" rel="noopener">docs/personas.md ↗</a>.</p>
+  <div class="splits" id="perKpis"></div>
+
+  <div class="rx-step">
+    <h3>As quatro, lado a lado</h3>
+    <div class="tbl"><table><thead><tr><th>Persona</th><th>Grupos</th><th>% base</th><th>Saída em 60 dias</th><th>% das saídas</th><th>% da receita mensal</th><th>Prioridade</th><th>Com o gatilho hoje</th></tr></thead><tbody id="perResumo"></tbody></table></div>
+    <p class="cap" style="color:var(--muted);font-size:14px">Saída: régua de 30/09 aplicada em 31/05, gabarito da D-053, sem quem já tinha anunciado a saída (média da base: <span id="perBase"></span>). Gatilho: pessoas com o sinal da persona em 30/09 que ainda não anunciaram a saída.</p>
+  </div>
+
+  <div class="rx-step">
+    <h3>Os cartões</h3>
+    <p class="lead">As citações são ilustrativas, para dar voz ao grupo; não são falas reais. Os números são do grupo todo.</p>
+    <div id="perCards"></div>
+  </div>
+
+  <div class="rx-step">
+    <h3>A ação cabe no CRM?</h3>
+    <div class="charts"><div class="chart wide"><h3>Pessoas com o gatilho hoje × teto mensal do CRM</h3><p class="cap">Se todos os gatilhos de hoje fossem por WhatsApp, caberiam no teto de 1.500 mensagens por mês. O CS (300 atendimentos) fica para os casos de maior valor. Quem já anunciou a saída (2.250) segue a regra à parte (D-052) e não entra nesta conta.</p><div class="box" style="height:220px"><canvas id="cPerCrm"></canvas></div><p class="src">Fonte: saidas/personas.json · capacidades do enunciado, seção 03</p></div></div>
+    <div class="biz"><p><b>Na ótica do negócio.</b> As personas resolvem um problema prático: com 14.753 assinantes e só 1.500 WhatsApps por mês, não dá para falar com todo mundo. Cada persona tem um gatilho próprio que separa, dentro dela, quem está se afastando agora. Somados, são cerca de 1.050 pessoas: o tamanho certo para o canal pessoal. O resto da base recebe só push e e-mail, que custam quase nada. E o grupo que mais vale (quem treina em casa, 30% da receita) quase não precisa de contato caro.</p></div>
+  </div>
+
+  <div class="rx-step">
+    <h3>Prioridade preliminar: agir já × monitorar</h3>
+    <div class="tbl"><table><thead><tr><th>Ordem</th><th>Persona</th><th>Por quê</th><th>Canal principal</th><th>Oferta</th></tr></thead><tbody>
+      <tr><td>1</td><td><b>O novato</b> <span class="pill risk">agir já</span></td><td>A maior saída (19,0%) e 28% das saídas; ainda dá tempo de criar o hábito</td><td>Push e e-mail para todos; WhatsApp no gatilho</td><td>Plano personalizado; sem desconto de primeira</td></tr>
+      <tr><td>2</td><td><b>O atleta</b> <span class="pill risk">agir já</span></td><td>Saída alta (17,4%) apesar de treinar muito; o motivo (meta cumprida) é previsível</td><td>Push e e-mail; WhatsApp na queda forte</td><td>Próxima meta e plano para a prova</td></tr>
+      <tr><td>3</td><td><b>O corredor de rua no ritmo leve</b> <span class="pill now">monitorar</span></td><td>Saída menor, mas 24% das saídas e 1.105 já desligaram</td><td>Push; WhatsApp ou CS para anual perto da renovação</td><td>Desafio; 1 mês grátis só no anual de risco alto</td></tr>
+      <tr><td>4</td><td><b>Quem treina em casa</b> <span class="pill done">proteger</span></td><td>A menor saída e a maior receita: proteger, sem gastar contato caro</td><td>Push e e-mail</td><td>Programa novo em vídeo</td></tr>
+    </tbody></table></div>
+    <p class="lesson"><b>Por que "preliminar":</b> a regra final de quem contatar junta o risco de cada pessoa (modelo de churn, objetivo 4), o efeito de cada mensagem medido na campanha de agosto (objetivo 6) e o custo dos canais e das ofertas (objetivo 7). As personas dizem <b>qual mensagem</b>; o modelo dirá <b>em quem</b>.</p>
+  </div>
+</section>
+
 <section id="dados">
   <div class="label">Churn: quem sai e por quê</div>
   <h2>Os números por trás das decisões</h2>
@@ -783,7 +817,7 @@ details.deep[open]>summary::before{content:"－"}
       <li>Quase metade de quem desliga não mostra sinal claro nos dados.</li>
     </ul></div>
     <div class="card"><h3>Pendências</h3><ul>
-      <li>Cartões das 3 a 4 personas e prioridade "agir já × monitorar" (a segmentação já está pronta, D-054).</li>
+      <li>Fechar relatório, notebook, deck e pasta no Drive (personas definidas, D-055).</li>
       <li>Notebook de EDA com os gráficos e o mini deck (tecnologia).</li>
       <li>Relatório de segmentação com cartões de persona, prioridade e limites (negócios).</li>
       <li>Pergunta ao professor sobre a D-029.</li>
@@ -799,29 +833,44 @@ details.deep[open]>summary::before{content:"－"}
 </div>
 
 <script type="text/plain" id="pKmeans">
-Você vai me ajudar a escrever os cartões de persona do projeto Vitaliza, na pasta vitaliza_grupo_05. Explique cada passo em português simples e peça minha confirmação antes de gravar arquivos.
+Você vai me ajudar a escrever o Customer Segmentation Report do projeto Vitaliza (entrega de 15/11), na pasta vitaliza_grupo_05. Explique cada passo em português simples e peça minha confirmação antes de gravar arquivos.
 
 Antes de começar:
-- Leia o AGENTS.md, a D-054 no DECISOES.md, saidas/clusters.md, saidas/clusters_final.json e saidas/motivos_leitura.md.
+- Leia o AGENTS.md, as decisões D-052 a D-055 no DECISOES.md, docs/personas.md, saidas/clusters.md, saidas/clusters_cenarios.md e saidas/motivos_leitura.md.
 - Atualize o projeto (git pull). Nunca altere nada em dados/brutos/. Não use e-mail nem data de nascimento.
-- Use só números que estão nesses arquivos. Se precisar de um número novo, calcule com o Python do .venv e me mostre como calculou.
+- Use só números que estão nesses arquivos. Não invente números.
 
 Decisões do grupo:
-- Personas: <<ex.: O novato que ainda está chegando (Novatos); Quem treina em casa (Treino em casa); O corredor de rua no ritmo leve (Rua no ritmo leve); O atleta (Intensos + Longões)>>
-- Público: <<ex.: diretoria da Vitaliza, linguagem de negócio>>
+- Público: <<ex.: diretoria da Vitaliza, linguagem de negócio, sem jargão técnico>>
+- Tamanho: <<ex.: 6 a 8 páginas>>
+- Personas: <<ex.: as 4 da D-055>>
 
-Para cada persona, escreva um cartão no formato da Aula 4:
-1. Contexto: quem é e como usa o app (tamanho do grupo, tempo de casa, treinos, estilo, rede, plano, canal de aquisição, objetivo).
-2. Conflito: por que pode sair.
-3. Evidência: saída em 60 dias do grupo contra a média da base (14,8%), % das saídas e % da receita mensal, e os 2 ou 3 sinais que mais aumentam a saída dentro do grupo.
-4. Resolução: o que faria a pessoa ficar.
-5. Decisão: gatilho, ação, canal (push, e-mail, WhatsApp ou CS) e uma hipótese a testar. Use só as ofertas do enunciado (30% por 3 meses no mensal, 1 mês grátis no anual, pausa de até 60 dias, plano de treino personalizado).
-6. Limite: o que os dados não dizem.
-Se uma persona juntar dois grupos, mostre os números de cada grupo separados.
+Estrutura:
+1. Resumo executivo (meia página): quem são os clientes, as 4 personas, onde agir primeiro.
+2. Como segmentamos: base de 30/09, 5 variáveis de comportamento, K-means, por que este cenário (resumo de clusters_cenarios.md), sem nenhuma informação de saída na formação dos grupos.
+3. Os 5 grupos: tamanho, perfil, valor e saída histórica.
+4. Uma página por persona, no formato da Aula 4 (contexto, conflito, evidência, resolução, decisão e limite).
+5. Prioridade preliminar "agir já × monitorar" e por que ela ainda é preliminar (modelo de churn e campanha de agosto).
+6. Limites da análise.
 
-Depois:
-- Monte a tabela de prioridade "agir já × monitorar", com o motivo de cada uma.
-- Grave tudo em docs/personas.md e não faça commit sem eu pedir.
+Grave em docs/relatorio_segmentacao.md e não faça commit sem eu pedir.
+</script>
+<script type="text/plain" id="pNotebook">
+Você vai me ajudar a montar o notebook de EDA do projeto Vitaliza (entrega de 15/11, trilha de tecnologia), na pasta vitaliza_grupo_05. Explique cada passo em português simples e peça minha confirmação antes de gravar arquivos.
+
+Antes de começar:
+- Leia o AGENTS.md, src/raio_x.py, src/motivos.py, src/clusters_cenarios.py, src/clusters.py e src/personas.py.
+- Atualize o projeto (git pull). Se a pasta dados/processados estiver vazia, rode com o Python do .venv, nesta ordem: src\limpeza.py, src\base_integrada.py, src\dimensoes.py, src\motivos.py, src\clusters_cenarios.py, src\clusters.py e src\personas.py.
+- Nunca altere nada em dados/brutos/. Não mostre e-mail nem data de nascimento em nenhuma célula.
+
+O notebook (notebooks/eda_segmentacao.ipynb) deve:
+1. Carregar a base ativa de 30/09 e mostrar o funil (contas → teste → pagantes → ativos).
+2. Refazer os principais exames do raio-x: cinco números, histogramas, correlação de Pearson, rua × casa.
+3. Mostrar a escolha da segmentação: a tabela de silhueta, menor grupo e estabilidade dos 4 cenários.
+4. Mostrar os 5 grupos: perfil padronizado, composição (plano, objetivo, canal), saída histórica com intervalo de confiança.
+5. Mostrar os números das 4 personas.
+Cada gráfico com uma célula de texto antes ("o que vamos ver") e depois ("o que isso diz para o negócio"), em português simples.
+Antes de terminar, rode o notebook inteiro do início ao fim e confira que os números batem com saidas/clusters.md. Não faça commit sem eu pedir.
 </script>
 <script type="text/plain" id="pSetup">
 Preciso preparar meu computador para um projeto em grupo do MBA (case Vitaliza). Faça o passo a passo abaixo comigo, explicando cada passo em português simples, em uma ou duas frases.
@@ -976,8 +1025,8 @@ const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).
     { t: 'Clusters e personas', st: 'now', d: 'K-means da base ativa de 30/09, visão geral (sem a ótica de churn) → perfil e valor por grupo → 3 a 4 personas',
       frase: 'Vamos deixar o algoritmo separar a base em grupos de pessoas parecidas no jeito de assinar e de treinar, para conhecer os tipos de cliente da Vitaliza.',
       entrou: ['A base ativa de 30/09 (14.753 assinantes)', '6 variáveis de contrato, uso, estilo e rede, escolhidas por variedade, qualidade e não repetição'],
-      fez: ['Feito: escolhemos as 6 variáveis (idade e sexo ficam fora) e normalizamos a base', 'Feito: rodamos todas as combinações de 3 a 6 variáveis com 3 a 7 grupos (210 rodadas) e medimos silhueta, tamanho e estabilidade', 'Feito: trouxemos 4 cenários com grupos, prós, contras e personas', 'Feito: o grupo escolheu o cenário de 5 variáveis sem o plano (D-054) e gravamos o grupo de cada assinante', 'Feito: descrevemos os grupos por perfil, valor, engajamento e saída histórica, e checamos os 5 critérios da Aula 3', 'Falta: escrever 3 a 4 cartões de persona'],
-      saiu: ['src/clusters_cenarios.py e saidas/clusters_cenarios.md (os 4 cenários)', 'src/clusters.py, saidas/clusters.md e o grupo de cada assinante (5 grupos, D-054)', 'As abas "Segmentação: como escolhemos" e "Segmentação escolhida" deste painel', 'A seguir: cartões de persona com conflito, evidência, gatilho, ação e limite'],
+      fez: ['Feito: escolhemos as 6 variáveis (idade e sexo ficam fora) e normalizamos a base', 'Feito: rodamos todas as combinações de 3 a 6 variáveis com 3 a 7 grupos (210 rodadas) e medimos silhueta, tamanho e estabilidade', 'Feito: trouxemos 4 cenários com grupos, prós, contras e personas', 'Feito: o grupo escolheu o cenário de 5 variáveis sem o plano (D-054) e gravamos o grupo de cada assinante', 'Feito: descrevemos os grupos por perfil, valor, engajamento e saída histórica, e checamos os 5 critérios da Aula 3', 'Feito: 4 cartões de persona e a prioridade preliminar (D-055, aceita)'],
+      saiu: ['src/clusters_cenarios.py e saidas/clusters_cenarios.md (os 4 cenários)', 'src/clusters.py, saidas/clusters.md e o grupo de cada assinante (5 grupos, D-054)', 'As abas "Segmentação: como escolhemos", "Segmentação escolhida" e "Personas" deste painel', 'docs/personas.md, src/personas.py e saidas/personas.json', 'A seguir: cartões de persona com conflito, evidência, gatilho, ação e limite'],
       ex: '% ao ar livre vai de 0 a 1 e minutos por treino chega a 515. Sem colocar na mesma escala, a variável com números maiores decide sozinha quem fica em cada grupo.',
       pq: 'É o que o professor pediu e o coração da entrega de 15/11.',
       tec: 'scikit-learn: <code>StandardScaler</code>, <code>KMeans</code>, <code>silhouette_score</code> · variáveis com cauda longa entram em log ou faixas' },
@@ -1145,7 +1194,7 @@ const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).
       prompts: [{ t: 'Para atualizar e explorar, peça à sua IA', txt: 'No projeto Vitaliza, rode .venv\\Scripts\\python.exe src\\painel_dados.py para atualizar o painel e abra docs/painel.html no navegador. Depois leia src/raio_x.py e me explique, em português simples, como foi calculado o exame 7 (a média esconde grupos). Não faça commit.' }] },
     'Clusters e personas': {
       t: 'as variáveis escolhidas e os critérios para aceitar um grupo',
-      links: [['Como escolhemos', '#segprocesso'], ['Segmentação escolhida', '#segmento'], ['src/clusters_cenarios.py', 'src/clusters_cenarios.py'], ['src/clusters.py', 'src/clusters.py'], ['saidas/clusters_cenarios.md', 'saidas/clusters_cenarios.md'], ['saidas/clusters.md', 'saidas/clusters.md']],
+      links: [['Como escolhemos', '#segprocesso'], ['Segmentação escolhida', '#segmento'], ['Personas', '#personas'], ['docs/personas.md', 'docs/personas.md'], ['src/clusters_cenarios.py', 'src/clusters_cenarios.py'], ['src/clusters.py', 'src/clusters.py'], ['saidas/clusters_cenarios.md', 'saidas/clusters_cenarios.md'], ['saidas/clusters.md', 'saidas/clusters.md']],
       html: tb(['Variável', 'Lente', 'Por que entra'], [
         ['Plano', 'Contrato', 'O compromisso que a pessoa assumiu'],
         ['Tempo de casa (em log)', 'Contrato', 'Novato ou veterano'],
@@ -1220,7 +1269,7 @@ const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).
         { n: 'Quem treina em casa', como: '30%: só 15% dos treinos ao ar livre; mais objetivo de bem-estar. Sai 10,5% (a menor saída).', pro: 'O maior grupo e 30% da receita mensal; ação clara: conteúdo em vídeo novo.', contra: 'Pode misturar quem prefere casa com quem não tem onde treinar.' },
         { n: 'O corredor de rua no ritmo leve', como: '28%: 13 meses de casa, 1,4 treino por semana; 13% sem treinar há 3 meses. Sai 13,6%, e 26% já desligaram a renovação.', pro: 'Maior receita por pessoa (mediana R$ 472): o núcleo da Vitaliza.', contra: 'Grupo grande: pode esconder subgrupos.' },
         { n: 'O atleta (intensos + longões)', como: '22%: 3,9 treinos por semana ou 84 minutos por treino; mais avançados e focados em prova. Saem 17,9% e 15,5%.', pro: 'Perfil nítido; mensagem de planilha e prova.', contra: 'Junta dois jeitos de treinar (muito ou longe).' }],
-      sug: 'Levar as quatro. Elas cobrem 100% da base e conversam com o raio-x e os motivos de saída (o novato que não criou rotina, quem entrou por prova): análises diferentes chegando ao mesmo lugar.',
+      sug: 'Decidido: as quatro (D-055; cartões na aba "Personas"). Elas cobrem 100% da base e conversam com o raio-x e os motivos de saída (o novato que não criou rotina, quem entrou por prova): análises diferentes chegando ao mesmo lugar.',
       depois: 'Cada persona vira um cartão no formato da Aula 4.' },
     { t: 'Confirmamos as decisões D-052 e D-053?', quando: 'decidir hoje',
       ctx: 'Duas decisões tomadas nas análises mudam o desenho do modelo da semana 10, então vale o grupo inteiro concordar.',
@@ -1326,28 +1375,28 @@ const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).
   ];
   document.getElementById('segDecisao').innerHTML = renderQ(decisao).replace(/<span class="badge">sugerida<\/span>/g, '<span class="badge">escolhida</span>').replace(/Nossa sugestão:/g, 'Decisão:');
 
-  // próximo passo: personas e entrega de 15/11
+  // próximo passo: fechar a entrega de 15/11
   const km = [
-    { t: 'Juntar intensos e longões numa persona?', quando: 'decidir na reunião',
-      ctx: 'O relatório pede 3 a 4 personas, e a segmentação tem 5 grupos. Persona é o retrato de um tipo de cliente para pensar ação; dois grupos que pedem a mesma ação podem virar uma persona só, sem mudar os grupos na base.',
-      ex: 'Intensos (3,9 treinos por semana) e longões (84 minutos por treino) são os mais avançados e os mais focados em prova, e saem parecido (17,9% e 15,5%). A mensagem para os dois é parecida: planilha, metas, próxima prova. Mas o driver muda: nos intensos, queda forte e chamado técnico; nos longões, treinar sem nenhum seguidor.',
+    { t: 'Quem faz o quê até 15/11?', quando: 'decidir até 09/11',
+      ctx: 'As personas estão definidas (D-055). Faltam quatro peças: relatório (negócios), notebook e mini deck (tecnologia) e a pasta no Drive. Os prompts abaixo fazem o grosso de cada uma; cada peça precisa de um dono que revise.',
+      ex: 'Uma pessoa roda o prompt do relatório e ajusta o tom; outra roda o do notebook e confere se os números batem com o painel; uma terceira faz o deck a partir dos gráficos; uma quarta revisa tudo e monta a pasta.',
       op: [
-        { n: 'Juntar em "O atleta"', como: '4 personas: novato, treino em casa, rua no ritmo leve e atleta (22% da base).', pro: 'Fica dentro de 3 a 4 personas; os longões (5,7%) deixam de ficar no limite de tamanho.', contra: 'Perde a nuance entre treinar muito e treinar longe; o cartão precisa citar os dois drivers.', rec: true },
-        { n: 'Manter os 5 separados', como: '5 personas.', pro: 'Mais fino.', contra: 'Passa do pedido de 3 a 4 personas e uma delas fica com só 5,7% da base.' }],
-      sug: 'Juntar em "O atleta". Os grupos continuam separados na base (para quem quiser o detalhe); a persona é uma só.',
-      depois: 'Escrevemos os 4 cartões com o prompt abaixo.' },
+        { n: 'Um dono por peça', como: 'Relatório, notebook, deck e revisão + Drive, cada um com uma pessoa.', pro: 'Responsabilidade clara; ninguém edita o arquivo do outro.', contra: 'Quem faz uma peça pode entender pouco das outras.', rec: true },
+        { n: 'Uma dupla por trilha', como: 'Uma dupla de negócios (relatório) e uma de tecnologia (notebook e deck).', pro: 'Espelha as duas trilhas do guia.', contra: 'Fica sem um dono claro para a revisão final e a pasta.' }],
+      sug: 'Um dono por peça, com revisão final em 14/11. A pergunta também está em "Para decidir".' },
   ];
   document.getElementById('kmDecide').innerHTML = renderQ(km);
   const passos = [
-    ['Cartões de persona (negócios)', '3 a 4 cartões no formato da Aula 4, com os números da aba "Segmentação escolhida".', 'O cartão do novato acima, repetido para treino em casa, rua no ritmo leve e o atleta.'],
-    ['Prioridade "agir já × monitorar" (negócios)', 'A tabela da seção 8 da aba "Segmentação escolhida", revisada pelo grupo.', 'Novatos e intensos: agir já. Rua no ritmo leve: monitorar a queda do treino.'],
-    ['Customer Segmentation Report (negócios)', 'Relatório executivo: quem são os grupos, por que saem, onde agir primeiro e os limites da análise.', 'Uma página por persona, mais uma de resumo e uma de limites.'],
-    ['Notebook de EDA (tecnologia)', 'Um caderno que lê a base e refaz os gráficos do raio-x, dos motivos e da segmentação, com o texto de cada um.', 'notebooks/eda_segmentacao.ipynb, rodando src/raio_x.py e src/clusters.py.'],
-    ['Mini deck de 3 a 5 slides (tecnologia)', 'Os achados mais fortes: base, rua × casa, os 5 grupos, saída por grupo, próximos passos.', 'O gráfico "% da base, da receita e das saídas" vira o slide principal.'],
+    ['Cartões de persona (negócios) · prontos', 'Os 4 cartões estão na aba "Personas" e em docs/personas.md (D-055 aceita). Falta só revisar o texto.', 'Ajustar a citação e a ação de cada persona ao tom que o grupo quer.'],
+    ['Prioridade "agir já × monitorar" (negócios) · rascunho pronto', 'Está no fim da aba "Personas". Revisar a ordem e o canal de cada uma.', 'Novato e atleta: agir já. Corredor de rua: monitorar. Treino em casa: proteger.'],
+    ['Customer Segmentation Report (negócios)', 'Relatório executivo: quem são os clientes, as 4 personas, onde agir primeiro e os limites. Use o primeiro prompt abaixo.', 'Uma página de resumo, uma por persona, uma de prioridade e uma de limites.'],
+    ['Notebook de EDA (tecnologia)', 'Um caderno que roda os scripts e refaz os gráficos do raio-x, dos motivos e da segmentação, com o texto de cada um. Use o segundo prompt.', 'notebooks/eda_segmentacao.ipynb.'],
+    ['Mini deck de 3 a 5 slides (tecnologia)', 'Os achados mais fortes: a base, rua × casa, os 5 grupos, a saída por grupo e as personas.', 'O gráfico "% da base, da receita e das saídas" vira o slide principal.'],
     ['Pasta no Drive e link na Adalove', 'Uma pasta pública com tudo; cada integrante envia o link (a entrega é individual).', 'Revisão final em 14/11; envio em 15/11.'],
   ];
   document.getElementById('kmSteps').innerHTML = passos.map(([t, d, e]) => `<li><b>${t}.</b> ${d}<span class="eg">Exemplo: ${e}</span></li>`).join('');
   document.getElementById('kmPrompt').textContent = (document.getElementById('pKmeans')?.textContent || '').trim();
+  document.getElementById('kmPrompt2').textContent = (document.getElementById('pNotebook')?.textContent || '').trim();
 })();
 
 // ---------- qualidade e entregas
@@ -1374,8 +1423,8 @@ const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).
     li('done', 'Carregar e limpar a base (código + decisões)'),
     li('done', 'Padrões e correlações com o churn (dimensões, motivos)'),
     li('done', 'Segmentação sustentada por números (K-means, D-054)'),
-    li('now', '3 a 4 cartões de persona com drivers de churn (drivers prontos na aba Segmentação escolhida)'),
-    li('now', 'Prioridade preliminar: agir já × monitorar (rascunho na aba Segmentação escolhida)'),
+    li('done', '3 a 4 cartões de persona com drivers de churn (aba Personas, D-055)'),
+    li('now', 'Prioridade preliminar: agir já × monitorar (rascunho na aba Personas)'),
     li('now', 'Gráficos da EDA (raio-x pronto no painel) e mini deck'),
     li('todo', 'Relatório executivo com limitações'),
   ].join('');
@@ -1504,6 +1553,62 @@ const SEGTXT = {
   ['segDistSel', 'segCompSel'].forEach(id => document.getElementById(id)?.addEventListener('change', () => draw()));
 })();
 
+
+// ---------- personas
+const PER = D.personas || { personas: [] };
+const PERTXT = {
+  'O novato que ainda está chegando': { prior: 'agir já', cls: 'risk', cita: 'Assinei porque vi o perfil de uma influenciadora. Ainda estou descobrindo o app e não conheço ninguém por aqui.',
+    conflito: 'Ainda não criou rotina nem rede no app. No mensal, decide de novo a cada mês. Quem veio por influenciador chega com uma expectativa que o app precisa cumprir rápido.',
+    evid: p => [`Sai <b>${pc(p.saida)}</b> em 60 dias, a maior das personas, e responde por ${pc(p.pct_das_saidas, 0)} de todas as saídas.`, `Mensal ${pc(p.saida_mensal)} × anual ${pc(p.saida_anual)}: até o novato anual sai como a média da base.`, 'Treino caiu forte nas últimas 4 semanas: 24,9% (contra 18,5%). Ficar 14 dias sem treinar <b>não</b> muda a saída dele (19,1% × 19,0%): o alarme é a queda, não a pausa.', 'Chamado técnico em maio: 35,8% (contra 18,3%). Em setembro quase não há chamados (14 pessoas).'],
+    resol: 'Primeiras semanas guiadas, uma primeira meta curta, conexão com outras pessoas e suporte rápido quando algo falha.',
+    decisao: p => [`<b>Preventiva:</b> os ${nm(p.hoje.no_1o_ou_2o_mes)} no 1º ou 2º mês recebem trilha de boas-vindas por push e e-mail, com plano de treino personalizado e sugestão de quem seguir (e-mail: cerca de R$ 80 por mês).`, `<b>Gatilho:</b> ${p.gatilho.regra}. Hoje: <b>${nm(p.gatilho.n)}</b> pessoas (${nm(p.gatilho.mensal)} mensais, ${nm(p.gatilho.anual)} anuais).`, '<b>Ação:</b> WhatsApp com o plano personalizado e convite para um grupo de treino. Sem desconto de primeira: o problema é rotina, não preço.', '<b>Hipótese a testar:</b> o novato que segue pelo menos uma pessoa no 1º mês sai menos (teste sorteado).'],
+    limite: 'Não sabemos o que o influenciador prometeu. A saída é a de maio com a régua de hoje. O problema técnico, forte em maio, quase sumiu em setembro.' },
+  'O atleta': { prior: 'agir já', cls: 'risk', cita: 'Treino para provas. Quando termino uma, preciso da próxima meta, senão perco o motivo.',
+    conflito: 'Treina para uma meta; quando a cumpre, o motivo para pagar some. "Objetivo cumprido" foi a resposta mais comum na pesquisa de saída, e o post de prova concluída é 7,9 vezes mais comum entre quem desliga. Quem treina muito também sente mais qualquer falha do app (GPS, relógio).',
+    evid: p => [`Sai <b>${pc(p.saida)}</b> em 60 dias (intensos ${pc(p.sub.Intensos.saida)}, longões ${pc(p.sub['Longões'].saida)}) e responde por ${pc(p.pct_das_saidas, 0)} das saídas: treinar muito <b>não</b> segura.`, 'Treino caiu forte: 25,1% (contra 16,8%). Chamado técnico em maio: 24,8% (contra 16,6%).', 'Longões sem nenhum seguidor: 24,4% (contra 12,8%).', `${pc(p.prova_concluida_30d)} postaram uma prova concluída em setembro (${nm(p.hoje.prova_concluida_30d)} pessoas).`],
+    resol: 'A próxima meta, logo depois de cumprir a anterior. Para quem treina sozinho e longe, uma comunidade.',
+    decisao: p => [`<b>Gatilho:</b> ${p.gatilho.regra}. Hoje: <b>${nm(p.gatilho.n)}</b> pessoas.`, '<b>Ação:</b> prova concluída → push e e-mail com a "próxima prova" e um plano para ela; queda forte → WhatsApp; longão sem seguidor → convite para um grupo de treino longo. Sem desconto: o motivo não é preço.', '<b>Hipótese a testar:</b> oferecer a próxima meta na semana seguinte à prova reduz o desligamento (comparar com 30 dias depois).'],
+    limite: 'Junta quem treina muito e quem treina longe; o cartão mostra os dois. "Prova concluída" é lida por palavras-chave; a leitura com IA vem no objetivo 5.' },
+  'O corredor de rua no ritmo leve': { prior: 'monitorar', cls: 'now', cita: 'Corro há mais de um ano, mas ultimamente saio menos. O plano anual se renova sozinho.',
+    conflito: 'Veterano em ritmo baixo: 13% não treinaram em 3 meses. Como é anual (71%), pode parar e continuar pagando sem sentir; a decisão só chega na renovação. 1 em cada 4 já desligou a renovação.',
+    evid: p => [`Sai ${pc(p.saida)} em 60 dias, abaixo da média, mas por ser grande responde por <b>${pc(p.pct_das_saidas, 0)} das saídas</b>.`, 'Treino caiu forte: a saída quase dobra (22,6% contra 12,4%).', `Mensal ${pc(p.saida_mensal)} × anual ${pc(p.saida_anual)}.`, `${nm(p.saida_anunciada)} já desligaram a renovação em 30/09 (${pc(p.saida_anunciada_pct, 0)}).`],
+    resol: 'Um desafio que traga o ritmo de volta antes da renovação.',
+    decisao: p => [`<b>Gatilho:</b> ${p.gatilho.regra}. Hoje: <b>${nm(p.gatilho.n)}</b> pessoas (${nm(p.gatilho.mensal)} mensais, ${nm(p.gatilho.anual)} anuais).`, '<b>Ação:</b> push com desafio de 6 semanas (uma das mensagens da campanha de agosto). Anual a até 60 dias da renovação e com risco alto: WhatsApp e, só então, 1 mês grátis (R$ 25).', `<b>Já desligaram (${nm(p.saida_anunciada)}):</b> regra à parte (D-052), tentar reverter antes do fim do período pago.`, `<b>Cuidado:</b> os ${nm(p.hoje.sem_treino_3m)} parados há 3 meses podem ser "não perturbe": lembrar que pagam por algo que não usam pode precipitar a saída. Testar antes.`],
+    limite: 'É o grupo mais "médio" e pode esconder subgrupos: quem parou de vez e quem só desacelerou.' },
+  'Quem treina em casa': { prior: 'proteger', cls: 'done', cita: 'Treino na sala, com os vídeos, umas duas vezes por semana. É o meu momento.',
+    conflito: 'Rotina regular, mas que depende de conteúdo novo. Quando para por duas semanas, o hábito se rompe.',
+    evid: p => [`Sai <b>${pc(p.saida)}</b>, a menor das personas, com ${pc(p.mrr_pct, 0)} da receita mensal, a maior fatia.`, '14 dias ou mais sem treinar dobra a saída (19,6% contra 9,8%).', `Mensal ${pc(p.saida_mensal)} × anual ${pc(p.saida_anual)}.`, 'Bem-estar é objetivo de 24% de quem informou (6% a 8% nos outros grupos).'],
+    resol: 'Novidade no catálogo de vídeos e um lembrete gentil quando a rotina para.',
+    decisao: p => [`<b>Gatilho:</b> ${p.gatilho.regra}. Hoje: <b>${nm(p.gatilho.n)}</b> pessoas.`, '<b>Ação:</b> push e e-mail com um programa novo em vídeo (plano personalizado, sem custo). Sem desconto e sem WhatsApp: é o grupo a proteger.', '<b>Hipótese a testar:</b> o lembrete depois de 14 dias aumenta a retomada sem aumentar o desligamento (contra um grupo sem lembrete).'],
+    limite: 'O % de vídeo não diz se a pessoa prefere casa ou não tem onde treinar. O objetivo falta para 30% da base.' },
+};
+(function () {
+  const P = PER.personas || [];
+  if (!P.length) return;
+  const tot = P.reduce((a, p) => a + p.gatilho.n, 0);
+  document.getElementById('perKpis').innerHTML = [
+    ['4', 'personas, cobrindo 100% da base', 'novato, atleta, corredor de rua, quem treina em casa (D-055)'],
+    [nm(tot), 'pessoas com o gatilho hoje', 'cabem no teto de 1.500 WhatsApps por mês'],
+    [nm(PER.anunciados_total), 'já desligaram a renovação', 'seguem a regra à parte (D-052)'],
+  ].map(([v, l, r]) => `<div class="split"><div class="v num">${v}</div><div>${l}</div><div class="ref">${r}</div></div>`).join('');
+  document.getElementById('perBase').textContent = pc(PER.base_taxa);
+  document.getElementById('perResumo').innerHTML = P.map(p => { const x = PERTXT[p.persona]; return `<tr><td><b>${p.persona}</b></td><td>${p.grupos.join(' + ')}</td><td>${pc(p.pct)}</td><td>${pc(p.saida)}</td><td>${pc(p.pct_das_saidas, 0)}</td><td>${pc(p.mrr_pct, 0)}</td><td><span class="pill ${x.cls}">${x.prior}</span></td><td>${nm(p.gatilho.n)}</td></tr>`; }).join('');
+  const obj = { saude: 'saúde', bem_estar: 'bem-estar', companhia: 'companhia', estetica: 'estética', desempenho: 'desempenho', prova_com_prazo: 'prova com prazo', outro: 'outro' };
+  document.getElementById('perCards').innerHTML = P.map(p => { const x = PERTXT[p.persona]; const m = p.mediana; return `<article class="persona">
+    <div class="p-head"><div><h3>${p.persona}</h3><p class="p-sub">${p.grupos.join(' + ')} · ${nm(p.n)} assinantes · ${pc(p.pct)} da base</p></div><span class="pill ${x.cls}">${x.prior}</span></div>
+    <blockquote>"${x.cita}"</blockquote>
+    <div class="p-nums"><span><b>${String(m.tempo_casa_meses).replace('.', ',')}</b> meses de casa</span><span><b>${String(m.treinos_semana.toFixed(1)).replace('.', ',')}</b> treinos/sem</span><span><b>${Math.round(m.min_por_treino)}</b> min/treino</span><span><b>${pc(m.pct_ar_livre, 0)}</b> ao ar livre</span><span><b>${m.seguidores}</b> seguidores</span><span><b>${pc(p.mensal, 0)}</b> mensal</span><span><b>${pc(p.saida)}</b> de saída</span></div>
+    <div class="p-grid">
+      <div><h4>Contexto</h4><p>${pc(p.loja, 0)} pagam pela loja do celular; ${pc(p.influenciador, 0)} vieram por influenciador; ${pc(p.avancado, 0)} se dizem avançados. Objetivo mais comum: ${Object.entries(p.objetivo_top).map(([k, v]) => `${obj[k] || k} (${pc(v, 0)})`).join(', ')}. ${pc(p.mrr_pct, 0)} da receita mensal.</p></div>
+      <div><h4>Conflito · por que pode sair</h4><p>${x.conflito}</p></div>
+      <div><h4>Evidência</h4><ul>${x.evid(p).map(e => `<li>${e}</li>`).join('')}</ul></div>
+      <div><h4>Resolução · o que faria ficar</h4><p>${x.resol}</p></div>
+      <div class="wide"><h4>Decisão · gatilho, ação e hipótese</h4><ul>${x.decisao(p).map(e => `<li>${e}</li>`).join('')}</ul></div>
+      <div class="wide p-lim"><h4>Limite</h4><p>${x.limite}</p></div>
+    </div>
+  </article>`; }).join('');
+})();
+
 // ---------- gráficos
 const charts = [];
 function draw() {
@@ -1592,6 +1697,17 @@ function draw() {
         y: { ...pct, min: 0, max: .36, title: { display: true, text: '% da receita mensal' } } },
         plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: c => `${c.dataset.label}: saída ${pc(c.raw.x)} · ${pc(c.raw.y)} da receita · ${nm(SG[c.datasetIndex].n)} assinantes` } },
           annotation: undefined } } });
+  }
+
+  // personas: gatilhos × CRM
+  const PP = (D.personas || {}).personas || [];
+  if (PP.length) {
+    const corP = [C.risk, C.warn, C.acc, C.ok];
+    mk('cPerCrm', { type: 'bar', data: { labels: ['Com o gatilho hoje', 'Teto do WhatsApp por mês', 'Teto do CS por mês'], datasets: [
+      ...PP.map((p, i) => ({ label: p.persona, data: [p.gatilho.n, null, null], backgroundColor: corP[i % corP.length], stack: 's' })),
+      { label: 'Capacidade', data: [null, 1500, 300], backgroundColor: C.idle, stack: 's' },
+    ] }, options: { indexAxis: 'y', maintainAspectRatio: false, scales: { x: { stacked: true, grid: { color: C.line }, ticks: { callback: v => nm(v) } }, y: { stacked: true, grid: { display: false } } },
+      plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: c => `${c.dataset.label}: ${nm(c.raw)}` } } } } });
   }
 
   const t = (D.trajetoria || []).slice().sort((a, b) => b.semana - a.semana);

@@ -1,5 +1,5 @@
 {
- "gerado_em": "07/11/2026 16:04",
+ "gerado_em": "07/11/2026 16:25",
  "churn_mensal": [
   {
    "mes": "2025-01",
@@ -440,7 +440,7 @@
  ],
  "desligamentos": 6624,
  "decisoes": {
-  "total": 54,
+  "total": 55,
   "substituidas": 2,
   "acoes": {
    "marcar": 20,
@@ -5164,5 +5164,391 @@
     "silhueta": 0.241
    }
   ]
+ },
+ "personas": {
+  "base_taxa": 0.1482,
+  "n_base": 14753,
+  "mrr_total": 409925.0,
+  "personas": [
+   {
+    "persona": "O novato que ainda está chegando",
+    "grupos": [
+     "Novatos"
+    ],
+    "n": 3002,
+    "pct": 0.2035,
+    "sub": {
+     "Novatos": {
+      "n": 3002,
+      "saida": 0.1898
+     }
+    },
+    "mediana": {
+     "tempo_casa_meses": 1.3,
+     "treinos_semana": 1.08,
+     "min_por_treino": 43.2,
+     "pct_ar_livre": 0.71,
+     "seguidores": 0.0,
+     "idade": 46.0
+    },
+    "mensal": 0.576,
+    "loja": 0.703,
+    "influenciador": 0.271,
+    "avancado": 0.152,
+    "objetivo_top": {
+     "estetica": 0.23,
+     "saude": 0.22,
+     "companhia": 0.16
+    },
+    "objetivo_informado": 0.69,
+    "mrr_pct": 0.218,
+    "mrr_mes": 89344.0,
+    "receita_total_mediana": 116.0,
+    "sem_treino_3m": 0.012,
+    "parado_14d": 0.094,
+    "prova_concluida_30d": 0.013,
+    "chamado_tecnico_90d": 0.005,
+    "saida_anunciada": 261,
+    "saida_anunciada_pct": 0.087,
+    "saida": 0.1898,
+    "saida_mensal": 0.2196,
+    "saida_anual": 0.1477,
+    "pct_das_saidas": 0.2831,
+    "n_hist": 2645,
+    "drivers": [
+     {
+      "sinal": "Chamado técnico (90 dias)",
+      "pct": 0.041,
+      "com": 0.3578,
+      "sem": 0.1826,
+      "n_com": 109
+     },
+     {
+      "sinal": "Plano mensal",
+      "pct": 0.585,
+      "com": 0.2196,
+      "sem": 0.1477,
+      "n_com": 1548
+     },
+     {
+      "sinal": "Treino caiu forte (4 semanas)",
+      "pct": 0.073,
+      "com": 0.2487,
+      "sem": 0.1852,
+      "n_com": 193
+     },
+     {
+      "sinal": "14+ dias sem treinar",
+      "pct": 0.051,
+      "com": 0.1912,
+      "sem": 0.1897,
+      "n_com": 136
+     }
+    ],
+    "gatilho": {
+     "regra": "treino caiu forte nas últimas 4 semanas (ou chamado técnico)",
+     "n": 182,
+     "pct_persona": 0.066,
+     "mensal": 119,
+     "anual": 63,
+     "loja": 0.72,
+     "mrr_mes": 5589.0
+    },
+    "hoje": {
+     "no_1o_ou_2o_mes": 2026,
+     "parado_14d": 134,
+     "sem_treino_3m": 26,
+     "queda_forte": 168,
+     "prova_concluida_30d": 28,
+     "chamado_tecnico_90d": 14
+    }
+   },
+   {
+    "persona": "Quem treina em casa",
+    "grupos": [
+     "Treino em casa"
+    ],
+    "n": 4392,
+    "pct": 0.2977,
+    "sub": {
+     "Treino em casa": {
+      "n": 4392,
+      "saida": 0.1047
+     }
+    },
+    "mediana": {
+     "tempo_casa_meses": 11.4,
+     "treinos_semana": 2.0,
+     "min_por_treino": 41.5,
+     "pct_ar_livre": 0.15,
+     "seguidores": 2.0,
+     "idade": 47.0
+    },
+    "mensal": 0.431,
+    "loja": 0.698,
+    "influenciador": 0.14,
+    "avancado": 0.165,
+    "objetivo_top": {
+     "saude": 0.26,
+     "bem_estar": 0.24,
+     "companhia": 0.2
+    },
+    "objetivo_informado": 0.695,
+    "mrr_pct": 0.2988,
+    "mrr_mes": 122492.0,
+    "receita_total_mediana": 386.0,
+    "sem_treino_3m": 0.035,
+    "parado_14d": 0.152,
+    "prova_concluida_30d": 0.0,
+    "chamado_tecnico_90d": 0.002,
+    "saida_anunciada": 598,
+    "saida_anunciada_pct": 0.136,
+    "saida": 0.1047,
+    "saida_mensal": 0.1358,
+    "saida_anual": 0.0752,
+    "pct_das_saidas": 0.2002,
+    "n_hist": 3390,
+    "drivers": [
+     {
+      "sinal": "14+ dias sem treinar",
+      "pct": 0.066,
+      "com": 0.1964,
+      "sem": 0.0982,
+      "n_com": 224
+     },
+     {
+      "sinal": "Plano mensal",
+      "pct": 0.486,
+      "com": 0.1358,
+      "sem": 0.0752,
+      "n_com": 1649
+     },
+     {
+      "sinal": "Treino caiu forte (4 semanas)",
+      "pct": 0.117,
+      "com": 0.1461,
+      "sem": 0.0992,
+      "n_com": 397
+     },
+     {
+      "sinal": "Nenhum seguidor",
+      "pct": 0.123,
+      "com": 0.1031,
+      "sem": 0.1049,
+      "n_com": 417
+     }
+    ],
+    "gatilho": {
+     "regra": "14+ dias sem treinar (ainda treinou em 2026)",
+     "n": 194,
+     "pct_persona": 0.051,
+     "mensal": 70,
+     "anual": 124,
+     "loja": 0.727,
+     "mrr_mes": 5223.0
+    },
+    "hoje": {
+     "no_1o_ou_2o_mes": 46,
+     "parado_14d": 279,
+     "sem_treino_3m": 85,
+     "queda_forte": 430,
+     "prova_concluida_30d": 0,
+     "chamado_tecnico_90d": 8
+    }
+   },
+   {
+    "persona": "O corredor de rua no ritmo leve",
+    "grupos": [
+     "Rua no ritmo leve"
+    ],
+    "n": 4165,
+    "pct": 0.2823,
+    "sub": {
+     "Rua no ritmo leve": {
+      "n": 4165,
+      "saida": 0.136
+     }
+    },
+    "mediana": {
+     "tempo_casa_meses": 13.2,
+     "treinos_semana": 1.38,
+     "min_por_treino": 45.5,
+     "pct_ar_livre": 0.81,
+     "seguidores": 2.0,
+     "idade": 47.0
+    },
+    "mensal": 0.294,
+    "loja": 0.703,
+    "influenciador": 0.135,
+    "avancado": 0.126,
+    "objetivo_top": {
+     "saude": 0.26,
+     "companhia": 0.19,
+     "estetica": 0.16
+    },
+    "objetivo_informado": 0.709,
+    "mrr_pct": 0.2647,
+    "mrr_mes": 108490.0,
+    "receita_total_mediana": 472.0,
+    "sem_treino_3m": 0.132,
+    "parado_14d": 0.331,
+    "prova_concluida_30d": 0.027,
+    "chamado_tecnico_90d": 0.002,
+    "saida_anunciada": 1105,
+    "saida_anunciada_pct": 0.265,
+    "saida": 0.136,
+    "saida_mensal": 0.1821,
+    "saida_anual": 0.1088,
+    "pct_das_saidas": 0.2363,
+    "n_hist": 3082,
+    "drivers": [
+     {
+      "sinal": "Treino caiu forte (4 semanas)",
+      "pct": 0.116,
+      "com": 0.2263,
+      "sem": 0.1241,
+      "n_com": 358
+     },
+     {
+      "sinal": "Chamado técnico (90 dias)",
+      "pct": 0.063,
+      "com": 0.2124,
+      "sem": 0.1308,
+      "n_com": 193
+     },
+     {
+      "sinal": "Plano mensal",
+      "pct": 0.371,
+      "com": 0.1821,
+      "sem": 0.1088,
+      "n_com": 1142
+     },
+     {
+      "sinal": "Nenhum seguidor",
+      "pct": 0.081,
+      "com": 0.1235,
+      "sem": 0.1371,
+      "n_com": 251
+     }
+    ],
+    "gatilho": {
+     "regra": "treino caiu forte nas últimas 4 semanas (ou chamado técnico)",
+     "n": 365,
+     "pct_persona": 0.119,
+     "mensal": 165,
+     "anual": 200,
+     "loja": 0.729,
+     "mrr_mes": 10239.0
+    },
+    "hoje": {
+     "no_1o_ou_2o_mes": 4,
+     "parado_14d": 603,
+     "sem_treino_3m": 372,
+     "queda_forte": 358,
+     "prova_concluida_30d": 75,
+     "chamado_tecnico_90d": 8
+    }
+   },
+   {
+    "persona": "O atleta",
+    "grupos": [
+     "Intensos",
+     "Longões"
+    ],
+    "n": 3194,
+    "pct": 0.2165,
+    "sub": {
+     "Intensos": {
+      "n": 2359,
+      "saida": 0.1793
+     },
+     "Longões": {
+      "n": 835,
+      "saida": 0.1547
+     }
+    },
+    "mediana": {
+     "tempo_casa_meses": 9.3,
+     "treinos_semana": 3.46,
+     "min_por_treino": 49.7,
+     "pct_ar_livre": 0.8,
+     "seguidores": 1.0,
+     "idade": 46.0
+    },
+    "mensal": 0.447,
+    "loja": 0.706,
+    "influenciador": 0.157,
+    "avancado": 0.231,
+    "objetivo_top": {
+     "saude": 0.23,
+     "desempenho": 0.2,
+     "estetica": 0.14
+    },
+    "objetivo_informado": 0.699,
+    "mrr_pct": 0.2186,
+    "mrr_mes": 89598.0,
+    "receita_total_mediana": 289.0,
+    "sem_treino_3m": 0.0,
+    "parado_14d": 0.088,
+    "prova_concluida_30d": 0.049,
+    "chamado_tecnico_90d": 0.002,
+    "saida_anunciada": 286,
+    "saida_anunciada_pct": 0.09,
+    "saida": 0.1745,
+    "saida_mensal": 0.209,
+    "saida_anual": 0.1434,
+    "pct_das_saidas": 0.2803,
+    "n_hist": 2848,
+    "drivers": [
+     {
+      "sinal": "Treino caiu forte (4 semanas)",
+      "pct": 0.081,
+      "com": 0.2511,
+      "sem": 0.1677,
+      "n_com": 231
+     },
+     {
+      "sinal": "Chamado técnico (90 dias)",
+      "pct": 0.105,
+      "com": 0.2475,
+      "sem": 0.1659,
+      "n_com": 299
+     },
+     {
+      "sinal": "Plano mensal",
+      "pct": 0.474,
+      "com": 0.209,
+      "sem": 0.1434,
+      "n_com": 1349
+     },
+     {
+      "sinal": "Nenhum seguidor",
+      "pct": 0.212,
+      "com": 0.1874,
+      "sem": 0.171,
+      "n_com": 603
+     }
+    ],
+    "gatilho": {
+     "regra": "treino caiu forte, chamado técnico ou post de prova concluída nos últimos 30 dias",
+     "n": 308,
+     "pct_persona": 0.106,
+     "mensal": 144,
+     "anual": 164,
+     "loja": 0.685,
+     "mrr_mes": 8744.0
+    },
+    "hoje": {
+     "no_1o_ou_2o_mes": 118,
+     "parado_14d": 95,
+     "sem_treino_3m": 0,
+     "queda_forte": 194,
+     "prova_concluida_30d": 129,
+     "chamado_tecnico_90d": 5
+    }
+   }
+  ],
+  "gatilho_total": 1049,
+  "anunciados_total": 2250
  }
 }

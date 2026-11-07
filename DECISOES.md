@@ -557,3 +557,12 @@ Decisões de qualidade de dados ("limpar é decidir": corrigir, remover ou marca
 - Efeito na contagem: 14.753 assinantes → 5 grupos (Novatos 3.002 · Treino em casa 4.392 · Rua no ritmo leve 4.165 · Intensos 2.359 · Longões 835). Saída em 60 dias no corte de 31/05 (base de 14,8%): Novatos 19,0%, Intensos 17,9%, Longões 15,5%, Rua no ritmo leve 13,6%, Treino em casa 10,5%.
 - Em aberto: juntar Intensos e Longões numa persona só ("O atleta") para ficar em 3 a 4 personas.
 - Impacto: objetivo 3 (segmentos e personas, entrega de 15/11); objetivos 6 e 8 (mensagem e oferta por segmento).
+## D-055: quatro personas a partir dos cinco grupos (Intensos + Longões = "O atleta")
+- Data: 2026-11-07 · Responsável: Pedro Filardi · Status: aceita
+- Dimensão: — (personas, objetivo 3)
+- Contexto: a entrega de 15/11 pede 3 a 4 personas com os fatores que levam à saída e uma prioridade. A segmentação escolhida (D-054) tem 5 grupos. Intensos (3,9 treinos por semana) e Longões (84 minutos por treino) são os mais avançados e os mais focados em prova, saem parecido (17,9% e 15,5% no corte de 31/05) e pedem a mesma mensagem (próxima meta). Os Longões têm só 5,7% da base.
+- Decisão: 4 personas — O novato que ainda está chegando (Novatos), O atleta (Intensos + Longões), O corredor de rua no ritmo leve (Rua no ritmo leve) e Quem treina em casa (Treino em casa) —, com prioridade preliminar "agir já" para o novato e o atleta, "monitorar com gatilho" para o corredor de rua e "proteger" para quem treina em casa. Os 5 grupos continuam separados na base; a junção é só na persona, e o cartão do atleta mostra os números de cada grupo. Cartões em docs/personas.md; números em src/personas.py e saidas/personas.json.
+- Motivo: fica dentro de 3 a 4 personas, cada persona pede uma ação diferente, e nenhuma fica abaixo de 20% da base.
+- Alternativas consideradas: manter 5 personas (passa do pedido e uma teria 5,7% da base); juntar Treino em casa e Rua no ritmo leve (perderia a diferença de lugar de treino, de saída e de gatilho).
+- Efeito na contagem: 14.753 assinantes → 4 personas (3.002 / 3.194 / 4.165 / 4.392). Gatilhos de hoje (30/09, sem saída anunciada): 182 + 308 + 365 + 194 = 1.049 pessoas, dentro do teto de 1.500 WhatsApps por mês; os 2.250 com saída anunciada seguem a D-052.
+- Impacto: objetivo 3 (entrega de 15/11) e objetivos 6 a 8 (mensagem, oferta e canal por persona).
