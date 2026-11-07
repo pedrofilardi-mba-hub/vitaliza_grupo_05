@@ -112,6 +112,11 @@ def main():
     import raio_x
     d['raiox'] = raio_x.montar()
 
+    # segmentação (K-means): cenários comparados por src/clusters_cenarios.py (só agregados)
+    perfis = RAIZ / 'saidas' / 'clusters_perfis.json'
+    if perfis.exists():
+        d['clusters'] = json.loads(perfis.read_text(encoding='utf-8'))
+
     (RAIZ / 'saidas' / 'painel_dados.json').write_text(json.dumps(d, ensure_ascii=False, indent=1), encoding='utf-8')
     modelo = (RAIZ / 'docs' / 'painel_modelo.html')
     if modelo.exists():

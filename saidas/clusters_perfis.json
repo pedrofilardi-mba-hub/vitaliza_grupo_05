@@ -1,0 +1,860 @@
+{
+ "assinantes": 14753,
+ "combinacoes": 42,
+ "rodadas": 210,
+ "aceitas": 166,
+ "melhor_silhueta_por_n": [
+  {
+   "n_vars": 3,
+   "silhueta": 0.665
+  },
+  {
+   "n_vars": 4,
+   "silhueta": 0.438
+  },
+  {
+   "n_vars": 5,
+   "silhueta": 0.315
+  },
+  {
+   "n_vars": 6,
+   "silhueta": 0.241
+  }
+ ],
+ "cenarios": [
+  {
+   "cenario": "A",
+   "n_vars": 3,
+   "variaveis": [
+    "mensal",
+    "min_por_treino",
+    "pct_ar_livre"
+   ],
+   "nomes": [
+    "plano mensal",
+    "minutos por treino",
+    "% ao ar livre"
+   ],
+   "k": 5,
+   "silhueta": 0.665,
+   "menor_grupo": 0.058,
+   "estavel": 1.0,
+   "silhueta_por_k": [
+    {
+     "k": 3,
+     "silhueta": 0.498,
+     "menor_grupo": 0.243,
+     "estavel": 1.0,
+     "aceito": true
+    },
+    {
+     "k": 4,
+     "silhueta": 0.531,
+     "menor_grupo": 0.058,
+     "estavel": 0.625,
+     "aceito": false
+    },
+    {
+     "k": 5,
+     "silhueta": 0.665,
+     "menor_grupo": 0.058,
+     "estavel": 1.0,
+     "aceito": true
+    },
+    {
+     "k": 6,
+     "silhueta": 0.623,
+     "menor_grupo": 0.04,
+     "estavel": 0.993,
+     "aceito": false
+    },
+    {
+     "k": 7,
+     "silhueta": 0.601,
+     "menor_grupo": 0.033,
+     "estavel": 0.978,
+     "aceito": false
+    }
+   ],
+   "grupos": [
+    {
+     "grupo": 4,
+     "n": 4797,
+     "pct": 0.325,
+     "mensal": 0.0,
+     "tempo_casa_meses": 10.5,
+     "treinos_semana": 1.38,
+     "min_por_treino": 45.4,
+     "pct_ar_livre": 0.81,
+     "seguidores": 1.0,
+     "sem_treino_3m": 0.12,
+     "idade": 47.0,
+     "mulheres": 0.504,
+     "avancado": 0.148,
+     "relogio": 0.38,
+     "influenciador": 0.132,
+     "indicacao": 0.152,
+     "objetivo_top": {
+      "saude": 0.21,
+      "prova_com_prazo": 0.17,
+      "desempenho": 0.16
+     },
+     "bem_estar": 0.058,
+     "prova_desempenho": 0.233,
+     "receita_total_mediana": 289.0,
+     "receita_total_soma_pct": 0.348
+    },
+    {
+     "grupo": 2,
+     "n": 3302,
+     "pct": 0.224,
+     "mensal": 1.0,
+     "tempo_casa_meses": 6.1,
+     "treinos_semana": 2.0,
+     "min_por_treino": 46.5,
+     "pct_ar_livre": 0.8,
+     "seguidores": 1.0,
+     "sem_treino_3m": 0.001,
+     "idade": 46.0,
+     "mulheres": 0.496,
+     "avancado": 0.15,
+     "relogio": 0.388,
+     "influenciador": 0.227,
+     "indicacao": 0.146,
+     "objetivo_top": {
+      "saude": 0.29,
+      "companhia": 0.19,
+      "estetica": 0.18
+     },
+     "bem_estar": 0.067,
+     "prova_desempenho": 0.127,
+     "receita_total_mediana": 237.0,
+     "receita_total_soma_pct": 0.197
+    },
+    {
+     "grupo": 3,
+     "n": 3080,
+     "pct": 0.209,
+     "mensal": 0.0,
+     "tempo_casa_meses": 10.8,
+     "treinos_semana": 1.69,
+     "min_por_treino": 41.4,
+     "pct_ar_livre": 0.15,
+     "seguidores": 2.0,
+     "sem_treino_3m": 0.051,
+     "idade": 47.0,
+     "mulheres": 0.495,
+     "avancado": 0.173,
+     "relogio": 0.378,
+     "influenciador": 0.144,
+     "indicacao": 0.152,
+     "objetivo_top": {
+      "saude": 0.24,
+      "companhia": 0.2,
+      "bem_estar": 0.19
+     },
+     "bem_estar": 0.131,
+     "prova_desempenho": 0.071,
+     "receita_total_mediana": 289.0,
+     "receita_total_soma_pct": 0.225
+    },
+    {
+     "grupo": 1,
+     "n": 2716,
+     "pct": 0.184,
+     "mensal": 1.0,
+     "tempo_casa_meses": 6.9,
+     "treinos_semana": 2.0,
+     "min_por_treino": 41.6,
+     "pct_ar_livre": 0.15,
+     "seguidores": 1.0,
+     "sem_treino_3m": 0.0,
+     "idade": 46.0,
+     "mulheres": 0.488,
+     "avancado": 0.166,
+     "relogio": 0.381,
+     "influenciador": 0.198,
+     "indicacao": 0.147,
+     "objetivo_top": {
+      "bem_estar": 0.26,
+      "saude": 0.26,
+      "companhia": 0.17
+     },
+     "bem_estar": 0.182,
+     "prova_desempenho": 0.038,
+     "receita_total_mediana": 267.0,
+     "receita_total_soma_pct": 0.17
+    },
+    {
+     "grupo": 0,
+     "n": 858,
+     "pct": 0.058,
+     "mensal": 0.3,
+     "tempo_casa_meses": 9.8,
+     "treinos_semana": 1.46,
+     "min_por_treino": 82.9,
+     "pct_ar_livre": 0.81,
+     "seguidores": 1.0,
+     "sem_treino_3m": 0.0,
+     "idade": 46.0,
+     "mulheres": 0.512,
+     "avancado": 0.291,
+     "relogio": 0.387,
+     "influenciador": 0.152,
+     "indicacao": 0.171,
+     "objetivo_top": {
+      "desempenho": 0.27,
+      "saude": 0.16,
+      "prova_com_prazo": 0.15
+     },
+     "bem_estar": 0.057,
+     "prova_desempenho": 0.28,
+     "receita_total_mediana": 289.0,
+     "receita_total_soma_pct": 0.06
+    }
+   ]
+  },
+  {
+   "cenario": "B",
+   "n_vars": 4,
+   "variaveis": [
+    "mensal",
+    "treinos_semana",
+    "min_por_treino",
+    "pct_ar_livre"
+   ],
+   "nomes": [
+    "plano mensal",
+    "treinos por semana",
+    "minutos por treino",
+    "% ao ar livre"
+   ],
+   "k": 6,
+   "silhueta": 0.438,
+   "menor_grupo": 0.053,
+   "estavel": 0.978,
+   "silhueta_por_k": [
+    {
+     "k": 3,
+     "silhueta": 0.343,
+     "menor_grupo": 0.243,
+     "estavel": 1.0,
+     "aceito": true
+    },
+    {
+     "k": 4,
+     "silhueta": 0.358,
+     "menor_grupo": 0.056,
+     "estavel": 0.622,
+     "aceito": false
+    },
+    {
+     "k": 5,
+     "silhueta": 0.427,
+     "menor_grupo": 0.056,
+     "estavel": 0.999,
+     "aceito": true
+    },
+    {
+     "k": 6,
+     "silhueta": 0.438,
+     "menor_grupo": 0.053,
+     "estavel": 0.978,
+     "aceito": true
+    },
+    {
+     "k": 7,
+     "silhueta": 0.432,
+     "menor_grupo": 0.051,
+     "estavel": 0.993,
+     "aceito": true
+    }
+   ],
+   "grupos": [
+    {
+     "grupo": 0,
+     "n": 3810,
+     "pct": 0.258,
+     "mensal": 0.0,
+     "tempo_casa_meses": 10.2,
+     "treinos_semana": 0.92,
+     "min_por_treino": 45.0,
+     "pct_ar_livre": 0.81,
+     "seguidores": 1.0,
+     "sem_treino_3m": 0.152,
+     "idade": 47.0,
+     "mulheres": 0.504,
+     "avancado": 0.13,
+     "relogio": 0.376,
+     "influenciador": 0.136,
+     "indicacao": 0.151,
+     "objetivo_top": {
+      "saude": 0.22,
+      "estetica": 0.17,
+      "prova_com_prazo": 0.16
+     },
+     "bem_estar": 0.059,
+     "prova_desempenho": 0.218,
+     "receita_total_mediana": 289.0,
+     "receita_total_soma_pct": 0.272
+    },
+    {
+     "grupo": 1,
+     "n": 3071,
+     "pct": 0.208,
+     "mensal": 1.0,
+     "tempo_casa_meses": 5.9,
+     "treinos_semana": 1.92,
+     "min_por_treino": 46.5,
+     "pct_ar_livre": 0.8,
+     "seguidores": 1.0,
+     "sem_treino_3m": 0.001,
+     "idade": 46.0,
+     "mulheres": 0.497,
+     "avancado": 0.142,
+     "relogio": 0.392,
+     "influenciador": 0.226,
+     "indicacao": 0.149,
+     "objetivo_top": {
+      "saude": 0.29,
+      "companhia": 0.2,
+      "estetica": 0.19
+     },
+     "bem_estar": 0.067,
+     "prova_desempenho": 0.119,
+     "receita_total_mediana": 237.0,
+     "receita_total_soma_pct": 0.18
+    },
+    {
+     "grupo": 2,
+     "n": 2847,
+     "pct": 0.193,
+     "mensal": 0.0,
+     "tempo_casa_meses": 10.8,
+     "treinos_semana": 1.62,
+     "min_por_treino": 41.4,
+     "pct_ar_livre": 0.14,
+     "seguidores": 2.0,
+     "sem_treino_3m": 0.054,
+     "idade": 47.0,
+     "mulheres": 0.497,
+     "avancado": 0.165,
+     "relogio": 0.383,
+     "influenciador": 0.142,
+     "indicacao": 0.155,
+     "objetivo_top": {
+      "saude": 0.25,
+      "companhia": 0.2,
+      "bem_estar": 0.19
+     },
+     "bem_estar": 0.131,
+     "prova_desempenho": 0.064,
+     "receita_total_mediana": 289.0,
+     "receita_total_soma_pct": 0.208
+    },
+    {
+     "grupo": 3,
+     "n": 2653,
+     "pct": 0.18,
+     "mensal": 1.0,
+     "tempo_casa_meses": 6.9,
+     "treinos_semana": 2.0,
+     "min_por_treino": 41.6,
+     "pct_ar_livre": 0.15,
+     "seguidores": 1.0,
+     "sem_treino_3m": 0.0,
+     "idade": 46.0,
+     "mulheres": 0.485,
+     "avancado": 0.165,
+     "relogio": 0.382,
+     "influenciador": 0.198,
+     "indicacao": 0.148,
+     "objetivo_top": {
+      "bem_estar": 0.27,
+      "saude": 0.26,
+      "companhia": 0.17
+     },
+     "bem_estar": 0.183,
+     "prova_desempenho": 0.036,
+     "receita_total_mediana": 267.0,
+     "receita_total_soma_pct": 0.165
+    },
+    {
+     "grupo": 5,
+     "n": 1587,
+     "pct": 0.108,
+     "mensal": 0.209,
+     "tempo_casa_meses": 11.0,
+     "treinos_semana": 4.38,
+     "min_por_treino": 44.5,
+     "pct_ar_livre": 0.79,
+     "seguidores": 2.0,
+     "sem_treino_3m": 0.0,
+     "idade": 46.0,
+     "mulheres": 0.498,
+     "avancado": 0.221,
+     "relogio": 0.372,
+     "influenciador": 0.147,
+     "indicacao": 0.141,
+     "objetivo_top": {
+      "desempenho": 0.21,
+      "saude": 0.21,
+      "prova_com_prazo": 0.15
+     },
+     "bem_estar": 0.071,
+     "prova_desempenho": 0.255,
+     "receita_total_mediana": 297.0,
+     "receita_total_soma_pct": 0.12
+    },
+    {
+     "grupo": 4,
+     "n": 785,
+     "pct": 0.053,
+     "mensal": 0.28,
+     "tempo_casa_meses": 10.0,
+     "treinos_semana": 1.31,
+     "min_por_treino": 85.2,
+     "pct_ar_livre": 0.82,
+     "seguidores": 2.0,
+     "sem_treino_3m": 0.0,
+     "idade": 46.0,
+     "mulheres": 0.517,
+     "avancado": 0.317,
+     "relogio": 0.385,
+     "influenciador": 0.152,
+     "indicacao": 0.175,
+     "objetivo_top": {
+      "desempenho": 0.26,
+      "saude": 0.16,
+      "prova_com_prazo": 0.15
+     },
+     "bem_estar": 0.06,
+     "prova_desempenho": 0.279,
+     "receita_total_mediana": 289.0,
+     "receita_total_soma_pct": 0.055
+    }
+   ]
+  },
+  {
+   "cenario": "C",
+   "n_vars": 5,
+   "variaveis": [
+    "tempo_casa",
+    "treinos_semana",
+    "min_por_treino",
+    "pct_ar_livre",
+    "seguidores"
+   ],
+   "nomes": [
+    "tempo de casa",
+    "treinos por semana",
+    "minutos por treino",
+    "% ao ar livre",
+    "seguidores"
+   ],
+   "k": 5,
+   "silhueta": 0.241,
+   "menor_grupo": 0.057,
+   "estavel": 0.952,
+   "silhueta_por_k": [
+    {
+     "k": 3,
+     "silhueta": 0.218,
+     "menor_grupo": 0.25,
+     "estavel": 0.921,
+     "aceito": true
+    },
+    {
+     "k": 4,
+     "silhueta": 0.238,
+     "menor_grupo": 0.062,
+     "estavel": 0.971,
+     "aceito": true
+    },
+    {
+     "k": 5,
+     "silhueta": 0.241,
+     "menor_grupo": 0.057,
+     "estavel": 0.952,
+     "aceito": true
+    },
+    {
+     "k": 6,
+     "silhueta": 0.243,
+     "menor_grupo": 0.054,
+     "estavel": 0.926,
+     "aceito": true
+    },
+    {
+     "k": 7,
+     "silhueta": 0.231,
+     "menor_grupo": 0.052,
+     "estavel": 0.638,
+     "aceito": false
+    }
+   ],
+   "grupos": [
+    {
+     "grupo": 1,
+     "n": 4392,
+     "pct": 0.298,
+     "mensal": 0.431,
+     "tempo_casa_meses": 11.4,
+     "treinos_semana": 2.0,
+     "min_por_treino": 41.5,
+     "pct_ar_livre": 0.15,
+     "seguidores": 2.0,
+     "sem_treino_3m": 0.035,
+     "idade": 47.0,
+     "mulheres": 0.491,
+     "avancado": 0.165,
+     "relogio": 0.373,
+     "influenciador": 0.14,
+     "indicacao": 0.16,
+     "objetivo_top": {
+      "saude": 0.26,
+      "bem_estar": 0.24,
+      "companhia": 0.2
+     },
+     "bem_estar": 0.168,
+     "prova_desempenho": 0.051,
+     "receita_total_mediana": 386.0,
+     "receita_total_soma_pct": 0.344
+    },
+    {
+     "grupo": 0,
+     "n": 4165,
+     "pct": 0.282,
+     "mensal": 0.294,
+     "tempo_casa_meses": 13.2,
+     "treinos_semana": 1.38,
+     "min_por_treino": 45.5,
+     "pct_ar_livre": 0.81,
+     "seguidores": 2.0,
+     "sem_treino_3m": 0.132,
+     "idade": 47.0,
+     "mulheres": 0.508,
+     "avancado": 0.126,
+     "relogio": 0.381,
+     "influenciador": 0.135,
+     "indicacao": 0.157,
+     "objetivo_top": {
+      "saude": 0.26,
+      "companhia": 0.19,
+      "estetica": 0.16
+     },
+     "bem_estar": 0.063,
+     "prova_desempenho": 0.17,
+     "receita_total_mediana": 472.0,
+     "receita_total_soma_pct": 0.343
+    },
+    {
+     "grupo": 4,
+     "n": 3002,
+     "pct": 0.203,
+     "mensal": 0.576,
+     "tempo_casa_meses": 1.3,
+     "treinos_semana": 1.08,
+     "min_por_treino": 43.2,
+     "pct_ar_livre": 0.71,
+     "seguidores": 0.0,
+     "sem_treino_3m": 0.012,
+     "idade": 46.0,
+     "mulheres": 0.49,
+     "avancado": 0.152,
+     "relogio": 0.394,
+     "influenciador": 0.271,
+     "indicacao": 0.133,
+     "objetivo_top": {
+      "estetica": 0.23,
+      "saude": 0.22,
+      "companhia": 0.16
+     },
+     "bem_estar": 0.072,
+     "prova_desempenho": 0.141,
+     "receita_total_mediana": 116.0,
+     "receita_total_soma_pct": 0.085
+    },
+    {
+     "grupo": 2,
+     "n": 2359,
+     "pct": 0.16,
+     "mensal": 0.491,
+     "tempo_casa_meses": 9.2,
+     "treinos_semana": 3.85,
+     "min_por_treino": 45.4,
+     "pct_ar_livre": 0.79,
+     "seguidores": 1.0,
+     "sem_treino_3m": 0.0,
+     "idade": 46.0,
+     "mulheres": 0.494,
+     "avancado": 0.206,
+     "relogio": 0.386,
+     "influenciador": 0.16,
+     "indicacao": 0.142,
+     "objetivo_top": {
+      "saude": 0.24,
+      "desempenho": 0.19,
+      "estetica": 0.14
+     },
+     "bem_estar": 0.075,
+     "prova_desempenho": 0.222,
+     "receita_total_mediana": 297.0,
+     "receita_total_soma_pct": 0.17
+    },
+    {
+     "grupo": 3,
+     "n": 835,
+     "pct": 0.057,
+     "mensal": 0.321,
+     "tempo_casa_meses": 9.8,
+     "treinos_semana": 1.46,
+     "min_por_treino": 83.7,
+     "pct_ar_livre": 0.82,
+     "seguidores": 1.0,
+     "sem_treino_3m": 0.0,
+     "idade": 46.0,
+     "mulheres": 0.526,
+     "avancado": 0.301,
+     "relogio": 0.38,
+     "influenciador": 0.15,
+     "indicacao": 0.17,
+     "objetivo_top": {
+      "desempenho": 0.24,
+      "saude": 0.17,
+      "prova_com_prazo": 0.15
+     },
+     "bem_estar": 0.06,
+     "prova_desempenho": 0.269,
+     "receita_total_mediana": 289.0,
+     "receita_total_soma_pct": 0.058
+    }
+   ]
+  },
+  {
+   "cenario": "D",
+   "n_vars": 6,
+   "variaveis": [
+    "mensal",
+    "tempo_casa",
+    "treinos_semana",
+    "min_por_treino",
+    "pct_ar_livre",
+    "seguidores"
+   ],
+   "nomes": [
+    "plano mensal",
+    "tempo de casa",
+    "treinos por semana",
+    "minutos por treino",
+    "% ao ar livre",
+    "seguidores"
+   ],
+   "k": 6,
+   "silhueta": 0.239,
+   "menor_grupo": 0.052,
+   "estavel": 0.94,
+   "silhueta_por_k": [
+    {
+     "k": 3,
+     "silhueta": 0.209,
+     "menor_grupo": 0.245,
+     "estavel": 0.517,
+     "aceito": false
+    },
+    {
+     "k": 4,
+     "silhueta": 0.196,
+     "menor_grupo": 0.062,
+     "estavel": 0.346,
+     "aceito": false
+    },
+    {
+     "k": 5,
+     "silhueta": 0.221,
+     "menor_grupo": 0.059,
+     "estavel": 0.986,
+     "aceito": true
+    },
+    {
+     "k": 6,
+     "silhueta": 0.239,
+     "menor_grupo": 0.052,
+     "estavel": 0.94,
+     "aceito": true
+    },
+    {
+     "k": 7,
+     "silhueta": 0.241,
+     "menor_grupo": 0.048,
+     "estavel": 0.96,
+     "aceito": false
+    }
+   ],
+   "grupos": [
+    {
+     "grupo": 2,
+     "n": 4052,
+     "pct": 0.275,
+     "mensal": 0.0,
+     "tempo_casa_meses": 11.8,
+     "treinos_semana": 1.38,
+     "min_por_treino": 45.5,
+     "pct_ar_livre": 0.81,
+     "seguidores": 2.0,
+     "sem_treino_3m": 0.141,
+     "idade": 47.0,
+     "mulheres": 0.501,
+     "avancado": 0.141,
+     "relogio": 0.378,
+     "influenciador": 0.123,
+     "indicacao": 0.153,
+     "objetivo_top": {
+      "saude": 0.22,
+      "prova_com_prazo": 0.16,
+      "estetica": 0.16
+     },
+     "bem_estar": 0.059,
+     "prova_desempenho": 0.228,
+     "receita_total_mediana": 297.0,
+     "receita_total_soma_pct": 0.308
+    },
+    {
+     "grupo": 0,
+     "n": 2817,
+     "pct": 0.191,
+     "mensal": 0.0,
+     "tempo_casa_meses": 11.7,
+     "treinos_semana": 1.85,
+     "min_por_treino": 41.5,
+     "pct_ar_livre": 0.15,
+     "seguidores": 2.0,
+     "sem_treino_3m": 0.055,
+     "idade": 47.0,
+     "mulheres": 0.495,
+     "avancado": 0.17,
+     "relogio": 0.375,
+     "influenciador": 0.136,
+     "indicacao": 0.153,
+     "objetivo_top": {
+      "saude": 0.24,
+      "companhia": 0.2,
+      "bem_estar": 0.19
+     },
+     "bem_estar": 0.132,
+     "prova_desempenho": 0.07,
+     "receita_total_mediana": 297.0,
+     "receita_total_soma_pct": 0.212
+    },
+    {
+     "grupo": 4,
+     "n": 2592,
+     "pct": 0.176,
+     "mensal": 0.912,
+     "tempo_casa_meses": 9.8,
+     "treinos_semana": 2.69,
+     "min_por_treino": 47.0,
+     "pct_ar_livre": 0.8,
+     "seguidores": 2.0,
+     "sem_treino_3m": 0.0,
+     "idade": 46.0,
+     "mulheres": 0.508,
+     "avancado": 0.159,
+     "relogio": 0.394,
+     "influenciador": 0.182,
+     "indicacao": 0.153,
+     "objetivo_top": {
+      "saude": 0.29,
+      "companhia": 0.19,
+      "estetica": 0.14
+     },
+     "bem_estar": 0.071,
+     "prova_desempenho": 0.146,
+     "receita_total_mediana": 346.0,
+     "receita_total_soma_pct": 0.204
+    },
+    {
+     "grupo": 3,
+     "n": 2319,
+     "pct": 0.157,
+     "mensal": 0.651,
+     "tempo_casa_meses": 1.0,
+     "treinos_semana": 1.0,
+     "min_por_treino": 43.4,
+     "pct_ar_livre": 0.72,
+     "seguidores": 0.0,
+     "sem_treino_3m": 0.004,
+     "idade": 46.0,
+     "mulheres": 0.489,
+     "avancado": 0.157,
+     "relogio": 0.394,
+     "influenciador": 0.28,
+     "indicacao": 0.131,
+     "objetivo_top": {
+      "saude": 0.23,
+      "estetica": 0.23,
+      "companhia": 0.17
+     },
+     "bem_estar": 0.072,
+     "prova_desempenho": 0.128,
+     "receita_total_mediana": 77.0,
+     "receita_total_soma_pct": 0.057
+    },
+    {
+     "grupo": 5,
+     "n": 2201,
+     "pct": 0.149,
+     "mensal": 1.0,
+     "tempo_casa_meses": 8.5,
+     "treinos_semana": 2.31,
+     "min_por_treino": 41.7,
+     "pct_ar_livre": 0.15,
+     "seguidores": 2.0,
+     "sem_treino_3m": 0.0,
+     "idade": 46.0,
+     "mulheres": 0.487,
+     "avancado": 0.167,
+     "relogio": 0.373,
+     "influenciador": 0.17,
+     "indicacao": 0.158,
+     "objetivo_top": {
+      "bem_estar": 0.28,
+      "saude": 0.27,
+      "companhia": 0.17
+     },
+     "bem_estar": 0.197,
+     "prova_desempenho": 0.04,
+     "receita_total_mediana": 326.0,
+     "receita_total_soma_pct": 0.165
+    },
+    {
+     "grupo": 1,
+     "n": 772,
+     "pct": 0.052,
+     "mensal": 0.262,
+     "tempo_casa_meses": 10.0,
+     "treinos_semana": 1.38,
+     "min_por_treino": 85.5,
+     "pct_ar_livre": 0.81,
+     "seguidores": 1.0,
+     "sem_treino_3m": 0.0,
+     "idade": 46.0,
+     "mulheres": 0.522,
+     "avancado": 0.317,
+     "relogio": 0.377,
+     "influenciador": 0.148,
+     "indicacao": 0.168,
+     "objetivo_top": {
+      "desempenho": 0.26,
+      "saude": 0.16,
+      "prova_com_prazo": 0.15
+     },
+     "bem_estar": 0.062,
+     "prova_desempenho": 0.281,
+     "receita_total_mediana": 289.0,
+     "receita_total_soma_pct": 0.054
+    }
+   ]
+  }
+ ]
+}
