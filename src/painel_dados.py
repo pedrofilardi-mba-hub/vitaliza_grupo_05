@@ -129,6 +129,9 @@ def main():
         html = modelo.read_text(encoding='utf-8').replace('/*__DADOS__*/{}', json.dumps(d, ensure_ascii=False))
         (RAIZ / 'docs' / 'painel.html').write_text(html, encoding='utf-8')
         print('gravado docs/painel.html')
+        entrega = RAIZ / 'entrega' / '15-11'   # a cópia da pasta de entrega acompanha o painel
+        if entrega.exists():
+            (entrega / '04_painel_do_projeto.html').write_text(html, encoding='utf-8')
     print(json.dumps({k: d[k] for k in ['churn_mensal', 'base', 'anunciados', 'decisoes']}, ensure_ascii=False)[:3000])
 
 
