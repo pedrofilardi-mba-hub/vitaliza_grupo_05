@@ -136,7 +136,21 @@ td code{font-family:var(--mono);font-size:12.5px;background:var(--accent-soft);p
 .badge.alt{color:var(--warn);border-color:var(--warn)}
 .badge.off{color:var(--muted);border-color:var(--line)}
 .cen{border:1px solid var(--line);border-radius:12px;background:var(--surface);padding:16px;margin-top:16px;display:grid;gap:10px}
-.cen.sugerido{border:2px solid var(--ok)}
+.cen.escolhido{border:2px solid var(--ok)}
+.seg-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.seg-card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;display:grid;gap:6px;align-content:start}
+.seg-card h4{margin:0;font-size:16px}
+.seg-card p{margin:0;font-size:14px}
+.seg-top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.seg-pct{font-family:var(--display);font-size:26px;font-weight:700}
+.seg-key{font-family:var(--mono);font-size:12.5px;color:var(--accent)}
+.seg-foot{color:var(--muted);font-size:12.5px !important}
+table.zt td.num{text-align:center;font-weight:600}
+.ch-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.ch-head h3{margin:0}
+.sel{font-size:13px;color:var(--muted);display:flex;gap:6px;align-items:center}
+.sel select{font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:4px 8px}
+.muted{color:var(--muted);font-size:12.5px}
 .cen-head{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between}
 .cen-head h3{margin:0}
 .cen-sub{margin:0;color:var(--muted);font-size:14px}
@@ -184,6 +198,7 @@ table.stats td.r{text-align:right;font-variant-numeric:tabular-nums}
 .biz{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--ok);border-radius:10px;padding:14px 16px;display:grid;gap:10px}
 .biz h4{margin:0;font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ok);font-weight:600}
 .biz ul{margin:0;padding-left:18px;display:grid;gap:8px}
+.biz p{margin:0;font-size:15px}
 .biz li{font-size:15px}
 .biz .act{display:block;color:var(--accent);font-size:14px;margin-top:2px}
 .biz .act::before{content:"→ "}
@@ -271,14 +286,14 @@ details.deep[open]>summary::before{content:"－"}
 </header>
 
 <nav class="jump" aria-label="Seções">
-  <a href="#resumo">Resumo</a><a href="#percurso">Percurso</a><a href="#proximo">Próximo passo</a><a href="#reuniao">Para decidir</a><a href="#raiox">Raio-x da base</a><a href="#dados">Churn: quem sai e por quê</a>
+  <a href="#resumo">Resumo</a><a href="#percurso">Percurso</a><a href="#proximo">Próximo passo</a><a href="#reuniao">Para decidir</a><a href="#raiox">Raio-x da base</a><a href="#segprocesso">Segmentação: como escolhemos</a><a href="#segmento">Segmentação escolhida</a><a href="#dados">Churn: quem sai e por quê</a>
   <a href="#achados">Achados</a><a href="#decisoes">Decisões</a><a href="#qualidade">Qualidade</a><a href="#entregas">Entregas</a><a href="#limites">Limites</a>
 </nav>
 
 <section id="resumo">
   <div class="label">Resumo</div>
-  <h2>A base está pronta e conferida. Agora: segmentar e virar personas.</h2>
-  <p class="lead">Limpamos os 12 arquivos do data room com regras registradas, montamos a base no corte de 30/09/2026 e conferimos contra o enunciado e a Aula 2. Depois estudamos o que separa quem sai e por que as pessoas desligam a renovação. O próximo passo é o K-means da base toda, que vira as personas da entrega de 15/11.</p>
+  <h2>A base está segmentada em 5 grupos. Agora: personas e a entrega de 15/11.</h2>
+  <p class="lead">Limpamos os 12 arquivos do data room com regras registradas, montamos a base no corte de 30/09/2026 e conferimos contra o enunciado e a Aula 2. Depois estudamos o que separa quem sai e por que as pessoas desligam a renovação. Com o K-means, separamos a base em 5 grupos de comportamento (D-054), cada um descrito por perfil, valor e saída. O próximo passo é escrever as personas e fechar a entrega de 15/11.</p>
   <div class="splits" id="splits"></div>
 </section>
 
@@ -294,120 +309,46 @@ details.deep[open]>summary::before{content:"－"}
 </section>
 
 <section id="proximo">
-  <div class="label">Próximo passo · km 09 · escolher a segmentação</div>
-  <h2>Rodamos o K-means: 4 cenários para o grupo escolher</h2>
-  <p class="lead"><b>Onde estamos:</b> rodamos o K-means na base ativa de 30/09 em <b>todas as combinações de 3, 4, 5 e 6 variáveis</b>, com 3 a 7 grupos cada (<span id="kmRodadas">210</span> rodadas), e trouxemos os <b>4 melhores cenários</b>, um para cada número de variáveis. <b>O que falta:</b> o grupo escolher um cenário. Depois disso, gravamos o grupo de cada assinante e escrevemos as 3 a 4 personas da entrega de <b>15/11</b>.</p>
-  <div class="biz"><b>Lembrete: segmentação não é churn.</b> Aqui a pergunta é "em que os nossos clientes são diferentes?", e não "quem vai sair?". Nenhuma informação de saída entrou no cálculo. O objetivo é dar ao marketing e ao produto um retrato de <i>tipos de cliente</i> (quem treina em casa, quem acabou de chegar, quem treina para prova) para pensar oferta, conteúdo e mensagem. O risco de saída de cada pessoa vem do modelo de churn, na etapa seguinte, e se soma ao grupo dela.</div>
+  <div class="label">Próximo passo · km 10 · personas e entrega de 15/11</div>
+  <h2>Transformar os 5 grupos em personas e fechar a entrega</h2>
+  <p class="lead"><b>Onde estamos:</b> a segmentação está escolhida (D-054) e cada assinante já tem o seu grupo. <b>O objetivo agora:</b> escrever <b>3 a 4 cartões de persona</b> com os números de cada grupo, os fatores que levam à saída e a prioridade, e juntar tudo na entrega de <b>15/11</b>: relatório de segmentação (negócios), notebook de EDA e mini deck (tecnologia), numa pasta pública do Drive.</p>
   <div class="flow">
-    <div class="in"><h4>1 · Entra</h4><ul><li>Os 4 cenários abaixo, com grupos, prós, contras e personas</li><li>O relatório completo: <a href="https://github.com/pedrofilardi-mba-hub/vitaliza_grupo_05/blob/main/saidas/clusters_cenarios.md" target="_blank" rel="noopener">saidas/clusters_cenarios.md ↗</a></li></ul></div>
-    <div class="do"><h4>2 · Fazemos</h4><ol><li>Ler os cenários e discutir na reunião</li><li>Escolher um cenário (e se juntamos grupos parecidos)</li><li>Gravar o grupo de cada assinante</li><li>Escrever os cartões de persona</li></ol></div>
-    <div class="out"><h4>3 · Sai</h4><ul><li>A coluna "grupo" de cada assinante, que o modelo e a regra de decisão usam depois</li><li>Uma decisão nova no DECISOES.md</li><li>3 a 4 cartões de persona no formato da Aula 4</li></ul></div>
+    <div class="in"><h4>1 · Entra</h4><ul><li>Os 5 grupos e as análises da aba <a href="#segmento">Segmentação escolhida</a></li><li>Os motivos de desligamento (seção "Churn: quem sai e por quê")</li><li>O formato de persona da Aula 4</li></ul></div>
+    <div class="do"><h4>2 · Fazemos</h4><ol><li>Decidir se juntamos grupos numa persona</li><li>Escrever os cartões</li><li>Montar a prioridade "agir já × monitorar"</li><li>Notebook, deck e relatório</li><li>Pasta no Drive e link na Adalove</li></ol></div>
+    <div class="out"><h4>3 · Sai</h4><ul><li>3 a 4 cartões de persona</li><li>Customer Segmentation Report</li><li>Notebook de EDA e mini deck de 3 a 5 slides</li><li>O link de cada integrante na Adalove</li></ul></div>
   </div>
 
   <div class="rx-step">
-    <h3>Como rodamos, em 4 passos</h3>
-    <ol class="flow-q">
-      <li><b>Preparamos as 6 variáveis</b> (plano, tempo de casa, treinos por semana, minutos por treino, % ao ar livre e seguidores): cortamos os extremos e preenchemos os faltantes. <span class="eg">Exemplo: um treino de 515 minutos vira 115, para não puxar um grupo inteiro para si.</span></li>
-      <li><b>Normalizamos</b> cada combinação: toda variável passa a ter média 0 e desvio 1 (StandardScaler). <span class="eg">Sem isso, minutos por treino (dezenas) mandariam mais que o plano (0 ou 1).</span></li>
-      <li><b>Rodamos todas as combinações:</b> 20 de 3 variáveis, 15 de 4, 6 de 5 e 1 de 6, cada uma com 3 a 7 grupos. <span class="eg">É como testar 42 "réguas" diferentes para medir quem é parecido com quem.</span></li>
-      <li><b>Medimos cada rodada</b> com três notas e só aceitamos as que passam nas duas últimas:
-        <span class="eg"><b>Silhueta:</b> quão separados estão os grupos (0 = misturados; 1 = bem separados).</span>
-        <span class="eg"><b>Menor grupo:</b> precisa ter pelo menos 5% da base, para valer uma ação própria.</span>
-        <span class="eg"><b>Estabilidade:</b> rodamos de novo com outro sorteio e com metade da base; os grupos precisam se repetir em pelo menos 80%.</span></li>
-    </ol>
-    <div class="charts" style="margin-top:14px">
-      <div class="chart"><h3>Silhueta por número de grupos</h3><p class="cap">Um traço por cenário. Mais alto = grupos mais separados. Compare só cenários com o mesmo número de variáveis (veja o cuidado 1).</p><div class="box"><canvas id="cKmSil"></canvas></div><p class="src">Fonte: saidas/clusters_cenarios.csv · src/clusters_cenarios.py</p></div>
-      <div class="chart"><h3>Tamanho dos grupos em cada cenário</h3><p class="cap">% da base em cada grupo, do maior para o menor. Passe o mouse para ver o nome.</p><div class="box"><canvas id="cKmTam"></canvas></div><p class="src">Fonte: saidas/clusters_perfis.json</p></div>
-    </div>
-    <div class="two" style="margin-top:14px">
-      <div class="card"><h3>Três cuidados antes de comparar</h3><ul>
-        <li><b>1 · A silhueta cai quando entram mais variáveis.</b> Com mais "direções", as pessoas ficam mais espalhadas. A melhor foi 0,67 com 3 variáveis e 0,24 com 6. Por isso a nota só compara cenários do mesmo tamanho; entre tamanhos, valem a estabilidade e o sentido de negócio.</li>
-        <li><b>2 · O plano, por ser 0 ou 1, manda na separação.</b> Quando ele entra, quase todo grupo sai 100% mensal ou 100% anual e a silhueta sobe. O algoritmo "descobre" uma divisão que já conhecíamos.</li>
-        <li><b>3 · Idade, sexo e relógio não mudam entre os grupos</b> em nenhum cenário (~46 anos, ~50% mulheres, ~38% com relógio). As personas se diferenciam pelo comportamento, pelo contrato e pelo objetivo, não pelo perfil demográfico.</li>
-      </ul></div>
-      <div class="card"><h3>O que aparece em todos os cenários</h3><ul>
-        <li><b>Rua × casa</b> é o corte mais forte da base: 1 em cada 3 assinantes faz só ~15% dos treinos ao ar livre (o resto em vídeo).</li>
-        <li><b>Os longões</b> (~83 minutos por treino, ~6% da base, mais avançados e focados em prova) aparecem em todas as rodadas.</li>
-        <li><b>Achado da visão geral:</b> mensais quase nunca ficam 3 meses sem treinar (≤ 0,1%), mas <b>12% a 15% dos anuais de rua</b> não treinaram nenhuma vez em 3 meses. O anual pagou o ano e pode parar sem sentir o custo; o mensal que para, cancela.</li>
-      </ul></div>
-    </div>
-  </div>
-
-  <div class="rx-step">
-    <h3>Os 4 cenários, lado a lado</h3>
-    <p class="lead">Para cada cenário: os grupos que se formam (nome provisório, tamanho e retrato), os prós (✔) e contras (✖), as personas que nascem dele e se vale considerar ou descartar. Os números de cada grupo são medianas, e os percentuais são a parcela do grupo.</p>
-    <div class="tbl"><table><thead><tr><th>Cenário</th><th>Variáveis</th><th>Grupos</th><th>Silhueta</th><th>Menor grupo</th><th>Estabilidade</th><th>Veredito</th></tr></thead><tbody id="kmResumo"></tbody></table></div>
-    <div id="kmCen"></div>
+    <h3>O cartão de persona (Aula 4), com um exemplo</h3>
+    <p class="lead">Persona não é um "personagem inventado": é o retrato de um grupo que os números confirmaram. Cada parte do cartão responde a uma pergunta:</p>
+    <div class="tbl"><table><thead><tr><th>Parte</th><th>Pergunta</th><th>Exemplo: "O novato que ainda está chegando"</th></tr></thead><tbody>
+      <tr><td><b>Contexto</b></td><td>Quem é e como usa o app?</td><td>20% da base. 1,3 mês de casa, 1 treino por semana, nenhum seguidor. 58% no mensal; o dobro dos outros grupos veio por influenciador.</td></tr>
+      <tr><td><b>Conflito</b></td><td>Por que pode sair?</td><td>Ainda não criou rotina nem rede. Um problema técnico no começo pesa muito.</td></tr>
+      <tr><td><b>Evidência</b></td><td>Que números sustentam isso?</td><td>Sai 19,0% em 60 dias (base: 14,8%) e responde por 28% das saídas. Com chamado técnico, 36%.</td></tr>
+      <tr><td><b>Resolução</b></td><td>O que o faria ficar?</td><td>Primeiras semanas guiadas, conexão com outras pessoas, suporte rápido.</td></tr>
+      <tr><td><b>Decisão</b></td><td>Gatilho, ação e hipótese a testar</td><td>Gatilho: 2 semanas sem treinar ou chamado técnico no 1º mês. Ação: push de "primeira meta" e sugestão de quem seguir. Hipótese: quem segue alguém nas 4 primeiras semanas fica mais.</td></tr>
+      <tr><td><b>Limite</b></td><td>O que os dados não dizem?</td><td>Não sabemos o que o influenciador prometeu; a saída é de 31/05 com a régua de hoje.</td></tr>
+    </tbody></table></div>
   </div>
 
   <div class="rx-step">
     <h3>O que está pendente decidir</h3>
-    <p class="lead">Duas escolhas, no formato de sempre: o que está em jogo, opções com ✔ e ✖, e a nossa sugestão.</p>
     <ol class="decide" id="kmDecide"></ol>
   </div>
 
   <div class="rx-step">
-    <h3>Depois de escolher: o passo a passo</h3>
+    <h3>O que falta para 15/11, peça por peça</h3>
     <ol class="steps" id="kmSteps"></ol>
   </div>
 
   <div class="rx-step">
-    <h3>O prompt para a IA gravar o cenário escolhido</h3>
+    <h3>O prompt para a IA escrever os cartões de persona</h3>
     <p class="lead">Funciona no Claude Code, Codex ou Cursor, com o projeto aberto. Troque o que está entre <code>&lt;&lt; &gt;&gt;</code> pelo que o grupo decidir.</p>
-    <div class="tbl"><table><thead><tr><th>O que preencher</th><th>Onde achar</th><th>Exemplo (cenário C)</th></tr></thead><tbody>
-      <tr><td>Cenário escolhido</td><td>Decisão 1 acima</td><td>C: tempo de casa, treinos por semana, minutos por treino, % ao ar livre e seguidores, 5 grupos</td></tr>
-      <tr><td>Nomes dos grupos</td><td>Tabela do cenário escolhido</td><td>Treino em casa; Rua no ritmo leve; Novatos; Intensos; Longões</td></tr>
-      <tr><td>Grupos a juntar para as personas</td><td>Decisão 2 acima</td><td>Intensos + Longões = "O atleta"</td></tr>
+    <div class="tbl"><table><thead><tr><th>O que preencher</th><th>Onde achar</th><th>Exemplo</th></tr></thead><tbody>
+      <tr><td>Personas</td><td>Decisão abaixo de "O que está pendente decidir"</td><td>Novato; Treino em casa; Rua no ritmo leve; O atleta (Intensos + Longões)</td></tr>
+      <tr><td>Público do relatório</td><td>Guia da entrega</td><td>Diretoria da Vitaliza (negócios)</td></tr>
     </tbody></table></div>
-    <div class="prompt"><div class="ph"><b>Prompt para gravar a segmentação (copie inteiro)</b><button class="btn copy" type="button">Copiar</button></div><pre id="kmPrompt"></pre></div>
-  </div>
-
-  <details class="deep"><summary>Aprofundar: como escolhemos as 6 variáveis e por que a base precisou ser normalizada</summary><div class="deep-body">
-    <h5>As quatro perguntas que cada variável precisou passar</h5>
-    <ol class="flow-q">
-      <li><b>As pessoas são diferentes nela?</b> <span class="eg">Exemplo: 98% têm zero recusa de cartão, então ela não separa ninguém.</span></li>
-      <li><b>O dado é bom?</b> <span class="eg">Exemplo: "treinos nos primeiros 14 dias" falta para metade da base.</span></li>
-      <li><b>Não repete outra que já entrou?</b> <span class="eg">Exemplo: treinos por semana e dias ativos andam juntos (r = 0,98).</span></li>
-      <li><b>Ajuda a formar grupos explicáveis?</b> <span class="eg">Exemplo: num teste, a idade fez a separação cair de 0,24 para 0,19.</span></li>
-    </ol>
-    <h5>As 6 que passaram</h5>
-    <div class="tbl"><table><thead><tr><th>Variável</th><th>Lente</th><th>O que diz sobre a pessoa</th><th>Como entra</th></tr></thead><tbody>
-      <tr><td><b>Plano</b> (mensal ou anual)</td><td>Contrato</td><td>O compromisso que assumiu. 42% mensal.</td><td>0 ou 1</td></tr>
-      <tr><td><b>Tempo de casa</b></td><td>Contrato</td><td>Novato ou veterano. Mediana de 8,6 meses; vai até 72.</td><td>Em log (encolhe a cauda)</td></tr>
-      <tr><td><b>Treinos por semana</b></td><td>Uso</td><td>Quanto treina, na média dos últimos 3 meses. Mediana 1,8.</td><td>Teto no percentil 99</td></tr>
-      <tr><td><b>Minutos por treino</b> ★</td><td>Estilo</td><td>Treino curto ou longão. Mediana 43 minutos.</td><td>Teto em 115 min (há casos de 515)</td></tr>
-      <tr><td><b>% de treinos ao ar livre</b></td><td>Estilo</td><td>Rua ou casa/vídeo. Mediana 75%, mas 1 em cada 4 fica abaixo de 16%.</td><td>Faltantes (1,2%) pela mediana</td></tr>
-      <tr><td><b>Seguidores</b></td><td>Rede</td><td>Treina sozinho ou enturmado. 1 em cada 4 tem zero.</td><td>Teto em 6</td></tr>
-    </tbody></table></div>
-    <p>★ Dimensão nova: minutos ÷ treinos dos últimos 3 meses. Quase não anda com a frequência (r ≈ 0): duas pessoas com 2 treinos por semana, uma com 40 e outra com 80 minutos, são perfis diferentes.</p>
-    <h5>O que ficou de fora, e por quê</h5>
-    <div class="tbl"><table><thead><tr><th>Ficou de fora</th><th>Motivo</th><th>Uso depois</th></tr></thead><tbody>
-      <tr><td>Dias ativos, minutos totais, aberturas do app, semanas ativas</td><td>Repetem os treinos por semana (r de 0,75 a 0,98)</td><td>—</td></tr>
-      <tr><td>% de treinos em vídeo</td><td>É o espelho do ar livre (r = −0,96)</td><td>—</td></tr>
-      <tr><td>Receita total</td><td>Repete o tempo de casa (r = 0,75)</td><td>Descrever o valor de cada grupo</td></tr>
-      <tr><td>Canal de cobrança</td><td>Repete o sistema do celular</td><td>Descrever</td></tr>
-      <tr><td>Idade, sexo, relógio</td><td>Não formam grupos; a idade piorou a separação</td><td>Descrever (LGPD: idade e sexo nunca disparam ação)</td></tr>
-      <tr><td>Objetivo do cadastro, nível, dias prometidos</td><td>30% sem objetivo e 10% sem dias prometidos; não melhoraram a separação</td><td>Descrever</td></tr>
-      <tr><td>Dias até a renovação, variação de treinos, dias sem treinar</td><td>Sinais de "está indo embora", não de "quem é"</td><td>Modelo de churn e regra de decisão</td></tr>
-      <tr><td>Chamados, recusas, treino acompanhado, amigos que saíram</td><td>Zero para 88% a 98% da base</td><td>Descrever</td></tr>
-    </tbody></table></div>
-    <h5>A base estava normalizada? Não, e isso é esperado</h5>
-    <p>Limpar não é normalizar. A limpeza deixou cada coluna correta, mas cada uma na própria régua: % ao ar livre vai de 0 a 1, tempo de casa até 72 meses, minutos por treino até 515. O K-means mede a distância somando as diferenças; sem ajuste, <b>10 minutos a mais num treino pesariam mais que a diferença entre mensal e anual</b>. Por isso, dentro de <code>src/clusters_cenarios.py</code>, cortamos os extremos (teto no percentil 99, log no tempo de casa), preenchemos faltantes com a mediana e padronizamos tudo para média 0 e desvio 1. Nada disso é gravado em <code>dados/processados/</code>.</p>
-  </div></details>
-
-  <div class="two">
-    <div class="card"><h3>Como saber se a escolha foi boa</h3><ul>
-      <li><b>Cada grupo cabe numa frase</b> sem olhar a tabela. Ex.: "novatos, sem rede, que chegaram por influenciador".</li>
-      <li><b>Cada grupo pede uma ação diferente</b> de oferta, conteúdo ou mensagem. Dois grupos que pedem a mesma ação podem virar uma persona só.</li>
-      <li><b>O que ficou fora do cálculo muda entre os grupos</b> (objetivo, plano, canal, receita). É a prova de que o grupo é real.</li>
-      <li><b>As personas somam boa parte da base</b> (cobrir) e são diferentes entre si (separar).</li>
-    </ul></div>
-    <div class="card"><h3>Cuidados da Aula 3</h3><ul>
-      <li><b>O algoritmo sempre acha grupos</b>, mesmo onde não existem. Só vale o grupo que muda a decisão.</li>
-      <li><b>Silhueta baixa não é erro:</b> em dados de clientes, 0,2 a 0,3 é comum; as pessoas mudam aos poucos, sem fronteiras nítidas.</li>
-      <li><b>Segmentação não é previsão:</b> o grupo diz <i>quem é</i> a pessoa; o risco de ela sair vem do modelo de churn.</li>
-      <li><b>LGPD:</b> idade e sexo só descrevem os grupos; nunca entram no cálculo nem disparam ação.</li>
-    </ul></div>
+    <div class="prompt"><div class="ph"><b>Prompt dos cartões de persona (copie inteiro)</b><button class="btn copy" type="button">Copiar</button></div><pre id="kmPrompt"></pre></div>
   </div>
 </section>
 
@@ -567,6 +508,197 @@ details.deep[open]>summary::before{content:"－"}
   </div>
 </section>
 
+<section id="segprocesso">
+  <div class="label">Segmentação · como escolhemos · decisão D-054</div>
+  <h2>Como chegamos ao cenário escolhido</h2>
+  <p class="lead">Rodamos o K-means na base ativa de 30/09 em <b>todas as combinações de 3, 4, 5 e 6 variáveis</b>, com 3 a 7 grupos cada (<span id="kmRodadas">210</span> rodadas). Levamos ao grupo os <b>4 melhores cenários</b>, um para cada número de variáveis, e o grupo escolheu o de 5 variáveis sem o plano, que passou a se chamar <b>cenário escolhido</b>. Esta aba guarda todo o processo, para quem quiser refazer o caminho ou questionar a escolha. O resultado detalhado está na aba <a href="#segmento">Segmentação escolhida</a>.</p>
+  <div class="biz"><p><b>Segmentação não é churn.</b> Aqui a pergunta foi "em que os nossos clientes são diferentes?", e não "quem vai sair?". Nenhuma informação de saída entrou na formação dos grupos, como pede o objetivo 3 do enunciado. Só depois de formados, os grupos foram descritos também pela saída histórica, porque a entrega de 15/11 pede personas com o que leva cada grupo a sair.</p></div>
+  <div class="flow">
+    <div class="in"><h4>1 · Entrou</h4><ul><li>A base ativa de 30/09/2026 (14.753 assinantes)</li><li>6 variáveis candidatas, escolhidas por variedade, qualidade e não repetição</li></ul></div>
+    <div class="do"><h4>2 · Fizemos</h4><ol><li>Normalizamos a base</li><li>Rodamos 42 combinações × 3 a 7 grupos</li><li>Medimos separação, tamanho e estabilidade</li><li>Levamos 4 cenários ao grupo</li><li>O grupo escolheu (D-054)</li></ol></div>
+    <div class="out"><h4>3 · Saiu</h4><ul><li><a href="https://github.com/pedrofilardi-mba-hub/vitaliza_grupo_05/blob/main/saidas/clusters_cenarios.md" target="_blank" rel="noopener">saidas/clusters_cenarios.md ↗</a> (os 4 cenários)</li><li>A decisão D-054 no <a href="https://github.com/pedrofilardi-mba-hub/vitaliza_grupo_05/blob/main/DECISOES.md" target="_blank" rel="noopener">DECISOES.md ↗</a></li><li>O cenário escolhido, detalhado na <a href="#segmento">próxima aba</a></li></ul></div>
+  </div>
+
+  <div class="rx-step">
+    <h3>Como rodamos, em 4 passos</h3>
+    <ol class="flow-q">
+      <li><b>Preparamos as 6 variáveis</b> (plano, tempo de casa, treinos por semana, minutos por treino, % ao ar livre e seguidores): cortamos os extremos e preenchemos os faltantes. <span class="eg">Exemplo: um treino de 515 minutos vira 115, para não puxar um grupo inteiro para si.</span></li>
+      <li><b>Normalizamos</b> cada combinação: toda variável passa a ter média 0 e desvio 1 (StandardScaler). <span class="eg">Sem isso, minutos por treino (dezenas) mandariam mais que o plano (0 ou 1).</span></li>
+      <li><b>Rodamos todas as combinações:</b> 20 de 3 variáveis, 15 de 4, 6 de 5 e 1 de 6, cada uma com 3 a 7 grupos. <span class="eg">É como testar 42 "réguas" diferentes para medir quem é parecido com quem.</span></li>
+      <li><b>Medimos cada rodada</b> com três notas e só aceitamos as que passam nas duas últimas:
+        <span class="eg"><b>Silhueta:</b> quão separados estão os grupos (0 = misturados; 1 = bem separados).</span>
+        <span class="eg"><b>Menor grupo:</b> precisa ter pelo menos 5% da base, para valer uma ação própria.</span>
+        <span class="eg"><b>Estabilidade:</b> rodamos de novo com outro sorteio e com metade da base; os grupos precisam se repetir em pelo menos 80%.</span></li>
+    </ol>
+    <div class="charts" style="margin-top:14px">
+      <div class="chart"><h3>Silhueta por número de grupos</h3><p class="cap">Um traço por cenário. Mais alto = grupos mais separados. Compare só cenários com o mesmo número de variáveis (veja o cuidado 1).</p><div class="box"><canvas id="cKmSil"></canvas></div><p class="src">Fonte: saidas/clusters_cenarios.csv · src/clusters_cenarios.py</p></div>
+      <div class="chart"><h3>Tamanho dos grupos em cada cenário</h3><p class="cap">% da base em cada grupo, do maior para o menor. Passe o mouse para ver o nome.</p><div class="box"><canvas id="cKmTam"></canvas></div><p class="src">Fonte: saidas/clusters_perfis.json</p></div>
+    </div>
+    <div class="two" style="margin-top:14px">
+      <div class="card"><h3>Três cuidados antes de comparar</h3><ul>
+        <li><b>1 · A silhueta cai quando entram mais variáveis.</b> Com mais "direções", as pessoas ficam mais espalhadas. A melhor foi 0,67 com 3 variáveis e 0,24 com 6. Por isso a nota só compara cenários do mesmo tamanho; entre tamanhos, valem a estabilidade e o sentido de negócio.</li>
+        <li><b>2 · O plano, por ser 0 ou 1, manda na separação.</b> Quando ele entra, quase todo grupo sai 100% mensal ou 100% anual e a silhueta sobe. O algoritmo "descobre" uma divisão que já conhecíamos.</li>
+        <li><b>3 · Idade, sexo e relógio não mudam entre os grupos</b> em nenhum cenário (~46 anos, ~50% mulheres, ~38% com relógio). As personas se diferenciam pelo comportamento, pelo contrato e pelo objetivo, não pelo perfil demográfico.</li>
+      </ul></div>
+      <div class="card"><h3>O que aparece em todos os cenários</h3><ul>
+        <li><b>Rua × casa</b> é o corte mais forte da base: 1 em cada 3 assinantes faz só ~15% dos treinos ao ar livre (o resto em vídeo).</li>
+        <li><b>Os longões</b> (~83 minutos por treino, ~6% da base, mais avançados e focados em prova) aparecem em todas as rodadas.</li>
+        <li><b>Achado da visão geral:</b> mensais quase nunca ficam 3 meses sem treinar (≤ 0,1%), mas <b>12% a 15% dos anuais de rua</b> não treinaram nenhuma vez em 3 meses. O anual pagou o ano e pode parar sem sentir o custo; o mensal que para, cancela.</li>
+      </ul></div>
+    </div>
+  </div>
+
+  <div class="rx-step">
+    <h3>Os 4 cenários, lado a lado</h3>
+    <p class="lead">Para cada cenário: os grupos que se formam (nome provisório, tamanho e retrato), os prós (✔) e contras (✖), as personas que nascem dele e se vale considerar ou descartar. Os números de cada grupo são medianas, e os percentuais são a parcela do grupo.</p>
+    <div class="tbl"><table><thead><tr><th>Cenário</th><th>Variáveis</th><th>Grupos</th><th>Silhueta</th><th>Menor grupo</th><th>Estabilidade</th><th>Veredito</th></tr></thead><tbody id="kmResumo"></tbody></table></div>
+    <div id="kmCen"></div>
+  </div>
+
+  <div class="rx-step">
+    <h3>A decisão do grupo (D-054)</h3>
+    <p class="lead">Registrada no mesmo formato das outras decisões: o que estava em jogo, as opções com ✔ e ✖, e o que foi decidido.</p>
+    <ol class="decide" id="segDecisao"></ol>
+  </div>
+
+  <details class="deep"><summary>Aprofundar: como escolhemos as 6 variáveis e por que a base precisou ser normalizada</summary><div class="deep-body">
+    <h5>As quatro perguntas que cada variável precisou passar</h5>
+    <ol class="flow-q">
+      <li><b>As pessoas são diferentes nela?</b> <span class="eg">Exemplo: 98% têm zero recusa de cartão, então ela não separa ninguém.</span></li>
+      <li><b>O dado é bom?</b> <span class="eg">Exemplo: "treinos nos primeiros 14 dias" falta para metade da base.</span></li>
+      <li><b>Não repete outra que já entrou?</b> <span class="eg">Exemplo: treinos por semana e dias ativos andam juntos (r = 0,98).</span></li>
+      <li><b>Ajuda a formar grupos explicáveis?</b> <span class="eg">Exemplo: num teste, a idade fez a separação cair de 0,24 para 0,19.</span></li>
+    </ol>
+    <h5>As 6 que passaram</h5>
+    <div class="tbl"><table><thead><tr><th>Variável</th><th>Lente</th><th>O que diz sobre a pessoa</th><th>Como entra</th></tr></thead><tbody>
+      <tr><td><b>Plano</b> (mensal ou anual)</td><td>Contrato</td><td>O compromisso que assumiu. 42% mensal.</td><td>0 ou 1</td></tr>
+      <tr><td><b>Tempo de casa</b></td><td>Contrato</td><td>Novato ou veterano. Mediana de 8,6 meses; vai até 72.</td><td>Em log (encolhe a cauda)</td></tr>
+      <tr><td><b>Treinos por semana</b></td><td>Uso</td><td>Quanto treina, na média dos últimos 3 meses. Mediana 1,8.</td><td>Teto no percentil 99</td></tr>
+      <tr><td><b>Minutos por treino</b> ★</td><td>Estilo</td><td>Treino curto ou longão. Mediana 43 minutos.</td><td>Teto em 115 min (há casos de 515)</td></tr>
+      <tr><td><b>% de treinos ao ar livre</b></td><td>Estilo</td><td>Rua ou casa/vídeo. Mediana 75%, mas 1 em cada 4 fica abaixo de 16%.</td><td>Faltantes (1,2%) pela mediana</td></tr>
+      <tr><td><b>Seguidores</b></td><td>Rede</td><td>Treina sozinho ou enturmado. 1 em cada 4 tem zero.</td><td>Teto em 6</td></tr>
+    </tbody></table></div>
+    <p>★ Dimensão nova: minutos ÷ treinos dos últimos 3 meses. Quase não anda com a frequência (r ≈ 0): duas pessoas com 2 treinos por semana, uma com 40 e outra com 80 minutos, são perfis diferentes.</p>
+    <h5>O que ficou de fora, e por quê</h5>
+    <div class="tbl"><table><thead><tr><th>Ficou de fora</th><th>Motivo</th><th>Uso depois</th></tr></thead><tbody>
+      <tr><td>Dias ativos, minutos totais, aberturas do app, semanas ativas</td><td>Repetem os treinos por semana (r de 0,75 a 0,98)</td><td>—</td></tr>
+      <tr><td>% de treinos em vídeo</td><td>É o espelho do ar livre (r = −0,96)</td><td>—</td></tr>
+      <tr><td>Receita total</td><td>Repete o tempo de casa (r = 0,75)</td><td>Descrever o valor de cada grupo</td></tr>
+      <tr><td>Canal de cobrança</td><td>Repete o sistema do celular</td><td>Descrever</td></tr>
+      <tr><td>Idade, sexo, relógio</td><td>Não formam grupos; a idade piorou a separação</td><td>Descrever (LGPD: idade e sexo nunca disparam ação)</td></tr>
+      <tr><td>Objetivo do cadastro, nível, dias prometidos</td><td>30% sem objetivo e 10% sem dias prometidos; não melhoraram a separação</td><td>Descrever</td></tr>
+      <tr><td>Dias até a renovação, variação de treinos, dias sem treinar</td><td>Sinais de "está indo embora", não de "quem é"</td><td>Modelo de churn e regra de decisão</td></tr>
+      <tr><td>Chamados, recusas, treino acompanhado, amigos que saíram</td><td>Zero para 88% a 98% da base</td><td>Descrever</td></tr>
+    </tbody></table></div>
+    <h5>A base estava normalizada? Não, e isso é esperado</h5>
+    <p>Limpar não é normalizar. A limpeza deixou cada coluna correta, mas cada uma na própria régua: % ao ar livre vai de 0 a 1, tempo de casa até 72 meses, minutos por treino até 515. O K-means mede a distância somando as diferenças; sem ajuste, <b>10 minutos a mais num treino pesariam mais que a diferença entre mensal e anual</b>. Por isso, dentro de <code>src/clusters_cenarios.py</code>, cortamos os extremos (teto no percentil 99, log no tempo de casa), preenchemos faltantes com a mediana e padronizamos tudo para média 0 e desvio 1. Nada disso é gravado em <code>dados/processados/</code>.</p>
+  </div></details>
+
+  <div class="two">
+    <div class="card"><h3>Como saber se a escolha foi boa</h3><ul>
+      <li><b>Cada grupo cabe numa frase</b> sem olhar a tabela. Ex.: "novatos, sem rede, que chegaram por influenciador".</li>
+      <li><b>Cada grupo pede uma ação diferente</b> de oferta, conteúdo ou mensagem. Dois grupos que pedem a mesma ação podem virar uma persona só.</li>
+      <li><b>O que ficou fora do cálculo muda entre os grupos</b> (objetivo, plano, canal, receita). É a prova de que o grupo é real.</li>
+      <li><b>As personas somam boa parte da base</b> (cobrir) e são diferentes entre si (separar).</li>
+    </ul></div>
+    <div class="card"><h3>Cuidados da Aula 3</h3><ul>
+      <li><b>O algoritmo sempre acha grupos</b>, mesmo onde não existem. Só vale o grupo que muda a decisão.</li>
+      <li><b>Silhueta baixa não é erro:</b> em dados de clientes, 0,2 a 0,3 é comum; as pessoas mudam aos poucos, sem fronteiras nítidas.</li>
+      <li><b>Segmentação não é previsão:</b> o grupo diz <i>quem é</i> a pessoa; o risco de ela sair vem do modelo de churn.</li>
+      <li><b>LGPD:</b> idade e sexo só descrevem os grupos; nunca entram no cálculo nem disparam ação.</li>
+    </ul></div>
+  </div>
+</section>
+
+<section id="segmento">
+  <div class="label">Segmentação escolhida · 5 grupos · decisão D-054</div>
+  <h2>Quem são os assinantes da Vitaliza: 5 grupos</h2>
+  <p class="lead">O <b>cenário escolhido</b> agrupa os 14.753 assinantes ativos de 30/09/2026 por <b>5 variáveis de comportamento</b>: tempo de casa, treinos por semana, minutos por treino, % de treinos ao ar livre e seguidores. O plano, o objetivo, a idade e a saída ficaram fora do cálculo. Abaixo, cada grupo é descrito por todos os ângulos: tamanho e valor, o que o define, quem são, como usam o app, quanto costumam sair e o que pesa nessa saída. O processo de escolha está na aba <a href="#segprocesso">Como escolhemos</a>.</p>
+  <div class="splits" id="segKpis"></div>
+
+  <div class="rx-index" aria-label="Análises desta aba">
+    <a href="#sg1">1 · Os grupos em uma frase</a><a href="#sg2">2 · Tamanho, valor e saída</a><a href="#sg3">3 · O que define cada grupo</a><a href="#sg4">4 · Quem são</a><a href="#sg5">5 · Como usam o app</a><a href="#sg6">6 · Saída histórica</a><a href="#sg7">7 · O que pesa na saída</a><a href="#sg8">8 · Prioridade</a><a href="#sg9">9 · A segmentação é confiável?</a>
+  </div>
+
+  <div class="rx-step" id="sg1">
+    <h3>1 · Os 5 grupos em uma frase</h3>
+    <p class="lead">Os nomes são provisórios e descrevem o comportamento típico do grupo (mediana). Cada cartão traz o número que mais diferencia o grupo dos outros.</p>
+    <div class="seg-cards" id="segCards"></div>
+  </div>
+
+  <div class="rx-step" id="sg2">
+    <h3>2 · Tamanho, valor e saída: quanto cada grupo pesa</h3>
+    <div class="charts"><div class="chart wide"><h3>% da base, da receita mensal e das saídas, por grupo</h3><p class="cap">Se um grupo tem mais % das saídas do que % da base, ele perde gente acima da média. Receita mensal estimada pelo preço de tabela e pela taxa de cada canal (enunciado, seção 03).</p><div class="box"><canvas id="cSegPeso"></canvas></div><p class="src">Fonte: base ativa de 30/09 e gabarito de 31/05 (D-053) · src/clusters.py</p></div></div>
+    <div class="biz" id="segPesoBiz"><p></p></div>
+  </div>
+
+  <div class="rx-step" id="sg3">
+    <h3>3 · O que define cada grupo</h3>
+    <p class="lead">A tabela mostra o "centro" de cada grupo nas 5 variáveis do cálculo, na escala padronizada: <b>0 é a média da base</b>, +1 é bem acima, −1 é bem abaixo. Verde = acima da média; vermelho = abaixo. É o "DNA" do grupo: o que o algoritmo usou para juntar essas pessoas.</p>
+    <div class="tbl"><table class="zt"><thead><tr><th>Grupo</th><th>Tempo de casa</th><th>Treinos por semana</th><th>Minutos por treino</th><th>% ao ar livre</th><th>Seguidores</th></tr></thead><tbody id="segZ"></tbody></table></div>
+    <div class="charts" style="margin-top:14px"><div class="chart wide"><div class="ch-head"><h3>Como cada variável se espalha dentro dos grupos</h3><label class="sel">Variável <select id="segDistSel"><option value="tempo_casa_meses">Tempo de casa (meses)</option><option value="treinos_semana">Treinos por semana</option><option value="min_por_treino">Minutos por treino</option><option value="pct_ar_livre_2026">% de treinos ao ar livre</option><option value="seguidores">Seguidores</option></select></label></div><p class="cap">A barra vai do 25º ao 75º percentil (a metade do meio do grupo); o traço fino vai do 10º ao 90º; o ponto é a mediana. Barras que não se sobrepõem = grupos bem diferentes nessa variável.</p><div class="box"><canvas id="cSegDist"></canvas></div><p class="src">Fonte: base ativa de 30/09 · src/clusters.py</p></div></div>
+    <p class="lesson"><b>Como ler:</b> cada grupo é marcado por uma ou duas variáveis. Os novatos se definem pelo tempo de casa e pela falta de seguidores; o treino em casa, pelo % ao ar livre baixo; os intensos, pelos treinos por semana; os longões, pelos minutos por treino. A rua no ritmo leve é o "centro" da base: veterana, de rua, com frequência abaixo da média.</p>
+  </div>
+
+  <div class="rx-step" id="sg4">
+    <h3>4 · Quem são: o que ficou fora do cálculo</h3>
+    <p class="lead">Plano, objetivo, canal de aquisição e nível <b>não entraram</b> na formação dos grupos. Se eles mudam de forma coerente entre os grupos, é sinal de que os grupos são reais, e não um corte artificial das 5 variáveis.</p>
+    <div class="charts"><div class="chart wide"><div class="ch-head"><h3>Composição de cada grupo</h3><label class="sel">Mostrar <select id="segCompSel"><option value="plano">Plano</option><option value="objetivo">Objetivo do cadastro</option><option value="canal_aquisicao">Canal de aquisição</option><option value="nivel">Nível declarado</option><option value="canal_cobranca">Canal de cobrança</option></select></label></div><p class="cap">% de cada grupo em cada categoria. Cada barra soma 100%.</p><div class="box"><canvas id="cSegComp"></canvas></div><p class="src">Fonte: base ativa de 30/09, onboarding, usuarios · src/clusters.py</p></div></div>
+    <div class="biz"><p><b>Na ótica do negócio.</b> Os novatos são o grupo mais mensal (58%) e o que mais veio por influenciador: a porta de entrada da Vitaliza hoje passa por eles. O treino em casa concentra o objetivo de bem-estar. Intensos e longões são os mais "avançados" e os que mais entraram por prova ou desempenho. A rua no ritmo leve é o grupo mais anual (71%). Idade (~46 anos), sexo (~50% mulheres) e relógio (~38%) são iguais em todos os grupos: <b>a mensagem não deve mudar por perfil demográfico, e sim por comportamento</b>.</p></div>
+  </div>
+
+  <div class="rx-step" id="sg5">
+    <h3>5 · Como usam o app hoje (30/09)</h3>
+    <div class="tbl"><table><thead><tr><th>Grupo</th><th>Sem treinar há 3 meses</th><th>Parado há mais de 30 dias</th><th>Aberturas do app por mês</th><th>Postou em 90 dias</th><th>Já desligou a renovação</th></tr></thead><tbody id="segEng"></tbody></table></div>
+    <div class="biz"><p><b>Na ótica do negócio.</b> Dois grupos acendem alertas diferentes. Na <b>rua no ritmo leve</b>, 13% não treinam há 3 meses e 1 em cada 4 já desligou a renovação: muitos são anuais que pararam e só vão sair na renovação (regra à parte da D-052). Nos <b>longões</b>, 27% já desligaram a renovação, apesar de treinarem. Já os <b>intensos</b> quase não desligaram (2%), mas a seção 6 mostra que eles saem acima da média nos 60 dias seguintes: o alerta deles chega tarde.</p></div>
+  </div>
+
+  <div class="rx-step" id="sg6">
+    <h3>6 · Saída histórica: quanto cada grupo costuma sair</h3>
+    <p class="lead">Para medir a saída, precisamos de uma data em que já sabemos o que aconteceu depois. Aplicamos <b>a mesma régua de 30/09</b> (mesma escala e mesmos centros) às 5 variáveis montadas em <b>31/05/2026</b> e medimos quem desligou a renovação ou cancelou pelo site nos 60 dias seguintes (D-053), sem quem já tinha anunciado a saída (D-052). <span id="segHistInfo"></span></p>
+    <div class="charts">
+      <div class="chart"><h3>Saída em 60 dias, por grupo</h3><p class="cap">O traço em cada barra é o intervalo de 95% de confiança. A linha tracejada é a média da base.</p><div class="box"><canvas id="cSegSaida"></canvas></div><p class="src">Gabarito de 31/05 (D-053) · src/clusters.py</p></div>
+      <div class="chart"><h3>Mensal × anual dentro de cada grupo</h3><p class="cap">O plano não formou os grupos, mas muda a saída dentro deles.</p><div class="box"><canvas id="cSegPlano"></canvas></div><p class="src">Gabarito de 31/05 (D-053) · src/clusters.py</p></div>
+    </div>
+    <div class="biz" id="segSaidaBiz"><p></p></div>
+  </div>
+
+  <div class="rx-step" id="sg7">
+    <h3>7 · O que pesa na saída dentro de cada grupo</h3>
+    <p class="lead">Dentro de cada grupo, comparamos a saída de quem tinha um sinal com a de quem não tinha (em 31/05). A tabela mostra os 3 sinais que mais aumentam a saída em cada grupo. São os <b>drivers</b> que entram nos cartões de persona. Cruzamento aponta suspeitos, não prova causa.</p>
+    <div class="tbl"><table><thead><tr><th>Grupo</th><th>Sinal</th><th>% do grupo com o sinal</th><th>Saída com o sinal</th><th>Saída sem o sinal</th><th>Diferença</th></tr></thead><tbody id="segDrv"></tbody></table></div>
+    <div class="biz"><p><b>Na ótica do negócio.</b> O <b>chamado técnico</b> aparece em quatro dos cinco grupos: quem reclama de problema no app sai muito mais, principalmente entre os novatos (36% contra 18%). A <b>queda forte no treino</b> é o alarme dos veteranos (rua no ritmo leve e intensos). No treino em casa, o sinal é <b>parar por 14 dias ou mais</b>. Nos longões, é <b>não ter nenhum seguidor</b>: quem treina longe e sozinho sai quase o dobro.</p></div>
+  </div>
+
+  <div class="rx-step" id="sg8">
+    <h3>8 · Prioridade preliminar: agir já × monitorar</h3>
+    <p class="lead">A prioridade combina <b>quanto o grupo sai</b> (eixo horizontal) com <b>quanto da receita mensal ele carrega</b> (eixo vertical). O tamanho da bolha é o número de assinantes. É preliminar: a prioridade final vem do modelo de churn (risco de cada pessoa) e da campanha de agosto (qual mensagem funciona).</p>
+    <div class="charts"><div class="chart wide"><h3>Saída × receita mensal, por grupo</h3><p class="cap">Canto superior direito = sai muito e vale muito: agir já.</p><div class="box"><canvas id="cSegPrior"></canvas></div><p class="src">Fonte: src/clusters.py · saída de 31/05 (D-053) e receita mensal estimada de 30/09</p></div></div>
+    <div class="tbl"><table><thead><tr><th>Grupo</th><th>Prioridade</th><th>Por quê</th><th>Ação sugerida (a testar)</th></tr></thead><tbody id="segPrior"></tbody></table></div>
+  </div>
+
+  <div class="rx-step" id="sg9">
+    <h3>9 · A segmentação é confiável?</h3>
+    <div class="two">
+      <div class="card"><h3>Três testes de robustez</h3><ul id="segRob"></ul></div>
+      <div class="card"><h3>Os 5 critérios da Aula 3</h3><ul>
+        <li><b>Mensurável:</b> as 5 variáveis vêm do próprio app; qualquer assinante novo ganha um grupo com a mesma régua.</li>
+        <li><b>Substancial:</b> todos os grupos têm pelo menos 5,6% da base (835 pessoas, os longões).</li>
+        <li><b>Diferenciável:</b> cada grupo tem um "DNA" próprio (seção 3) e saídas diferentes (de 10,5% a 19,0%, seção 6).</li>
+        <li><b>Acessível:</b> todos usam o app; push e e-mail alcançam 100%.</li>
+        <li><b>Acionável:</b> cada grupo pede uma ação diferente (seção 8).</li>
+      </ul></div>
+    </div>
+    <div class="tbl" style="margin-top:14px"><table><thead><tr><th>Grupo</th><th>% da base em 30/09</th><th>% da base em 31/05 (mesma régua)</th><th>Silhueta média</th><th>Leitura</th></tr></thead><tbody id="segQual"></tbody></table></div>
+    <div class="card" style="margin-top:14px"><h3>Limites</h3><ul>
+      <li>A saída histórica usa a régua de hoje em 31/05: os grupos são os mesmos, mas cada pessoa pode ter mudado de grupo entre as datas.</li>
+      <li>Receita mensal estimada pelo preço de tabela e pela taxa do canal; cupons de influenciador não foram descontados.</li>
+      <li>A silhueta de 0,24 indica grupos que se tocam nas bordas: uma pessoa perto da fronteira pode se parecer com dois grupos.</li>
+      <li>Os drivers são cruzamentos: apontam suspeitos, não provam causa. O único experimento sorteado da base é a campanha de agosto.</li>
+    </ul></div>
+  </div>
+</section>
+
 <section id="dados">
   <div class="label">Churn: quem sai e por quê</div>
   <h2>Os números por trás das decisões</h2>
@@ -651,7 +783,7 @@ details.deep[open]>summary::before{content:"－"}
       <li>Quase metade de quem desliga não mostra sinal claro nos dados.</li>
     </ul></div>
     <div class="card"><h3>Pendências</h3><ul>
-      <li>K-means da base toda e escolha de 3 a 4 personas.</li>
+      <li>Cartões das 3 a 4 personas e prioridade "agir já × monitorar" (a segmentação já está pronta, D-054).</li>
       <li>Notebook de EDA com os gráficos e o mini deck (tecnologia).</li>
       <li>Relatório de segmentação com cartões de persona, prioridade e limites (negócios).</li>
       <li>Pergunta ao professor sobre a D-029.</li>
@@ -667,29 +799,29 @@ details.deep[open]>summary::before{content:"－"}
 </div>
 
 <script type="text/plain" id="pKmeans">
-Você vai me ajudar a gravar a segmentação de clientes (K-means) do projeto Vitaliza, na pasta vitaliza_grupo_05. Explique cada passo em português simples, em uma ou duas frases, e peça minha confirmação antes de gravar arquivos.
-
-O foco é uma visão geral da base: tipos de cliente, e não quem vai sair. Nenhuma informação de saída entra nesta etapa.
+Você vai me ajudar a escrever os cartões de persona do projeto Vitaliza, na pasta vitaliza_grupo_05. Explique cada passo em português simples e peça minha confirmação antes de gravar arquivos.
 
 Antes de começar:
-- Leia o AGENTS.md, o DECISOES.md, saidas/clusters_cenarios.md e src/clusters_cenarios.py (lá estão a preparação das variáveis, a normalização e os 4 cenários testados).
-- Atualize o projeto (git pull). Se a pasta dados/processados estiver vazia, rode com o Python do .venv, nesta ordem: src\limpeza.py, src\base_integrada.py e src\dimensoes.py.
-- Nunca altere nada em dados/brutos/. Não use e-mail nem data de nascimento.
+- Leia o AGENTS.md, a D-054 no DECISOES.md, saidas/clusters.md, saidas/clusters_final.json e saidas/motivos_leitura.md.
+- Atualize o projeto (git pull). Nunca altere nada em dados/brutos/. Não use e-mail nem data de nascimento.
+- Use só números que estão nesses arquivos. Se precisar de um número novo, calcule com o Python do .venv e me mostre como calculou.
 
 Decisões do grupo:
-- Cenário escolhido: <<ex.: C, com tempo_casa, treinos_semana, min_por_treino, pct_ar_livre e seguidores, 5 grupos>>
-- Nomes dos grupos: <<ex.: Treino em casa; Rua no ritmo leve; Novatos; Intensos; Longões>>
-- Grupos a juntar nas personas: <<ex.: Intensos + Longões = "O atleta">>
+- Personas: <<ex.: O novato que ainda está chegando (Novatos); Quem treina em casa (Treino em casa); O corredor de rua no ritmo leve (Rua no ritmo leve); O atleta (Intensos + Longões)>>
+- Público: <<ex.: diretoria da Vitaliza, linguagem de negócio>>
 
-Passos:
-1. Crie src/clusters.py reaproveitando as funções montar_base e preparar de src/clusters_cenarios.py: mesma preparação, mesma normalização (StandardScaler) e KMeans com n_init=10 e random_state=0, só para o cenário escolhido.
-2. Confira que os tamanhos dos grupos batem com saidas/clusters_cenarios.md e dê a cada grupo o nome decidido (pelo perfil do grupo, não pelo número, que pode mudar).
-3. Grave dados/processados/clusters_2026-09-30.parquet só com user_id, grupo (número) e nome_grupo. Nenhum dado pessoal.
-4. Grave saidas/clusters.md: para cada grupo, tamanho, mediana das variáveis do cálculo, % mensal, objetivo mais comum, canal de aquisição, nível e receita líquida, e os 5 critérios da Aula 3 (mensurável, substancial, diferenciável, acessível e acionável).
-5. Proponha a decisão D-054 para o DECISOES.md, no mesmo formato das outras, com o cenário, as variáveis, o número de grupos e o motivo (inclusive por que os outros cenários foram descartados).
-6. Não faça commit sem eu pedir.
+Para cada persona, escreva um cartão no formato da Aula 4:
+1. Contexto: quem é e como usa o app (tamanho do grupo, tempo de casa, treinos, estilo, rede, plano, canal de aquisição, objetivo).
+2. Conflito: por que pode sair.
+3. Evidência: saída em 60 dias do grupo contra a média da base (14,8%), % das saídas e % da receita mensal, e os 2 ou 3 sinais que mais aumentam a saída dentro do grupo.
+4. Resolução: o que faria a pessoa ficar.
+5. Decisão: gatilho, ação, canal (push, e-mail, WhatsApp ou CS) e uma hipótese a testar. Use só as ofertas do enunciado (30% por 3 meses no mensal, 1 mês grátis no anual, pausa de até 60 dias, plano de treino personalizado).
+6. Limite: o que os dados não dizem.
+Se uma persona juntar dois grupos, mostre os números de cada grupo separados.
 
-No final, me mostre a tabela dos grupos com os nomes e um rascunho de 3 a 4 cartões de persona no formato da Aula 4 (contexto, conflito, resolução, evidência, decisão e limite).
+Depois:
+- Monte a tabela de prioridade "agir já × monitorar", com o motivo de cada uma.
+- Grave tudo em docs/personas.md e não faça commit sem eu pedir.
 </script>
 <script type="text/plain" id="pSetup">
 Preciso preparar meu computador para um projeto em grupo do MBA (case Vitaliza). Faça o passo a passo abaixo comigo, explicando cada passo em português simples, em uma ou duas frases.
@@ -844,8 +976,8 @@ const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).
     { t: 'Clusters e personas', st: 'now', d: 'K-means da base ativa de 30/09, visão geral (sem a ótica de churn) → perfil e valor por grupo → 3 a 4 personas',
       frase: 'Vamos deixar o algoritmo separar a base em grupos de pessoas parecidas no jeito de assinar e de treinar, para conhecer os tipos de cliente da Vitaliza.',
       entrou: ['A base ativa de 30/09 (14.753 assinantes)', '6 variáveis de contrato, uso, estilo e rede, escolhidas por variedade, qualidade e não repetição'],
-      fez: ['Feito: escolhemos as 6 variáveis (idade e sexo ficam fora) e normalizamos a base', 'Feito: rodamos todas as combinações de 3 a 6 variáveis com 3 a 7 grupos (210 rodadas) e medimos silhueta, tamanho e estabilidade', 'Feito: trouxemos 4 cenários com grupos, prós, contras e personas', 'Falta: o grupo escolher o cenário e gravar o grupo de cada assinante', 'Falta: checar os 5 critérios da Aula 3 e escrever 3 a 4 cartões de persona'],
-      saiu: ['src/clusters_cenarios.py e saidas/clusters_cenarios.md (os 4 cenários)', 'A seguir: 3 a 4 segmentos com perfil, tamanho e receita', 'A seguir: cartões de persona com conflito, evidência, gatilho, ação e limite'],
+      fez: ['Feito: escolhemos as 6 variáveis (idade e sexo ficam fora) e normalizamos a base', 'Feito: rodamos todas as combinações de 3 a 6 variáveis com 3 a 7 grupos (210 rodadas) e medimos silhueta, tamanho e estabilidade', 'Feito: trouxemos 4 cenários com grupos, prós, contras e personas', 'Feito: o grupo escolheu o cenário de 5 variáveis sem o plano (D-054) e gravamos o grupo de cada assinante', 'Feito: descrevemos os grupos por perfil, valor, engajamento e saída histórica, e checamos os 5 critérios da Aula 3', 'Falta: escrever 3 a 4 cartões de persona'],
+      saiu: ['src/clusters_cenarios.py e saidas/clusters_cenarios.md (os 4 cenários)', 'src/clusters.py, saidas/clusters.md e o grupo de cada assinante (5 grupos, D-054)', 'As abas "Segmentação: como escolhemos" e "Segmentação escolhida" deste painel', 'A seguir: cartões de persona com conflito, evidência, gatilho, ação e limite'],
       ex: '% ao ar livre vai de 0 a 1 e minutos por treino chega a 515. Sem colocar na mesma escala, a variável com números maiores decide sozinha quem fica em cada grupo.',
       pq: 'É o que o professor pediu e o coração da entrega de 15/11.',
       tec: 'scikit-learn: <code>StandardScaler</code>, <code>KMeans</code>, <code>silhouette_score</code> · variáveis com cauda longa entram em log ou faixas' },
@@ -1013,7 +1145,7 @@ const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).
       prompts: [{ t: 'Para atualizar e explorar, peça à sua IA', txt: 'No projeto Vitaliza, rode .venv\\Scripts\\python.exe src\\painel_dados.py para atualizar o painel e abra docs/painel.html no navegador. Depois leia src/raio_x.py e me explique, em português simples, como foi calculado o exame 7 (a média esconde grupos). Não faça commit.' }] },
     'Clusters e personas': {
       t: 'as variáveis escolhidas e os critérios para aceitar um grupo',
-      links: [['Próximo passo: análise completa das variáveis', '#proximo']],
+      links: [['Como escolhemos', '#segprocesso'], ['Segmentação escolhida', '#segmento'], ['src/clusters_cenarios.py', 'src/clusters_cenarios.py'], ['src/clusters.py', 'src/clusters.py'], ['saidas/clusters_cenarios.md', 'saidas/clusters_cenarios.md'], ['saidas/clusters.md', 'saidas/clusters.md']],
       html: tb(['Variável', 'Lente', 'Por que entra'], [
         ['Plano', 'Contrato', 'O compromisso que a pessoa assumiu'],
         ['Tempo de casa (em log)', 'Contrato', 'Novato ou veterano'],
@@ -1081,22 +1213,14 @@ const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).
         { n: 'Uma dupla por trilha', como: 'Uma dupla de negócios, uma de tecnologia e uma pessoa que revisa e monta o Drive.', pro: 'Espelha as duas trilhas do guia de entregas.', contra: 'Depende de as duplas conversarem bastante entre si.' }],
       sug: 'Dividir por artefato, com uma pessoa responsável pela revisão final e pela pasta no Drive. O prazo é curto e o K-means ainda vai sair: com peças separadas, o notebook e o deck já podem começar usando o raio-x, enquanto os grupos não ficam prontos.',
       depois: 'Anotamos os nomes na seção Entregas deste painel.' },
-    { t: 'Os grupos devem mostrar a taxa de saída?', quando: 'decidir antes do relatório',
-      ctx: 'Já definimos que a segmentação é uma <b>visão geral da base</b> de 30/09, sem a ótica de churn: as variáveis foram escolhidas para mostrar quem são os clientes, não quem vai sair (detalhes em "Próximo passo"). A dúvida que sobra é se o relatório, além do perfil, mostra quanto cada grupo costuma sair.',
-      ex: 'Em 30/09 ainda não sabemos quem vai sair: a saída acontece até 29/11, fora dos dados. Para ter "o grupo dos novatos sai X%", seria preciso aplicar a mesma régua à base de 31/05, quando já sabemos quem saiu em junho e julho.',
+    { t: 'Quais 3 a 4 personas levar?', quando: 'até 10/11',
+      ctx: 'Persona é o retrato de um grupo que os números confirmaram (Aula 4). Por isso ela só nasce depois do K-means. Juntas, as personas precisam <b>separar</b> (cada uma diferente das outras) e <b>cobrir</b> (somar boa parte da base). A segmentação está escolhida (D-054): 5 grupos, detalhados na aba "Segmentação escolhida". As 4 personas abaixo saem deles; a única dúvida é juntar intensos e longões em "O atleta" (aba "Próximo passo").',
       op: [
-        { n: 'Não nesta etapa', como: 'O relatório de segmentação mostra perfil, tamanho e receita de cada grupo. O risco de saída entra quando o modelo de churn ficar pronto, somado ao grupo de cada pessoa.', pro: 'Mantém a segmentação como retrato limpo; cada peça faz uma coisa.', contra: 'As personas de 15/11 ficam sem a taxa de saída como evidência.', rec: true },
-        { n: 'Sim, como informação extra', como: 'Aplicar os grupos de 30/09 à base de 31/05 e medir a saída em 60 dias de cada grupo (D-053), só para descrever.', pro: 'As personas ganham um número de risco.', contra: 'A base de 31/05 não tem algumas das 6 variáveis prontas: dá trabalho a mais, e o número pode desviar o foco de volta para o churn.' }],
-      sug: 'Não nesta etapa. Se o professor pedir a saída por grupo, fazemos o passo extra depois; as variáveis e os grupos não mudam.',
-      depois: 'Rodamos o K-means (prompt em "Próximo passo") e trazemos os grupos para o painel.' },
-    { t: 'Quais 3 a 4 personas levar?', quando: 'depois do K-means',
-      ctx: 'Persona é o retrato de um grupo que os números confirmaram (Aula 4). Por isso ela só nasce depois do K-means. Juntas, as personas precisam <b>separar</b> (cada uma diferente das outras) e <b>cobrir</b> (somar boa parte da base). O K-means já rodou em 4 cenários (aba "Próximo passo"); as personas abaixo são as do cenário C, o sugerido.',
-      op: [
-        { n: 'O novato que ainda está chegando', como: '20% da base: 1,3 mês de casa, nenhum seguidor, 58% mensal, 27% vindos de influenciador.', pro: 'Ação clara: onboarding e criar rede.', contra: 'É uma fase, não um tipo: em alguns meses vira outro grupo.' },
-        { n: 'Quem treina em casa', como: '30%: só 15% dos treinos ao ar livre; mais objetivo de bem-estar.', pro: 'O maior grupo e 34% da receita; ação clara: conteúdo em vídeo novo.', contra: 'Pode misturar quem prefere casa com quem não tem onde treinar.' },
-        { n: 'O corredor de rua no ritmo leve', como: '28%: 13 meses de casa, 1,4 treino por semana; 13% sem treinar há 3 meses.', pro: 'Maior receita por pessoa (mediana R$ 472): o núcleo da Vitaliza.', contra: 'Grupo grande: pode esconder subgrupos.' },
-        { n: 'O atleta (intensos + longões)', como: '22%: 3,9 treinos por semana ou 84 minutos por treino; mais avançados e focados em prova.', pro: 'Perfil nítido; mensagem de planilha e prova.', contra: 'Junta dois jeitos de treinar (muito ou longe).' }],
-      sug: 'Levar as quatro, se o grupo escolher o cenário C. Elas cobrem 100% da base e conversam com o raio-x e os motivos de saída (o novato que não criou rotina, quem entrou por prova): análises diferentes chegando ao mesmo lugar.',
+        { n: 'O novato que ainda está chegando', como: '20% da base: 1,3 mês de casa, nenhum seguidor, 58% mensal, 27% vindos de influenciador. Sai 19,0% (a maior saída).', pro: 'Ação clara: onboarding e criar rede; 28% de todas as saídas.', contra: 'É uma fase, não um tipo: em alguns meses vira outro grupo.' },
+        { n: 'Quem treina em casa', como: '30%: só 15% dos treinos ao ar livre; mais objetivo de bem-estar. Sai 10,5% (a menor saída).', pro: 'O maior grupo e 30% da receita mensal; ação clara: conteúdo em vídeo novo.', contra: 'Pode misturar quem prefere casa com quem não tem onde treinar.' },
+        { n: 'O corredor de rua no ritmo leve', como: '28%: 13 meses de casa, 1,4 treino por semana; 13% sem treinar há 3 meses. Sai 13,6%, e 26% já desligaram a renovação.', pro: 'Maior receita por pessoa (mediana R$ 472): o núcleo da Vitaliza.', contra: 'Grupo grande: pode esconder subgrupos.' },
+        { n: 'O atleta (intensos + longões)', como: '22%: 3,9 treinos por semana ou 84 minutos por treino; mais avançados e focados em prova. Saem 17,9% e 15,5%.', pro: 'Perfil nítido; mensagem de planilha e prova.', contra: 'Junta dois jeitos de treinar (muito ou longe).' }],
+      sug: 'Levar as quatro. Elas cobrem 100% da base e conversam com o raio-x e os motivos de saída (o novato que não criou rotina, quem entrou por prova): análises diferentes chegando ao mesmo lugar.',
       depois: 'Cada persona vira um cartão no formato da Aula 4.' },
     { t: 'Confirmamos as decisões D-052 e D-053?', quando: 'decidir hoje',
       ctx: 'Duas decisões tomadas nas análises mudam o desenho do modelo da semana 10, então vale o grupo inteiro concordar.',
@@ -1154,64 +1278,73 @@ const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).
       contra: ['Quatro grupos continuam presos ao "plano × lugar"', 'Não enxerga os novatos'],
       personas: ['"O anual que pagou e esfriou"', '"O atleta intenso"', '"O mensal de casa, por bem-estar"', '"O longão"'],
       porque: 'Boa segunda opção, se o grupo preferir os grupos separados por plano.' },
-    C: { titulo: '5 variáveis, sem o plano', vered: 'sugerido', sub: 'Só comportamento: tempo de casa, treinos, minutos, ar livre e seguidores',
+    C: { titulo: '5 variáveis, sem o plano', vered: 'escolhido', sub: 'Só comportamento: tempo de casa, treinos, minutos, ar livre e seguidores',
       nomes: ['Treino em casa', 'Rua no ritmo leve', 'Novatos', 'Intensos', 'Longões'],
       nota: ['Bem-estar 17% (6% a 8% nos outros); 34% da receita', 'Maior receita por pessoa (mediana R$ 472); 13% não treinaram em 3 meses', '27% vieram por influenciador (o dobro); só 8,5% da receita', '21% avançados; 22% por prova ou desempenho', '30% avançados; 27% por prova ou desempenho'],
       pro: ['Os grupos nascem só do comportamento, e cada um cabe numa frase', 'Aparecem os novatos, que nenhum cenário com plano isola bem', 'Plano e objetivo ficaram fora do cálculo e mesmo assim mudam de forma coerente: novatos mais mensais e vindos de influenciador, casa com mais bem-estar, intensos e longões com mais prova. É sinal de grupos reais', 'Estável (0,95)'],
       contra: ['Silhueta baixa (0,24): os grupos se tocam nas bordas, o que é comum em dados de clientes', 'Mensais e anuais se misturam no mesmo grupo: a ação comercial precisa olhar o plano dentro do grupo', 'Os longões ficam no limite de 5%'],
       personas: ['"O novato que ainda está chegando" (20%): sem rede, veio por influenciador. Pede onboarding e conexão', '"Quem treina em casa" (30%): vídeo e bem-estar. Pede conteúdo em vídeo novo', '"O corredor de rua no ritmo leve" (28%): veterano, maior receita, mas 1 em 8 parado há 3 meses. Pede um desafio para reativar', '"O atleta" (intensos + longões, 22%): treina muito ou longe, focado em prova. Pede planilha e metas'],
-      porque: 'É o que melhor responde "quem são os nossos clientes" e rende 4 personas diferentes entre si.' },
+      porque: 'É o que melhor responde "quem são os nossos clientes" e rende 4 personas diferentes entre si. Detalhe completo na aba <a href="#segmento">Segmentação escolhida</a>.' },
     D: { titulo: '6 variáveis', vered: 'descartar', sub: 'Todas as variáveis',
       nomes: ['Anuais de rua', 'Anuais em casa', 'Mensais de rua ativos', 'Novatos', 'Mensais em casa', 'Longões'],
       nota: ['14% não treinaram em 3 meses', '15% ao ar livre', '2,7 treinos por semana', '28% por influenciador; 65% mensais', 'Bem-estar 20%', '32% avançados'],
       pro: ['Usa toda a informação', 'Mostra os novatos e mantém o plano explícito'],
-      contra: ['O plano volta a dominar: quatro grupos são de novo "plano × lugar"', 'Os intensos se diluem', 'A menor silhueta (0,24), com estabilidade parecida com a de C', 'A 6ª variável não acrescentou um grupo novo em relação a C'],
+      contra: ['O plano volta a dominar: quatro grupos são de novo "plano × lugar"', 'Os intensos se diluem', 'A menor silhueta (0,24), com estabilidade parecida com a do cenário escolhido', 'A 6ª variável não acrescentou um grupo novo em relação ao cenário escolhido'],
       personas: ['"O novato"', '"O mensal de rua engajado"', '"O mensal de casa, por bem-estar"', '"O longão"'],
-      porque: 'Tem a complexidade de 6 variáveis sem ganhar um grupo que C ou B não mostrem.' },
+      porque: 'Tem a complexidade de 6 variáveis sem ganhar um grupo que o cenário escolhido ou o B não mostrem.' },
   };
+  const nomeCen = c => c === 'C' ? 'Cenário escolhido' : 'Cenário ' + c;
   window.CEN_NOMES = Object.fromEntries(Object.entries(CEN).map(([k, v]) => [k, v.nomes]));
+  window.NOME_CEN = nomeCen;
   const KM = D.clusters || { cenarios: [] };
   if (KM.rodadas) document.getElementById('kmRodadas').textContent = KM.rodadas;
-  const badge = v => v === 'sugerido' ? '<span class="badge">sugerido</span>' : v === 'alternativa' ? '<span class="badge alt">alternativa</span>' : '<span class="badge off">descartar</span>';
+  const badge = v => v === 'escolhido' ? '<span class="badge">escolhido · D-054</span>' : v === 'alternativa' ? '<span class="badge alt">alternativa</span>' : '<span class="badge off">descartado</span>';
   const f2 = v => v.toFixed(2).replace('.', ',');
-  document.getElementById('kmResumo').innerHTML = KM.cenarios.map(c => `<tr><td><b>${c.cenario}</b> · ${CEN[c.cenario].titulo}</td><td>${c.nomes.join(', ')}</td><td>${c.k}</td><td>${f2(c.silhueta)}</td><td>${pc(c.menor_grupo)}</td><td>${f2(c.estavel)}</td><td>${badge(CEN[c.cenario].vered)}</td></tr>`).join('');
+  document.getElementById('kmResumo').innerHTML = KM.cenarios.map(c => `<tr><td><b>${nomeCen(c.cenario)}</b> · ${CEN[c.cenario].titulo}</td><td>${c.nomes.join(', ')}</td><td>${c.k}</td><td>${f2(c.silhueta)}</td><td>${pc(c.menor_grupo)}</td><td>${f2(c.estavel)}</td><td>${badge(CEN[c.cenario].vered)}</td></tr>`).join('');
   document.getElementById('kmCen').innerHTML = KM.cenarios.map(c => { const x = CEN[c.cenario]; return `<div class="cen ${x.vered}" id="cen${c.cenario}">
-    <div class="cen-head"><h3>Cenário ${c.cenario} · ${x.titulo} · ${c.k} grupos</h3>${badge(x.vered)}</div>
+    <div class="cen-head"><h3>${nomeCen(c.cenario)} · ${x.titulo} · ${c.k} grupos</h3>${badge(x.vered)}</div>
     <p class="cen-sub">${x.sub}. Silhueta ${f2(c.silhueta)} · menor grupo ${pc(c.menor_grupo)} · estabilidade ${f2(c.estavel)}</p>
     <div class="tbl"><table><thead><tr><th>Grupo</th><th>% base</th><th>Meses de casa</th><th>Treinos/sem</th><th>Min/treino</th><th>% ar livre</th><th>Seguidores</th><th>% mensal</th><th>O que chama atenção</th></tr></thead><tbody>
       ${c.grupos.map((g, i) => `<tr><td><b>${x.nomes[i] || 'Grupo ' + (i + 1)}</b></td><td>${pc(g.pct)}</td><td>${String(g.tempo_casa_meses).replace('.', ',')}</td><td>${String(g.treinos_semana.toFixed(1)).replace('.', ',')}</td><td>${Math.round(g.min_por_treino)}</td><td>${pc(g.pct_ar_livre)}</td><td>${g.seguidores}</td><td>${pc(g.mensal)}</td><td>${x.nota[i] || ''}</td></tr>`).join('')}
     </tbody></table></div>
     <div class="cen-pc"><div><h4>✔ Prós</h4><ul>${x.pro.map(p => `<li>${p}</li>`).join('')}</ul></div><div><h4>✖ Contras</h4><ul>${x.contra.map(p => `<li>${p}</li>`).join('')}</ul></div></div>
     <div class="cen-pers"><h4>Personas que se formam</h4><ul>${x.personas.map(p => `<li>${p}</li>`).join('')}</ul></div>
-    <p class="sug"><b>${x.vered === 'sugerido' ? 'Considerar como principal' : x.vered === 'alternativa' ? 'Considerar como alternativa' : 'Descartar'}:</b> ${x.porque}</p>
+    <p class="sug"><b>${x.vered === 'escolhido' ? 'Escolhido pelo grupo (D-054)' : x.vered === 'alternativa' ? 'Alternativa, não escolhida' : 'Descartado'}:</b> ${x.porque}</p>
   </div>`; }).join('');
 
-  const km = [
-    { t: 'Qual cenário levar para as personas?', quando: 'decidir na reunião',
-      ctx: 'Os quatro cenários são estáveis e têm grupos com pelo menos 5% da base. A diferença está no que cada um mostra: só "plano × lugar" (A), a frequência (B), o ciclo de vida e o comportamento sem o plano (C) ou tudo junto (D).',
-      ex: 'No cenário B, um novato mensal que treina na rua cai em "Mensais de rua", junto com quem está há 2 anos. No cenário C, ele cai em "Novatos", com quem também acabou de chegar, e a mensagem certa (onboarding) fica óbvia.',
+  // a decisão registrada (D-054)
+  const decisao = [
+    { t: 'Qual cenário levar para as personas?', quando: 'decidido em 07/11 · D-054',
+      ctx: 'Os quatro cenários são estáveis e têm grupos com pelo menos 5% da base. A diferença está no que cada um mostra: só "plano × lugar" (A), a frequência (B), o ciclo de vida e o comportamento sem o plano (cenário escolhido) ou tudo junto (D).',
+      ex: 'No cenário B, um novato mensal que treina na rua cai em "Mensais de rua", junto com quem está há 2 anos. No cenário escolhido, ele cai em "Novatos", com quem também acabou de chegar, e a mensagem certa (onboarding) fica óbvia.',
       op: [
-        { n: 'C · 5 variáveis sem o plano', como: '5 grupos: treino em casa, rua no ritmo leve, novatos, intensos e longões.', pro: 'Grupos de comportamento, explicáveis, com os novatos isolados; 4 personas prontas.', contra: 'Mensais e anuais se misturam: a ação comercial olha o plano dentro do grupo.', rec: true },
+        { n: 'Cenário escolhido · 5 variáveis sem o plano', como: '5 grupos: treino em casa, rua no ritmo leve, novatos, intensos e longões.', pro: 'Grupos de comportamento, explicáveis, com os novatos isolados; 4 personas prontas.', contra: 'Mensais e anuais se misturam: a ação comercial olha o plano dentro do grupo.', rec: true },
         { n: 'B · 4 variáveis', como: '6 grupos: 4 de "plano × lugar", mais intensos e longões.', pro: 'Plano explícito e os anuais pouco ativos isolados.', contra: 'Não mostra os novatos; 4 grupos repetem o que já sabíamos.' },
         { n: 'A ou D', como: 'O mais simples (3 variáveis) ou o mais completo (6).', pro: 'A é o mais fácil de explicar; D usa toda a informação.', contra: 'A é simples demais para 4 personas; D é complexo sem ganhar grupo novo.' }],
-      sug: 'Cenário C. Responde "quem são os nossos clientes" com grupos de comportamento, e o plano continua aparecendo na descrição de cada grupo.',
-      depois: 'A IA grava o grupo de cada assinante e propõe a decisão no DECISOES.md (prompt abaixo).' },
-    { t: 'Juntar grupos parecidos numa persona?', quando: 'decidir na reunião',
-      ctx: 'O relatório pede 3 a 4 personas, e o cenário C tem 5 grupos. Persona é o retrato de um tipo de cliente para pensar ação; dois grupos que pedem a mesma ação podem virar uma persona só, sem mudar os grupos na base.',
-      ex: 'Intensos (3,9 treinos por semana) e longões (84 minutos por treino) são ambos mais avançados e mais focados em prova. A mensagem para os dois é parecida: planilha, metas, próxima prova.',
+      sug: 'O grupo escolheu o cenário de 5 variáveis sem o plano, renomeado para "cenário escolhido". Responde "quem são os nossos clientes" com grupos de comportamento, e o plano continua aparecendo na descrição de cada grupo.',
+      depois: 'Feito: o grupo de cada assinante está em dados/processados/clusters_2026-09-30.parquet (src/clusters.py), a decisão está no DECISOES.md (D-054) e o detalhe está na aba "Segmentação escolhida". Também mudamos uma sugestão anterior: os grupos agora são descritos com a saída histórica, porque o guia de 15/11 pede personas com os fatores de saída. A saída continua fora da formação dos grupos.' },
+  ];
+  document.getElementById('segDecisao').innerHTML = renderQ(decisao).replace(/<span class="badge">sugerida<\/span>/g, '<span class="badge">escolhida</span>').replace(/Nossa sugestão:/g, 'Decisão:');
+
+  // próximo passo: personas e entrega de 15/11
+  const km = [
+    { t: 'Juntar intensos e longões numa persona?', quando: 'decidir na reunião',
+      ctx: 'O relatório pede 3 a 4 personas, e a segmentação tem 5 grupos. Persona é o retrato de um tipo de cliente para pensar ação; dois grupos que pedem a mesma ação podem virar uma persona só, sem mudar os grupos na base.',
+      ex: 'Intensos (3,9 treinos por semana) e longões (84 minutos por treino) são os mais avançados e os mais focados em prova, e saem parecido (17,9% e 15,5%). A mensagem para os dois é parecida: planilha, metas, próxima prova. Mas o driver muda: nos intensos, queda forte e chamado técnico; nos longões, treinar sem nenhum seguidor.',
       op: [
-        { n: 'Juntar intensos + longões em "O atleta"', como: '4 personas: novato, treino em casa, rua no ritmo leve e atleta (22% da base).', pro: 'Fica dentro de 3 a 4 personas; os longões (5,7%) deixam de ficar no limite de tamanho.', contra: 'Perde a nuance entre treinar muito e treinar longe.', rec: true },
+        { n: 'Juntar em "O atleta"', como: '4 personas: novato, treino em casa, rua no ritmo leve e atleta (22% da base).', pro: 'Fica dentro de 3 a 4 personas; os longões (5,7%) deixam de ficar no limite de tamanho.', contra: 'Perde a nuance entre treinar muito e treinar longe; o cartão precisa citar os dois drivers.', rec: true },
         { n: 'Manter os 5 separados', como: '5 personas.', pro: 'Mais fino.', contra: 'Passa do pedido de 3 a 4 personas e uma delas fica com só 5,7% da base.' }],
-      sug: 'Juntar em "O atleta". Os grupos continuam separados na base (para quem quiser o detalhe); a persona é uma só.' },
+      sug: 'Juntar em "O atleta". Os grupos continuam separados na base (para quem quiser o detalhe); a persona é uma só.',
+      depois: 'Escrevemos os 4 cartões com o prompt abaixo.' },
   ];
   document.getElementById('kmDecide').innerHTML = renderQ(km);
   const passos = [
-    ['Gravar o grupo de cada assinante', 'A IA roda o cenário escolhido e grava uma coluna "grupo" para os 14.753 ativos.', 'dados/processados/clusters_2026-09-30.parquet: user_id + grupo (sem nenhum dado pessoal).'],
-    ['Registrar a decisão', 'Uma decisão nova no DECISOES.md: cenário, variáveis, número de grupos e o motivo.', '"D-054: segmentação com 5 variáveis de comportamento, sem o plano, porque…"'],
-    ['Conferir os 5 critérios da Aula 3', 'Mensurável, substancial, diferenciável, acessível, acionável, para cada grupo.', 'Acessível: conseguimos falar com os novatos pelo push e pelo e-mail de boas-vindas.'],
-    ['Escrever os cartões de persona', 'Formato da Aula 4: contexto, conflito, resolução, evidência (os números do grupo), decisão e limite.', '"O novato que ainda está chegando: 20% da base, 1,3 mês de casa, nenhum seguidor…"'],
-    ['Levar para o relatório de 15/11', 'Os gráficos e as tabelas desta aba entram no relatório de segmentação e EDA.', 'O gráfico de tamanho dos grupos vira o slide de "quem são os nossos clientes".'],
-    ['Somar o risco depois', 'Quando o modelo de churn ficar pronto, cada pessoa ganha um risco, e o grupo diz qual mensagem usar.', '"Novato com risco alto" recebe onboarding reforçado; "atleta com risco alto" recebe a próxima prova.'],
+    ['Cartões de persona (negócios)', '3 a 4 cartões no formato da Aula 4, com os números da aba "Segmentação escolhida".', 'O cartão do novato acima, repetido para treino em casa, rua no ritmo leve e o atleta.'],
+    ['Prioridade "agir já × monitorar" (negócios)', 'A tabela da seção 8 da aba "Segmentação escolhida", revisada pelo grupo.', 'Novatos e intensos: agir já. Rua no ritmo leve: monitorar a queda do treino.'],
+    ['Customer Segmentation Report (negócios)', 'Relatório executivo: quem são os grupos, por que saem, onde agir primeiro e os limites da análise.', 'Uma página por persona, mais uma de resumo e uma de limites.'],
+    ['Notebook de EDA (tecnologia)', 'Um caderno que lê a base e refaz os gráficos do raio-x, dos motivos e da segmentação, com o texto de cada um.', 'notebooks/eda_segmentacao.ipynb, rodando src/raio_x.py e src/clusters.py.'],
+    ['Mini deck de 3 a 5 slides (tecnologia)', 'Os achados mais fortes: base, rua × casa, os 5 grupos, saída por grupo, próximos passos.', 'O gráfico "% da base, da receita e das saídas" vira o slide principal.'],
+    ['Pasta no Drive e link na Adalove', 'Uma pasta pública com tudo; cada integrante envia o link (a entrega é individual).', 'Revisão final em 14/11; envio em 15/11.'],
   ];
   document.getElementById('kmSteps').innerHTML = passos.map(([t, d, e]) => `<li><b>${t}.</b> ${d}<span class="eg">Exemplo: ${e}</span></li>`).join('');
   document.getElementById('kmPrompt').textContent = (document.getElementById('pKmeans')?.textContent || '').trim();
@@ -1240,9 +1373,9 @@ const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).
   document.getElementById('e5').innerHTML = [
     li('done', 'Carregar e limpar a base (código + decisões)'),
     li('done', 'Padrões e correlações com o churn (dimensões, motivos)'),
-    li('now', 'Segmentação sustentada por números (K-means)'),
-    li('todo', '3 a 4 cartões de persona com drivers de churn'),
-    li('todo', 'Prioridade preliminar: agir já × monitorar'),
+    li('done', 'Segmentação sustentada por números (K-means, D-054)'),
+    li('now', '3 a 4 cartões de persona com drivers de churn (drivers prontos na aba Segmentação escolhida)'),
+    li('now', 'Prioridade preliminar: agir já × monitorar (rascunho na aba Segmentação escolhida)'),
     li('now', 'Gráficos da EDA (raio-x pronto no painel) e mini deck'),
     li('todo', 'Relatório executivo com limitações'),
   ].join('');
@@ -1314,6 +1447,63 @@ function heatTables() {
   }
 }
 
+
+// ---------- segmentação escolhida: tabelas e textos
+const SEG = D.segmento || { grupos: [] };
+const SEGTXT = {
+  'Novatos': { frase: 'Acabaram de chegar: 1,3 mês de casa, 1 treino por semana, ainda sem nenhum seguidor. Mais mensais e o dobro dos outros vindos por influenciador.', chave: g => `${String(g.mediana.tempo_casa_meses).replace('.', ',')} mês de casa`,
+    prior: 'Agir já', porque: 'A maior saída (19,0%) e 28% de todas as saídas, com 22% da receita mensal.', acao: 'Onboarding guiado nas primeiras semanas, sugestão de quem seguir e suporte técnico rápido no 1º mês.' },
+  'Treino em casa': { frase: 'Treinam em casa, por vídeo: só 15% dos treinos ao ar livre, 2 treinos por semana. Mais objetivo de bem-estar.', chave: g => `${pc(g.mediana.pct_ar_livre, 0)} ao ar livre`,
+    prior: 'Proteger', porque: 'A menor saída (10,5%) e a maior fatia da receita mensal (30%). O alarme é parar por 14 dias ou mais.', acao: 'Conteúdo em vídeo novo e um aviso gentil quando a pessoa para por 2 semanas.' },
+  'Rua no ritmo leve': { frase: 'Veteranos de rua: 13 meses de casa, 81% ao ar livre, 1,4 treino por semana. O grupo mais anual e de maior receita acumulada por pessoa.', chave: g => `${String(g.mediana.treinos_semana.toFixed(1)).replace('.', ',')} treino/semana`,
+    prior: 'Monitorar com gatilho', porque: 'Saída abaixo da média (13,6%), mas 24% das saídas por ser grande; 26% já desligaram a renovação em 30/09 (regra à parte, D-052).', acao: 'Alerta quando o treino cai forte; desafio para reativar quem parou antes da renovação.' },
+  'Intensos': { frase: 'Treinam muito: 3,9 vezes por semana, abrem o app 16 vezes por mês e quase todos postam. Mais avançados e focados em prova.', chave: g => `${String(g.mediana.treinos_semana.toFixed(1)).replace('.', ',')} treinos/semana`,
+    prior: 'Agir já', porque: 'Surpresa: treinar muito não segura. Saem 17,9% (23% das saídas). Chamado técnico e queda forte no treino são os sinais.', acao: 'Suporte técnico proativo (GPS, relógio) e metas de prova quando o treino cai.' },
+  'Longões': { frase: 'Treinos longos: 84 minutos por treino, quase todos ao ar livre. Os mais avançados e os mais focados em desempenho e prova.', chave: g => `${Math.round(g.mediana.min_por_treino)} min/treino`,
+    prior: 'Monitorar', porque: 'Saída um pouco acima da média (15,5%), mas grupo pequeno (5% das saídas). 27% já desligaram a renovação em 30/09.', acao: 'Comunidade e provas: conectar quem treina longe e sozinho com outros longões.' },
+};
+(function () {
+  const G = SEG.grupos || [];
+  if (!G.length) return;
+  const H = SEG.historico || {};
+  const f2 = v => v.toFixed(2).replace('.', ',');
+  const kp = [
+    ['5', 'grupos de comportamento', 'variáveis: tempo de casa, treinos, minutos, ar livre, seguidores'],
+    [nm(SEG.n), 'assinantes ativos em 30/09', 'cada um com o seu grupo gravado'],
+    ['R$ ' + nm(Math.round(SEG.mrr_total / 1000)) + ' mil', 'receita líquida mensal estimada', 'preço de tabela menos a taxa de cada canal'],
+    [f2(SEG.qualidade.silhueta), 'silhueta (separação)', 'comum em dados de clientes: 0,2 a 0,3'],
+    [f2(Math.min(SEG.qualidade.ari_semente, SEG.qualidade.ari_metade)), 'estabilidade (0 a 1)', 'os grupos se repetem com outro sorteio e com metade da base'],
+    [pc(G[0].historico.taxa) + ' <small>→ ' + pc(G[1].historico.taxa) + '</small>', 'saída: novatos → treino em casa', `média da base: ${pc(H.taxa_base)} (31/05, D-053)`],
+  ];
+  document.getElementById('segKpis').innerHTML = kp.map(([v, l, r]) => `<div class="split"><div class="v num">${v}</div><div>${l}</div><div class="ref">${r}</div></div>`).join('');
+  document.getElementById('segCards').innerHTML = G.map(g => { const x = SEGTXT[g.nome] || {}; return `<div class="seg-card"><div class="seg-top"><h4>${g.nome}</h4><span class="seg-pct">${pc(g.pct, 0)}</span></div><p class="seg-key">${x.chave ? x.chave(g) : ''}</p><p>${x.frase || ''}</p><p class="seg-foot">${nm(g.n)} assinantes · saída ${pc(g.historico.taxa)} · ${pc(g.valor.mrr_pct, 0)} da receita mensal</p></div>`; }).join('');
+  // DNA (centros padronizados)
+  const VV = ['tempo_casa', 'treinos_semana', 'min_por_treino', 'pct_ar_livre', 'seguidores'];
+  const cor = z => { const a = Math.min(Math.abs(z) / 2, 1) * .55; return z >= 0 ? `background:rgba(31,140,90,${a})` : `background:rgba(200,60,60,${a})`; };
+  document.getElementById('segZ').innerHTML = G.map(g => `<tr><td><b>${g.nome}</b></td>${VV.map(v => { const z = g.centro_z[v]; return `<td class="num" style="${cor(z)}">${z > 0 ? '+' : ''}${f2(z)}</td>`; }).join('')}</tr>`).join('');
+  // engajamento
+  document.getElementById('segEng').innerHTML = G.map(g => { const e = g.engajamento; return `<tr><td><b>${g.nome}</b></td><td>${pc(e.sem_treino_3m)}</td><td>${pc(e.parado_30d)}</td><td>${String(e.sessoes_mes).replace('.', ',')}</td><td>${pc(e.com_post, 0)}</td><td>${pc(g.saida_anunciada_30_09)}</td></tr>`; }).join('');
+  // peso
+  const maior = G.slice().sort((a, b) => b.historico.pct_dos_desligamentos - a.historico.pct_dos_desligamentos);
+  document.getElementById('segPesoBiz').innerHTML = `<p><b>Na ótica do negócio.</b> Os <b>novatos</b> são ${pc(G[0].pct, 0)} da base, mas respondem por ${pc(G[0].historico.pct_dos_desligamentos, 0)} das saídas: é onde a Vitaliza mais perde gente. Os <b>intensos</b> também saem acima do seu tamanho (${pc(G[3].pct, 0)} da base, ${pc(G[3].historico.pct_dos_desligamentos, 0)} das saídas). O <b>treino em casa</b> é o contrário: ${pc(G[1].pct, 0)} da base e ${pc(G[1].valor.mrr_pct, 0)} da receita mensal, mas só ${pc(G[1].historico.pct_dos_desligamentos, 0)} das saídas. Em receita mensal os grupos pesam quase como em tamanho, porque o valor por pessoa varia pouco (de R$ ${String(Math.min(...G.map(g => g.valor.mrr_por_pessoa)).toFixed(2)).replace('.', ',')} a R$ ${String(Math.max(...G.map(g => g.valor.mrr_por_pessoa)).toFixed(2)).replace('.', ',')} por mês).</p>`;
+  document.getElementById('segHistInfo').textContent = `São ${nm(H.n)} assinantes em 31/05, ${nm(H.desligamentos)} desligaram nos 60 dias seguintes: ${pc(H.taxa_base)}.`;
+  document.getElementById('segSaidaBiz').innerHTML = `<p><b>Na ótica do negócio.</b> A saída vai de ${pc(G[1].historico.taxa)} (treino em casa) a ${pc(G[0].historico.taxa)} (novatos), e os intervalos de confiança dos dois extremos não se tocam: a diferença é real, não sorte da amostra. A surpresa são os <b>intensos</b> (${pc(G[3].historico.taxa)}): treinar muito não garante ficar. Em todos os grupos, o mensal sai mais que o anual, mas o grupo muda o tamanho dessa diferença: um novato anual (${pc(G[0].historico.anual_taxa)}) sai mais que um mensal do treino em casa (${pc(G[1].historico.mensal_taxa)}).</p>`;
+  // drivers
+  document.getElementById('segDrv').innerHTML = G.map(g => g.drivers.slice(0, 3).map((d, i) => `<tr>${i === 0 ? `<td rowspan="${Math.min(3, g.drivers.length)}"><b>${g.nome}</b><br><span class="muted">saída ${pc(g.historico.taxa)}</span></td>` : ''}<td>${d.sinal}</td><td>${pc(d.pct_grupo)}</td><td><b>${pc(d.taxa_com)}</b></td><td>${pc(d.taxa_sem)}</td><td>+${String(((d.taxa_com - d.taxa_sem) * 100).toFixed(1)).replace('.', ',')} p.p.</td></tr>`).join('')).join('');
+  // prioridade
+  const ordP = { 'Agir já': 0, 'Monitorar com gatilho': 1, 'Monitorar': 2, 'Proteger': 3 };
+  const pill = p => `<span class="pill ${p === 'Agir já' ? 'risk' : p === 'Proteger' ? 'done' : 'now'}">${p}</span>`;
+  document.getElementById('segPrior').innerHTML = G.slice().sort((a, b) => ordP[SEGTXT[a.nome].prior] - ordP[SEGTXT[b.nome].prior]).map(g => { const x = SEGTXT[g.nome]; return `<tr><td><b>${g.nome}</b></td><td>${pill(x.prior)}</td><td>${x.porque}</td><td>${x.acao}</td></tr>`; }).join('');
+  // robustez
+  document.getElementById('segRob').innerHTML = [
+    `<li><b>Outro sorteio inicial:</b> rodando de novo com outra semente, ${pc(SEG.qualidade.ari_semente, 0)} de concordância (ARI ${f2(SEG.qualidade.ari_semente)}).</li>`,
+    `<li><b>Metade da base:</b> treinando só com metade dos assinantes e aplicando a todos, ${pc(SEG.qualidade.ari_metade, 0)} de concordância (ARI ${f2(SEG.qualidade.ari_metade)}).</li>`,
+    `<li><b>Outra data:</b> a mesma régua aplicada a 31/05 dá grupos de tamanho parecido (tabela abaixo): os grupos não são um retrato de um único mês.</li>`,
+  ].join('');
+  document.getElementById('segQual').innerHTML = G.map(g => { const d = Math.abs(g.pct - g.historico.pct_base_31_05); return `<tr><td><b>${g.nome}</b></td><td>${pc(g.pct)}</td><td>${pc(g.historico.pct_base_31_05)}</td><td>${f2(g.silhueta)}</td><td>${d < .03 ? 'Estável entre as datas' : 'Mudou de tamanho entre as datas'}${g.silhueta < .2 ? '; fronteira mais difusa' : ''}</td></tr>`; }).join('');
+  ['segDistSel', 'segCompSel'].forEach(id => document.getElementById(id)?.addEventListener('change', () => draw()));
+})();
+
 // ---------- gráficos
 const charts = [];
 function draw() {
@@ -1340,17 +1530,69 @@ function draw() {
   const kc = (D.clusters || {}).cenarios || [];
   const corCen = { A: C.idle, B: C.warn, C: C.ok, D: C.acc };
   mk('cKmSil', { type: 'line', data: { labels: [3, 4, 5, 6, 7].map(k => k + ' grupos'), datasets: kc.map(c => ({
-    label: `${c.cenario} · ${c.n_vars} variáveis`, data: c.silhueta_por_k.map(r => r.silhueta), borderColor: corCen[c.cenario], backgroundColor: corCen[c.cenario],
+    label: `${(window.NOME_CEN || (x => x))(c.cenario)} · ${c.n_vars} variáveis`, data: c.silhueta_por_k.map(r => r.silhueta), borderColor: corCen[c.cenario], backgroundColor: corCen[c.cenario],
     pointRadius: c.silhueta_por_k.map(r => r.k === c.k ? 7 : 3), pointStyle: c.silhueta_por_k.map(r => r.aceito ? 'circle' : 'crossRot'), tension: .2, borderWidth: c.cenario === 'C' ? 3 : 2 })) },
     options: { maintainAspectRatio: false, scales: { y: { min: 0, title: { display: true, text: 'silhueta' } }, x: { grid: { display: false } } },
       plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: c => { const r = kc[c.datasetIndex].silhueta_por_k[c.dataIndex]; return `${c.dataset.label}: ${r.silhueta.toFixed(2).replace('.', ',')} · menor grupo ${pc(r.menor_grupo)} · estabilidade ${r.estavel.toFixed(2).replace('.', ',')}${r.aceito ? '' : ' (reprovado)'}`; } } } } } });
   const maxG = Math.max(0, ...kc.map(c => c.grupos.length));
   const tons = [C.acc, C.ok, C.warn, C.medal, C.risk, C.idle, C.muted];
-  mk('cKmTam', { type: 'bar', data: { labels: kc.map(c => `Cenário ${c.cenario}`), datasets: Array.from({ length: maxG }, (_, i) => ({
+  mk('cKmTam', { type: 'bar', data: { labels: kc.map(c => (window.NOME_CEN || (x => 'Cenário ' + x))(c.cenario)), datasets: Array.from({ length: maxG }, (_, i) => ({
     label: `${i + 1}º maior`, data: kc.map(c => c.grupos[i] ? c.grupos[i].pct : null), backgroundColor: tons[i % tons.length], borderColor: css('--surface'), borderWidth: 1,
     nomes: kc.map(c => c.grupos[i] ? ((window.CEN_NOMES || {})[c.cenario] || [])[i] : '') })) },
     options: { indexAxis: 'y', maintainAspectRatio: false, scales: { x: { ...pct, stacked: true, max: 1 }, y: { stacked: true, grid: { display: false } } },
       plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => `${c.dataset.nomes[c.dataIndex] || c.dataset.label}: ${pc(c.raw)}` } } } } });
+
+  // segmentação escolhida
+  const SG = (D.segmento || {}).grupos || [];
+  if (SG.length) {
+    const nomesG = SG.map(g => g.nome);
+    const corG = [C.risk, C.idle, C.acc, C.warn, C.medal];
+    mk('cSegPeso', { type: 'bar', data: { labels: nomesG, datasets: [
+      { label: '% da base', data: SG.map(g => g.pct), backgroundColor: C.idle },
+      { label: '% da receita mensal', data: SG.map(g => g.valor.mrr_pct), backgroundColor: C.acc },
+      { label: '% das saídas (31/05)', data: SG.map(g => g.historico.pct_dos_desligamentos), backgroundColor: C.risk },
+    ] }, options: { maintainAspectRatio: false, scales: { y: { ...pct, min: 0 }, x: { grid: { display: false } } }, plugins: { tooltip: tip, legend: { position: 'bottom' } } } });
+
+    const dv = document.getElementById('segDistSel')?.value || 'tempo_casa_meses';
+    const isPct = dv === 'pct_ar_livre_2026';
+    const fmt = v => isPct ? pc(v, 0) : String(Math.round(v * 10) / 10).replace('.', ',');
+    mk('cSegDist', { type: 'bar', data: { labels: nomesG, datasets: [
+      { label: '10º a 90º percentil', data: SG.map(g => [g.quantis[dv][0], g.quantis[dv][4]]), backgroundColor: C.line, barPercentage: .12, categoryPercentage: 1, grouped: false },
+      { label: '25º a 75º percentil', data: SG.map(g => [g.quantis[dv][1], g.quantis[dv][3]]), backgroundColor: corG.map(c => c + 'aa'), borderColor: corG, borderWidth: 1, barPercentage: .5, categoryPercentage: 1, grouped: false },
+      { type: 'line', label: 'Mediana', data: SG.map(g => g.quantis[dv][2]), showLine: false, pointRadius: 6, pointBackgroundColor: C.ink, pointBorderColor: C.ink },
+    ] }, options: { indexAxis: 'y', maintainAspectRatio: false, scales: { x: { min: 0, ticks: { callback: v => fmt(v) }, grid: { color: C.line } }, y: { grid: { display: false } } },
+      plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: c => Array.isArray(c.raw) ? `${c.dataset.label}: ${fmt(c.raw[0])} a ${fmt(c.raw[1])}` : `Mediana: ${fmt(c.raw)}` } } } } });
+
+    const cv = document.getElementById('segCompSel')?.value || 'plano';
+    const rot = { mensal: 'Mensal', anual: 'Anual', prova_com_prazo: 'Prova com prazo', desempenho: 'Desempenho', estetica: 'Estética', saude: 'Saúde', bem_estar: 'Bem-estar', companhia: 'Companhia', outro: 'Outro', nao_informado: 'Não informado', sem_onboarding: 'Sem onboarding',
+      organico: 'Orgânico', influenciador: 'Influenciador', meta_ads: 'Meta Ads', indicacao: 'Indicação', google_ads: 'Google Ads', parceria_corporativa: 'Parceria corporativa', iniciante: 'Iniciante', intermediario: 'Intermediário', avancado: 'Avançado',
+      app_store: 'App Store', google_play: 'Google Play', web_cartao: 'Site · cartão', web_pix: 'Site · Pix' };
+    const cats = Object.keys(SG[0][cv]);
+    const paleta = [C.acc, C.ok, C.warn, C.risk, C.medal, C.idle, C.muted, C.line, C.ink];
+    mk('cSegComp', { type: 'bar', data: { labels: nomesG, datasets: cats.map((k, i) => ({ label: rot[k] || k, data: SG.map(g => g[cv][k] || 0), backgroundColor: paleta[i % paleta.length], borderColor: css('--surface'), borderWidth: 1 })) },
+      options: { indexAxis: 'y', maintainAspectRatio: false, scales: { x: { ...pct, stacked: true, max: 1 }, y: { stacked: true, grid: { display: false } } }, plugins: { tooltip: tip, legend: { position: 'bottom' } } } });
+
+    const base = (D.segmento.historico || {}).taxa_base || 0;
+    mk('cSegSaida', { type: 'bar', data: { labels: nomesG, datasets: [
+      { label: 'Saída em 60 dias', data: SG.map(g => g.historico.taxa), backgroundColor: SG.map(g => g.historico.taxa > base ? C.risk : C.ok), barPercentage: .6, grouped: false },
+      { label: 'Intervalo de 95%', data: SG.map(g => g.historico.ic95), backgroundColor: C.ink, barPercentage: .04, grouped: false },
+      { type: 'line', label: 'Média da base', data: SG.map(() => base), borderColor: C.ink, borderDash: [6, 4], pointRadius: 0 },
+    ] }, options: { maintainAspectRatio: false, scales: { y: { ...pct, min: 0 }, x: { grid: { display: false } } },
+      plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: c => Array.isArray(c.raw) ? `IC 95%: ${pc(c.raw[0])} a ${pc(c.raw[1])}` : `${c.dataset.label}: ${pc(c.raw)}${c.datasetIndex === 0 ? ` · n = ${nm(SG[c.dataIndex].historico.n)}` : ''}` } } } } });
+
+    mk('cSegPlano', { type: 'bar', data: { labels: nomesG, datasets: [
+      { label: 'Mensal', data: SG.map(g => g.historico.mensal_taxa), backgroundColor: C.risk },
+      { label: 'Anual', data: SG.map(g => g.historico.anual_taxa), backgroundColor: C.idle },
+    ] }, options: { maintainAspectRatio: false, scales: { y: { ...pct, min: 0 }, x: { grid: { display: false } } }, plugins: { tooltip: tip, legend: { position: 'bottom' } } } });
+
+    const maxN = Math.max(...SG.map(g => g.n));
+    mk('cSegPrior', { type: 'bubble', data: { datasets: SG.map((g, i) => ({ label: g.nome, data: [{ x: g.historico.taxa, y: g.valor.mrr_pct, r: 8 + 22 * Math.sqrt(g.n / maxN) }], backgroundColor: corG[i] + 'aa', borderColor: corG[i] })) },
+      options: { maintainAspectRatio: false, scales: {
+        x: { ...pct, min: .08, max: .22, title: { display: true, text: 'saída em 60 dias (31/05)' } },
+        y: { ...pct, min: 0, max: .36, title: { display: true, text: '% da receita mensal' } } },
+        plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: c => `${c.dataset.label}: saída ${pc(c.raw.x)} · ${pc(c.raw.y)} da receita · ${nm(SG[c.datasetIndex].n)} assinantes` } },
+          annotation: undefined } } });
+  }
 
   const t = (D.trajetoria || []).slice().sort((a, b) => b.semana - a.semana);
   mk('cTraj', { type: 'line', data: { labels: t.map(x => x.semana === 1 ? 'última' : x.semana + 'ª antes'), datasets: [

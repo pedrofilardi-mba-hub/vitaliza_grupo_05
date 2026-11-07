@@ -1,5 +1,7 @@
 # Segmentação da base ativa (30/09/2026): cenários de K-means
 
+> **Decisão (D-054, 07/11/2026):** o grupo escolheu o cenário C, que passa a se chamar **cenário escolhido**. Detalhe da segmentação escolhida: `saidas/clusters.md` (código `src/clusters.py`). Este arquivo guarda o processo de escolha.
+
 Visão geral da base, **sem a ótica de churn**: nenhuma informação de saída entrou no cálculo nem na descrição dos grupos.
 Código: `src/clusters_cenarios.py`. Métricas de todas as rodadas: `saidas/clusters_cenarios.csv`. Perfis: `saidas/clusters_perfis.json`.
 
@@ -38,7 +40,7 @@ Um achado que só a visão geral mostra: **mensais quase nunca passam 3 meses se
 |---|---|---|---|---|---|
 | **A** · 3 variáveis | plano, minutos por treino, % ao ar livre | 5 | 0,665 | 5,8% | 1,00 |
 | **B** · 4 variáveis | A + treinos por semana | 6 | 0,438 | 5,3% | 0,98 |
-| **C** · 5 variáveis | tempo de casa, treinos por semana, minutos por treino, % ao ar livre, seguidores (**sem o plano**) | 5 | 0,241 | 5,7% | 0,95 |
+| **Cenário escolhido** (C) · 5 variáveis | tempo de casa, treinos por semana, minutos por treino, % ao ar livre, seguidores (**sem o plano**) | 5 | 0,241 | 5,7% | 0,95 |
 | **D** · 6 variáveis | todas | 6 | 0,239 | 5,2% | 0,94 |
 
 Para 5 variáveis levamos a versão **sem o plano**. As versões com plano repetem os grupos do cenário B (o plano domina). Sem ele, os grupos nascem só do comportamento, e o plano vira uma descrição. Em cada cenário, o número de grupos é o de melhor silhueta entre as rodadas aceitas, exceto em C. Ali, 5 e 6 grupos empatam (0,241 contra 0,243), e 5 é mais estável e mais fácil de explicar.
@@ -85,7 +87,7 @@ Para 5 variáveis levamos a versão **sem o plano**. As versões com plano repet
   - "o longão".
 - **Considerar ou descartar:** **considerar**, como segunda opção, se o grupo quiser o plano explícito nos grupos.
 
-### Cenário C · 5 variáveis sem o plano, 5 grupos (sugerido)
+### Cenário escolhido (C) · 5 variáveis sem o plano, 5 grupos
 
 | Grupo | % base | Retrato | Plano (descrição) | Receita líquida |
 |---|---|---|---|---|
@@ -109,7 +111,7 @@ Para 5 variáveis levamos a versão **sem o plano**. As versões com plano repet
   2. **"Quem treina em casa"** (30%): vídeo, bem-estar, rotina regular. Pede conteúdo em vídeo novo.
   3. **"O corredor de rua no ritmo leve"** (28%): veterano e de maior receita, mas 1 em cada 8 está parado há 3 meses. Pede um desafio para reativar.
   4. **"O atleta"** (intensos + longões, 22%): treina muito ou longe, avançado, focado em prova. Pede planilha e metas.
-- **Considerar ou descartar:** **considerar como principal**. É o que melhor responde "quem são os nossos clientes" e rende personas diferentes entre si.
+- **Decisão:** **escolhido pelo grupo (D-054)**. É o que melhor responde "quem são os nossos clientes" e rende personas diferentes entre si.
 
 ### Cenário D · 6 variáveis, 6 grupos
 
@@ -137,9 +139,9 @@ Para 5 variáveis levamos a versão **sem o plano**. As versões com plano repet
   - "o longão".
 - **Considerar ou descartar:** **descartar**. Tem a complexidade de 6 variáveis sem ganhar um grupo que C ou B não mostrem.
 
-## Recomendação para a discussão
+## Recomendação levada à discussão e decisão
 
-1. **Principal: cenário C** (5 variáveis sem o plano, 5 grupos, 4 personas).
+1. **Principal: cenário C** (5 variáveis sem o plano, 5 grupos, 4 personas). **Escolhido pelo grupo em 07/11/2026 (D-054)** e renomeado para "cenário escolhido".
 2. **Alternativa: cenário B**, se o grupo preferir grupos separados por plano.
 3. **Descartar A e D:** A é simples demais; D é complexo sem ganho.
 

@@ -1,0 +1,809 @@
+{
+ "cenario": "escolhido",
+ "variaveis": [
+  "tempo_casa",
+  "treinos_semana",
+  "min_por_treino",
+  "pct_ar_livre",
+  "seguidores"
+ ],
+ "nomes_vars": {
+  "tempo_casa": "Tempo de casa",
+  "treinos_semana": "Treinos por semana",
+  "min_por_treino": "Minutos por treino",
+  "pct_ar_livre": "% ao ar livre",
+  "seguidores": "Seguidores"
+ },
+ "k": 5,
+ "n": 14753,
+ "qualidade": {
+  "silhueta": 0.241,
+  "ari_semente": 0.988,
+  "ari_metade": 0.952
+ },
+ "historico": {
+  "corte": "31/05/2026",
+  "n": 11965,
+  "taxa_base": 0.1482,
+  "desligamentos": 1773,
+  "regua": "escala e centros de 30/09 aplicados às mesmas 5 variáveis montadas em 31/05"
+ },
+ "mrr_total": 409925.0,
+ "grupos": [
+  {
+   "nome": "Novatos",
+   "grupo": 4,
+   "n": 3002,
+   "pct": 0.2035,
+   "centro_z": {
+    "tempo_casa": -1.37,
+    "treinos_semana": -0.51,
+    "min_por_treino": -0.19,
+    "pct_ar_livre": 0.05,
+    "seguidores": -0.9
+   },
+   "quantis": {
+    "tempo_casa_meses": [
+     0.2,
+     0.6,
+     1.3,
+     2.4,
+     4.2
+    ],
+    "treinos_semana": [
+     0.31,
+     0.54,
+     1.08,
+     1.77,
+     2.31
+    ],
+    "min_por_treino": [
+     35.4,
+     39.0,
+     43.2,
+     48.6,
+     54.9
+    ],
+    "pct_ar_livre_2026": [
+     0.08,
+     0.2,
+     0.71,
+     0.83,
+     0.9
+    ],
+    "seguidores": [
+     0.0,
+     0.0,
+     0.0,
+     1.0,
+     1.0
+    ]
+   },
+   "mediana": {
+    "tempo_casa_meses": 1.3,
+    "treinos_semana": 1.08,
+    "min_por_treino": 43.2,
+    "pct_ar_livre": 0.71,
+    "seguidores": 0.0,
+    "idade": 46.0
+   },
+   "plano": {
+    "mensal": 0.576,
+    "anual": 0.424
+   },
+   "canal_cobranca": {
+    "app_store": 0.357,
+    "google_play": 0.346,
+    "web_cartao": 0.207,
+    "web_pix": 0.09
+   },
+   "canal_aquisicao": {
+    "organico": 0.284,
+    "influenciador": 0.271,
+    "meta_ads": 0.14,
+    "indicacao": 0.133,
+    "google_ads": 0.09,
+    "parceria_corporativa": 0.083
+   },
+   "objetivo": {
+    "prova_com_prazo": 0.074,
+    "desempenho": 0.067,
+    "estetica": 0.16,
+    "saude": 0.151,
+    "bem_estar": 0.072,
+    "companhia": 0.113,
+    "outro": 0.054,
+    "nao_informado": 0.31,
+    "sem_onboarding": 0.0
+   },
+   "nivel": {
+    "iniciante": 0.38,
+    "intermediario": 0.405,
+    "avancado": 0.152,
+    "nao_informado": 0.063
+   },
+   "sexo_f": 0.49,
+   "relogio": 0.394,
+   "engajamento": {
+    "sem_treino_3m": 0.012,
+    "dias_sem_treinar_mediana": 2.0,
+    "parado_30d": 0.039,
+    "posts_90d": 0.96,
+    "sessoes_mes": 5.2,
+    "com_post": 0.584
+   },
+   "valor": {
+    "receita_total_mediana": 116.0,
+    "receita_total_pct": 0.0847,
+    "mrr_liq": 89344.0,
+    "mrr_pct": 0.218,
+    "mrr_por_pessoa": 29.76
+   },
+   "saida_anunciada_30_09": 0.087,
+   "historico": {
+    "n": 2645,
+    "pct_base_31_05": 0.2084,
+    "taxa": 0.1898,
+    "ic95": [
+     0.1748,
+     0.2047
+    ],
+    "desligamentos": 502,
+    "pct_dos_desligamentos": 0.2831,
+    "mensal_taxa": 0.2196,
+    "anual_taxa": 0.1477
+   },
+   "drivers": [
+    {
+     "sinal": "Chamado técnico (90 dias)",
+     "n_com": 109,
+     "pct_grupo": 0.041,
+     "taxa_com": 0.3578,
+     "taxa_sem": 0.1826
+    },
+    {
+     "sinal": "Plano mensal",
+     "n_com": 1548,
+     "pct_grupo": 0.585,
+     "taxa_com": 0.2196,
+     "taxa_sem": 0.1477
+    },
+    {
+     "sinal": "Treino caiu forte (4 semanas)",
+     "n_com": 193,
+     "pct_grupo": 0.073,
+     "taxa_com": 0.2487,
+     "taxa_sem": 0.1852
+    },
+    {
+     "sinal": "Pagava o preço antigo (reajuste)",
+     "n_com": 238,
+     "pct_grupo": 0.09,
+     "taxa_com": 0.2227,
+     "taxa_sem": 0.1865
+    }
+   ],
+   "silhueta": 0.275
+  },
+  {
+   "nome": "Treino em casa",
+   "grupo": 1,
+   "n": 4392,
+   "pct": 0.2977,
+   "centro_z": {
+    "tempo_casa": 0.36,
+    "treinos_semana": 0.05,
+    "min_por_treino": -0.39,
+    "pct_ar_livre": -1.22,
+    "seguidores": 0.26
+   },
+   "quantis": {
+    "tempo_casa_meses": [
+     4.4,
+     6.9,
+     11.4,
+     20.3,
+     37.0
+    ],
+    "treinos_semana": [
+     0.24,
+     1.23,
+     2.0,
+     2.77,
+     3.54
+    ],
+    "min_por_treino": [
+     37.3,
+     39.5,
+     41.5,
+     43.5,
+     45.8
+    ],
+    "pct_ar_livre_2026": [
+     0.09,
+     0.12,
+     0.15,
+     0.18,
+     0.21
+    ],
+    "seguidores": [
+     0.0,
+     1.0,
+     2.0,
+     3.0,
+     4.0
+    ]
+   },
+   "mediana": {
+    "tempo_casa_meses": 11.4,
+    "treinos_semana": 2.0,
+    "min_por_treino": 41.5,
+    "pct_ar_livre": 0.15,
+    "seguidores": 2.0,
+    "idade": 47.0
+   },
+   "plano": {
+    "mensal": 0.431,
+    "anual": 0.569
+   },
+   "canal_cobranca": {
+    "app_store": 0.364,
+    "google_play": 0.334,
+    "web_cartao": 0.203,
+    "web_pix": 0.099
+   },
+   "canal_aquisicao": {
+    "organico": 0.318,
+    "influenciador": 0.14,
+    "meta_ads": 0.166,
+    "indicacao": 0.16,
+    "google_ads": 0.105,
+    "parceria_corporativa": 0.11
+   },
+   "objetivo": {
+    "prova_com_prazo": 0.012,
+    "desempenho": 0.038,
+    "estetica": 0.105,
+    "saude": 0.179,
+    "bem_estar": 0.168,
+    "companhia": 0.138,
+    "outro": 0.054,
+    "nao_informado": 0.305,
+    "sem_onboarding": 0.0
+   },
+   "nivel": {
+    "iniciante": 0.392,
+    "intermediario": 0.369,
+    "avancado": 0.165,
+    "nao_informado": 0.074
+   },
+   "sexo_f": 0.491,
+   "relogio": 0.373,
+   "engajamento": {
+    "sem_treino_3m": 0.035,
+    "dias_sem_treinar_mediana": 2.0,
+    "parado_30d": 0.092,
+    "posts_90d": 1.58,
+    "sessoes_mes": 8.6,
+    "com_post": 0.773
+   },
+   "valor": {
+    "receita_total_mediana": 386.0,
+    "receita_total_pct": 0.3444,
+    "mrr_liq": 122492.0,
+    "mrr_pct": 0.2988,
+    "mrr_por_pessoa": 27.89
+   },
+   "saida_anunciada_30_09": 0.136,
+   "historico": {
+    "n": 3390,
+    "pct_base_31_05": 0.2789,
+    "taxa": 0.1047,
+    "ic95": [
+     0.0944,
+     0.115
+    ],
+    "desligamentos": 355,
+    "pct_dos_desligamentos": 0.2002,
+    "mensal_taxa": 0.1358,
+    "anual_taxa": 0.0752
+   },
+   "drivers": [
+    {
+     "sinal": "14+ dias sem treinar",
+     "n_com": 224,
+     "pct_grupo": 0.066,
+     "taxa_com": 0.1964,
+     "taxa_sem": 0.0982
+    },
+    {
+     "sinal": "Plano mensal",
+     "n_com": 1649,
+     "pct_grupo": 0.486,
+     "taxa_com": 0.1358,
+     "taxa_sem": 0.0752
+    },
+    {
+     "sinal": "Pagava o preço antigo (reajuste)",
+     "n_com": 1531,
+     "pct_grupo": 0.452,
+     "taxa_com": 0.1365,
+     "taxa_sem": 0.0785
+    },
+    {
+     "sinal": "Treino caiu forte (4 semanas)",
+     "n_com": 397,
+     "pct_grupo": 0.117,
+     "taxa_com": 0.1461,
+     "taxa_sem": 0.0992
+    }
+   ],
+   "silhueta": 0.266
+  },
+  {
+   "nome": "Rua no ritmo leve",
+   "grupo": 0,
+   "n": 4165,
+   "pct": 0.2823,
+   "centro_z": {
+    "tempo_casa": 0.51,
+    "treinos_semana": -0.47,
+    "min_por_treino": -0.09,
+    "pct_ar_livre": 0.79,
+    "seguidores": 0.42
+   },
+   "quantis": {
+    "tempo_casa_meses": [
+     5.8,
+     8.1,
+     13.2,
+     22.2,
+     47.5
+    ],
+    "treinos_semana": [
+     0.0,
+     0.23,
+     1.38,
+     2.08,
+     2.46
+    ],
+    "min_por_treino": [
+     34.8,
+     39.0,
+     45.5,
+     52.0,
+     57.2
+    ],
+    "pct_ar_livre_2026": [
+     0.73,
+     0.77,
+     0.81,
+     0.84,
+     0.89
+    ],
+    "seguidores": [
+     1.0,
+     1.0,
+     2.0,
+     3.0,
+     4.0
+    ]
+   },
+   "mediana": {
+    "tempo_casa_meses": 13.2,
+    "treinos_semana": 1.38,
+    "min_por_treino": 45.5,
+    "pct_ar_livre": 0.81,
+    "seguidores": 2.0,
+    "idade": 47.0
+   },
+   "plano": {
+    "mensal": 0.294,
+    "anual": 0.706
+   },
+   "canal_cobranca": {
+    "app_store": 0.365,
+    "google_play": 0.338,
+    "web_cartao": 0.199,
+    "web_pix": 0.098
+   },
+   "canal_aquisicao": {
+    "organico": 0.327,
+    "influenciador": 0.135,
+    "meta_ads": 0.177,
+    "indicacao": 0.157,
+    "google_ads": 0.109,
+    "parceria_corporativa": 0.094
+   },
+   "objetivo": {
+    "prova_com_prazo": 0.09,
+    "desempenho": 0.079,
+    "estetica": 0.112,
+    "saude": 0.182,
+    "bem_estar": 0.063,
+    "companhia": 0.135,
+    "outro": 0.047,
+    "nao_informado": 0.291,
+    "sem_onboarding": 0.0
+   },
+   "nivel": {
+    "iniciante": 0.399,
+    "intermediario": 0.407,
+    "avancado": 0.126,
+    "nao_informado": 0.068
+   },
+   "sexo_f": 0.508,
+   "relogio": 0.381,
+   "engajamento": {
+    "sem_treino_3m": 0.132,
+    "dias_sem_treinar_mediana": 5.0,
+    "parado_30d": 0.233,
+    "posts_90d": 1.23,
+    "sessoes_mes": 5.8,
+    "com_post": 0.685
+   },
+   "valor": {
+    "receita_total_mediana": 472.0,
+    "receita_total_pct": 0.3435,
+    "mrr_liq": 108490.0,
+    "mrr_pct": 0.2647,
+    "mrr_por_pessoa": 26.05
+   },
+   "saida_anunciada_30_09": 0.265,
+   "historico": {
+    "n": 3082,
+    "pct_base_31_05": 0.2842,
+    "taxa": 0.136,
+    "ic95": [
+     0.1239,
+     0.1481
+    ],
+    "desligamentos": 419,
+    "pct_dos_desligamentos": 0.2363,
+    "mensal_taxa": 0.1821,
+    "anual_taxa": 0.1088
+   },
+   "drivers": [
+    {
+     "sinal": "Treino caiu forte (4 semanas)",
+     "n_com": 358,
+     "pct_grupo": 0.116,
+     "taxa_com": 0.2263,
+     "taxa_sem": 0.1241
+    },
+    {
+     "sinal": "Chamado técnico (90 dias)",
+     "n_com": 193,
+     "pct_grupo": 0.063,
+     "taxa_com": 0.2124,
+     "taxa_sem": 0.1308
+    },
+    {
+     "sinal": "Plano mensal",
+     "n_com": 1142,
+     "pct_grupo": 0.371,
+     "taxa_com": 0.1821,
+     "taxa_sem": 0.1088
+    },
+    {
+     "sinal": "Pagava o preço antigo (reajuste)",
+     "n_com": 1119,
+     "pct_grupo": 0.363,
+     "taxa_com": 0.1805,
+     "taxa_sem": 0.1105
+    }
+   ],
+   "silhueta": 0.224
+  },
+  {
+   "nome": "Intensos",
+   "grupo": 2,
+   "n": 2359,
+   "pct": 0.1599,
+   "centro_z": {
+    "tempo_casa": 0.14,
+    "treinos_semana": 1.48,
+    "min_por_treino": -0.0,
+    "pct_ar_livre": 0.52,
+    "seguidores": -0.11
+   },
+   "quantis": {
+    "tempo_casa_meses": [
+     3.1,
+     5.15,
+     9.2,
+     17.2,
+     25.2
+    ],
+    "treinos_semana": [
+     2.77,
+     3.15,
+     3.85,
+     4.85,
+     5.92
+    ],
+    "min_por_treino": [
+     37.7,
+     41.4,
+     45.4,
+     51.4,
+     55.3
+    ],
+    "pct_ar_livre_2026": [
+     0.18,
+     0.76,
+     0.79,
+     0.82,
+     0.85
+    ],
+    "seguidores": [
+     0.0,
+     1.0,
+     1.0,
+     2.0,
+     3.0
+    ]
+   },
+   "mediana": {
+    "tempo_casa_meses": 9.2,
+    "treinos_semana": 3.85,
+    "min_por_treino": 45.4,
+    "pct_ar_livre": 0.79,
+    "seguidores": 1.0,
+    "idade": 46.0
+   },
+   "plano": {
+    "mensal": 0.491,
+    "anual": 0.509
+   },
+   "canal_cobranca": {
+    "app_store": 0.389,
+    "google_play": 0.324,
+    "web_cartao": 0.198,
+    "web_pix": 0.089
+   },
+   "canal_aquisicao": {
+    "organico": 0.323,
+    "influenciador": 0.16,
+    "meta_ads": 0.17,
+    "indicacao": 0.142,
+    "google_ads": 0.106,
+    "parceria_corporativa": 0.1
+   },
+   "objetivo": {
+    "prova_com_prazo": 0.091,
+    "desempenho": 0.131,
+    "estetica": 0.102,
+    "saude": 0.173,
+    "bem_estar": 0.075,
+    "companhia": 0.086,
+    "outro": 0.048,
+    "nao_informado": 0.294,
+    "sem_onboarding": 0.0
+   },
+   "nivel": {
+    "iniciante": 0.318,
+    "intermediario": 0.402,
+    "avancado": 0.206,
+    "nao_informado": 0.074
+   },
+   "sexo_f": 0.494,
+   "relogio": 0.386,
+   "engajamento": {
+    "sem_treino_3m": 0.0,
+    "dias_sem_treinar_mediana": 1.0,
+    "parado_30d": 0.002,
+    "posts_90d": 2.55,
+    "sessoes_mes": 16.3,
+    "com_post": 0.917
+   },
+   "valor": {
+    "receita_total_mediana": 297.0,
+    "receita_total_pct": 0.1698,
+    "mrr_liq": 67502.0,
+    "mrr_pct": 0.1647,
+    "mrr_por_pessoa": 28.61
+   },
+   "saida_anunciada_30_09": 0.024,
+   "historico": {
+    "n": 2292,
+    "pct_base_31_05": 0.172,
+    "taxa": 0.1793,
+    "ic95": [
+     0.1636,
+     0.195
+    ],
+    "desligamentos": 411,
+    "pct_dos_desligamentos": 0.2318,
+    "mensal_taxa": 0.216,
+    "anual_taxa": 0.144
+   },
+   "drivers": [
+    {
+     "sinal": "Treino caiu forte (4 semanas)",
+     "n_com": 180,
+     "pct_grupo": 0.079,
+     "taxa_com": 0.2833,
+     "taxa_sem": 0.1705
+    },
+    {
+     "sinal": "Chamado técnico (90 dias)",
+     "n_com": 259,
+     "pct_grupo": 0.113,
+     "taxa_com": 0.2471,
+     "taxa_sem": 0.1707
+    },
+    {
+     "sinal": "Plano mensal",
+     "n_com": 1125,
+     "pct_grupo": 0.491,
+     "taxa_com": 0.216,
+     "taxa_sem": 0.144
+    },
+    {
+     "sinal": "Pagava o preço antigo (reajuste)",
+     "n_com": 1017,
+     "pct_grupo": 0.444,
+     "taxa_com": 0.2153,
+     "taxa_sem": 0.1506
+    }
+   ],
+   "silhueta": 0.186
+  },
+  {
+   "nome": "Longões",
+   "grupo": 3,
+   "n": 835,
+   "pct": 0.0566,
+   "centro_z": {
+    "tempo_casa": 0.09,
+    "treinos_semana": -0.24,
+    "min_por_treino": 3.22,
+    "pct_ar_livre": 0.82,
+    "seguidores": 0.05
+   },
+   "quantis": {
+    "tempo_casa_meses": [
+     2.2,
+     5.5,
+     9.8,
+     18.2,
+     24.32
+    ],
+    "treinos_semana": [
+     0.08,
+     0.23,
+     1.46,
+     2.54,
+     3.51
+    ],
+    "min_por_treino": [
+     70.5,
+     74.5,
+     83.7,
+     102.0,
+     138.3
+    ],
+    "pct_ar_livre_2026": [
+     0.73,
+     0.77,
+     0.82,
+     0.86,
+     0.94
+    ],
+    "seguidores": [
+     0.0,
+     1.0,
+     1.0,
+     2.5,
+     4.0
+    ]
+   },
+   "mediana": {
+    "tempo_casa_meses": 9.8,
+    "treinos_semana": 1.46,
+    "min_por_treino": 83.7,
+    "pct_ar_livre": 0.82,
+    "seguidores": 1.0,
+    "idade": 46.0
+   },
+   "plano": {
+    "mensal": 0.321,
+    "anual": 0.679
+   },
+   "canal_cobranca": {
+    "app_store": 0.345,
+    "google_play": 0.343,
+    "web_cartao": 0.22,
+    "web_pix": 0.092
+   },
+   "canal_aquisicao": {
+    "organico": 0.309,
+    "influenciador": 0.15,
+    "meta_ads": 0.162,
+    "indicacao": 0.17,
+    "google_ads": 0.114,
+    "parceria_corporativa": 0.096
+   },
+   "objetivo": {
+    "prova_com_prazo": 0.103,
+    "desempenho": 0.166,
+    "estetica": 0.093,
+    "saude": 0.117,
+    "bem_estar": 0.06,
+    "companhia": 0.092,
+    "outro": 0.048,
+    "nao_informado": 0.32,
+    "sem_onboarding": 0.0
+   },
+   "nivel": {
+    "iniciante": 0.077,
+    "intermediario": 0.557,
+    "avancado": 0.301,
+    "nao_informado": 0.066
+   },
+   "sexo_f": 0.526,
+   "relogio": 0.38,
+   "engajamento": {
+    "sem_treino_3m": 0.0,
+    "dias_sem_treinar_mediana": 4.0,
+    "parado_30d": 0.199,
+    "posts_90d": 1.45,
+    "sessoes_mes": 7.0,
+    "com_post": 0.754
+   },
+   "valor": {
+    "receita_total_mediana": 289.0,
+    "receita_total_pct": 0.0576,
+    "mrr_liq": 22096.0,
+    "mrr_pct": 0.0539,
+    "mrr_por_pessoa": 26.46
+   },
+   "saida_anunciada_30_09": 0.274,
+   "historico": {
+    "n": 556,
+    "pct_base_31_05": 0.0565,
+    "taxa": 0.1547,
+    "ic95": [
+     0.1246,
+     0.1847
+    ],
+    "desligamentos": 86,
+    "pct_dos_desligamentos": 0.0485,
+    "mensal_taxa": 0.1741,
+    "anual_taxa": 0.1416
+   },
+   "drivers": [
+    {
+     "sinal": "Nenhum seguidor",
+     "n_com": 127,
+     "pct_grupo": 0.228,
+     "taxa_com": 0.2441,
+     "taxa_sem": 0.1282
+    },
+    {
+     "sinal": "Chamado técnico (90 dias)",
+     "n_com": 40,
+     "pct_grupo": 0.072,
+     "taxa_com": 0.25,
+     "taxa_sem": 0.1473
+    },
+    {
+     "sinal": "Anual que renova nos 60 dias",
+     "n_com": 42,
+     "pct_grupo": 0.076,
+     "taxa_com": 0.1905,
+     "taxa_sem": 0.1518
+    },
+    {
+     "sinal": "Plano mensal",
+     "n_com": 224,
+     "pct_grupo": 0.403,
+     "taxa_com": 0.1741,
+     "taxa_sem": 0.1416
+    }
+   ],
+   "silhueta": 0.241
+  }
+ ]
+}
