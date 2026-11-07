@@ -55,7 +55,9 @@ nav.jump a{flex:0 0 auto;font-size:14px;text-decoration:none;color:var(--muted);
 nav.jump a:hover{background:var(--accent-soft);color:var(--ink)}
 
 /* splits (KPIs) */
-.splits{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.splits{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+@media (max-width:760px){.splits{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:460px){.splits{grid-template-columns:1fr}}
 .split{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;gap:4px;align-content:start}
 .split .v{font-family:var(--display);font-size:40px;font-weight:700;line-height:1}
 .split .v small{font-size:20px;color:var(--muted);font-weight:600}
