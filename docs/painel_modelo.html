@@ -143,6 +143,39 @@ table.stats td.r{text-align:right;font-variant-numeric:tabular-nums}
 .tag.forte{background:var(--risk-soft);color:var(--risk)}
 .legend-heat{display:flex;gap:8px;align-items:center;font-size:12.5px;color:var(--muted);flex-wrap:wrap}
 .legend-heat i{display:inline-block;width:46px;height:10px;border-radius:4px}
+/* passo a passo de cada fase */
+.course-tools{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;justify-content:space-between}
+.levels{display:flex;flex-wrap:wrap;gap:8px;font-size:13.5px;color:var(--muted)}
+.levels span{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:3px 10px}
+.levels b{color:var(--ink)}
+.btn{font:inherit;font-size:14px;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:6px 12px;cursor:pointer}
+.btn:hover{background:var(--accent-soft)}
+details.how{grid-column:2/-1;margin-top:4px}
+details.how>summary{cursor:pointer;font-size:14px;color:var(--accent);font-weight:600;list-style:none;display:inline-flex;gap:6px;align-items:center}
+details.how>summary::-webkit-details-marker{display:none}
+details.how>summary::before{content:"▸";transition:transform .15s}
+details.how[open]>summary::before{transform:rotate(90deg)}
+.how-body{display:grid;gap:12px;margin-top:12px}
+.oneliner{font-size:16.5px;background:var(--accent-soft);border-radius:10px;padding:10px 14px}
+.oneliner b{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:2px}
+.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:10px}
+.flow>div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;display:grid;gap:6px;align-content:start;position:relative}
+.flow h4{margin:0;font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.flow .in{border-top:3px solid var(--idle)}
+.flow .do{border-top:3px solid var(--accent)}
+.flow .out{border-top:3px solid var(--ok)}
+.flow ul,.flow ol{margin:0;padding-left:18px;display:grid;gap:4px;font-size:14.5px}
+.course .flow li{display:list-item;padding:0;border:0;grid-template-columns:none}
+.flow ol li::marker{color:var(--accent);font-weight:700}
+.side{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:10px}
+.side>div{border-radius:10px;padding:10px 14px;font-size:14.5px}
+.side .ex{background:var(--medal-soft)}
+.side .why{background:var(--ok-soft)}
+.side b{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px}
+.tech{font-size:13px;color:var(--muted);border-left:3px solid var(--line);padding-left:12px}
+.tech b{color:var(--ink);font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+.tech code{font-family:var(--mono);font-size:12px}
+@media (max-width:560px){details.how{grid-column:1/-1}}
 @media (max-width:560px){.course li{grid-template-columns:56px 1fr}.course li .pill{grid-column:2}}
 @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
 </style>
@@ -171,6 +204,11 @@ table.stats td.r{text-align:right;font-variant-numeric:tabular-nums}
 <section id="percurso">
   <div class="label">Percurso · status por fase</div>
   <h2>Do quilômetro zero à linha de chegada</h2>
+  <p class="lead">Cada etapa abre um passo a passo: o que entrou, o que fizemos, o que saiu. Dá para ler em três níveis, do mais simples ao mais técnico.</p>
+  <div class="course-tools">
+    <div class="levels"><span><b>Em uma frase</b> · para qualquer pessoa</span><span><b>Entrou → Fizemos → Saiu</b> · o passo a passo</span><span><b>Detalhe técnico</b> · para quem vai mexer no código</span></div>
+    <button class="btn" id="toggleHow" type="button">Abrir todas as etapas</button>
+  </div>
   <ol class="course" id="course"></ol>
 </section>
 
@@ -391,25 +429,135 @@ const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).
 
 // ---------- percurso
 (function () {
+  // Cada fase: t título, d resumo, st status, frase (para todos), entrou, fez (passo a passo), saiu, ex (exemplo), pq (por que importa), tec (detalhe técnico)
   const fases = [
-    ['Organização', 'Repositório no GitHub, regras do projeto (AGENTS.md), guia para configurar as máquinas', 'done'],
-    ['Inventário', 'Os 12 arquivos conferidos contra o dicionário: o data room está completo', 'done'],
-    ['Qualidade', 'Skill de qualidade nas 5 dimensões aplicada aos 12 arquivos', 'done'],
-    ['Limpeza', 'Script aplica as decisões e confere cada número; os brutos nunca mudam', 'done'],
-    ['Base integrada', '1 linha por assinante ativo em 30/09, 49 colunas, bate com o enunciado', 'done'],
-    ['Dimensões novas', '19 dimensões testadas com gabarito histórico (31/05 e 31/07)', 'done'],
-    ['Motivos', 'Por que desligam: trajetória, sinais, perfis; desenho do modelo (D-052, D-053)', 'done'],
-    ['Raio-x da base', 'Análise exploratória da base toda com as técnicas das Aulas 2 e 3: distribuições, extremos, correlação, cruzamentos, três lentes', 'done'],
-    ['Clusters e personas', 'K-means da base toda (sem usar o churn) → churn e valor por grupo → 3 a 4 personas', 'now'],
-    ['EDA e mini deck', 'Notebook com os gráficos + 3 a 5 slides (tecnologia, semana 5)', 'todo'],
-    ['Relatório de segmentação', 'Cartões de persona, drivers, prioridade, limites (negócios, semana 5)', 'todo'],
-    ['Modelo de churn', 'Logística, árvores, boosting; métricas e interpretação (semana 10)', 'todo'],
-    ['App preditivo-generativo', 'Marimo + API de IA generativa para a mensagem de retenção (semana 10)', 'todo'],
-    ['Plano de intervenção e ROI', 'Segmentos-alvo, oferta, custo da IA, KPIs (semana 10)', 'todo'],
+    { t: 'Organização', st: 'done', d: 'Repositório no GitHub, regras do projeto (AGENTS.md), guia para configurar as máquinas',
+      frase: 'Montamos a "cozinha" do projeto: um lugar único onde ficam os dados, o código e as decisões, igual para os cinco integrantes.',
+      entrou: ['Os 12 arquivos do data room da Vitaliza', 'O enunciado e o dicionário de dados do case', 'O guia de entregas do módulo'],
+      fez: ['Criamos um repositório no GitHub: uma pasta compartilhada que guarda o histórico de cada mudança', 'Escrevemos as regras do projeto (AGENTS.md), que qualquer IA lê antes de trabalhar: corte em 30/09, fusos, cuidados com dados pessoais', 'Abrimos um caderno de decisões (DECISOES.md) para registrar cada escolha que muda um número', 'Separamos os dados brutos: ficam só na máquina de cada um, nunca são alterados e não sobem para a internet', 'Preparamos o ambiente: Python 3.12 e as bibliotecas com versão fixa', 'Fizemos um guia com um prompt pronto para cada colega configurar a própria máquina'],
+      saiu: ['Repositório do grupo no GitHub', 'AGENTS.md, DECISOES.md, README.md', 'Guia em docs/CONFIGURAR_MAQUINA.md'],
+      ex: 'Um colega que roda os scripts na própria casa chega aos mesmos 14.753 assinantes que nós, porque todos partem dos mesmos arquivos e das mesmas regras.',
+      pq: 'Todos trabalham sobre a mesma versão, qualquer número pode ser refeito do zero e, se algo der errado, o histórico mostra o que mudou e quando.',
+      tec: 'Git + GitHub (pull antes de trabalhar, push ao terminar) · ambiente virtual em <code>.venv</code> · <code>requirements.txt</code> · <code>.gitignore</code> com <code>dados/brutos/</code> e <code>dados/processados/</code>' },
+    { t: 'Inventário', st: 'done', d: 'Os 12 arquivos conferidos contra o dicionário: o data room está completo',
+      frase: 'Antes de cozinhar, conferimos se chegou tudo o que estava na nota: cada arquivo contra o dicionário de dados.',
+      entrou: ['12 arquivos brutos: 1,25 milhão de treinos, 275 mil eventos de assinatura, 165 mil cobranças, 64 mil contas…', 'O dicionário de dados'],
+      fez: ['Contamos linhas e colunas de cada arquivo e comparamos com o dicionário', 'Respondemos "uma linha é o quê?" em cada arquivo: uma conta, uma assinatura, uma cobrança, um treino', 'Listamos os valores de cada categoria, o período coberto e a chave que liga os arquivos (user_id)', 'Marcamos cada achado por cor: vermelho impede o uso, amarelo precisa de limpeza, azul é informação útil'],
+      saiu: ['saidas/inventario.md', 'Os 12 arquivos conferem com o dicionário, nenhum vermelho', '21 achados amarelos, que viraram a pauta da etapa de qualidade'],
+      ex: 'Pagamentos tem uma linha por cobrança: um assinante de 2 anos no plano mensal tem cerca de 24 linhas. Se juntássemos esse arquivo direto com o de usuários, essa pessoa contaria 24 vezes.',
+      pq: 'É a granularidade da Aula 2: sem saber o que é cada linha, juntar tabelas multiplica pessoas e todas as taxas saem erradas.',
+      tec: '<code>src/inventario.py</code> · leitura com pandas · conversão de datas UTC → Brasília · mapas de calor em imagem só inventariados' },
+    { t: 'Qualidade', st: 'done', d: 'Skill de qualidade nas 5 dimensões aplicada aos 12 arquivos',
+      frase: 'Fizemos um check-up de cada arquivo com cinco exames e levamos cada problema para o grupo decidir o que fazer.',
+      entrou: ['Os 12 arquivos brutos e os achados do inventário', 'As 5 dimensões de qualidade da Aula 2 (Wang & Strong)'],
+      fez: ['Criamos um roteiro (a skill qualidade-dados) que a IA segue sempre do mesmo jeito', 'Completude: falta informação? (ex.: objetivo em branco ou escrito "nada", "x", "asdf")', 'Validade: o valor é possível? (ex.: treino de 10 mil km, nascimento falso)', 'Consistência: a mesma coisa está escrita igual? (ex.: a cidade escrita de 36 jeitos, "corrida" e "run")', 'Unicidade: há repetidos? (ex.: a mesma cobrança duas vezes)', 'Temporalidade: a data está certa e antes do corte? (ex.: lojas gravam em outro fuso)', 'Cada problema virou uma pergunta ao grupo: corrigir, remover ou marcar? A resposta foi para o DECISOES.md com quanto ela muda a contagem'],
+      saiu: ['12 relatórios em saidas/qualidade/ (links na seção Qualidade)', 'Decisões D-001 a D-049 e D-051 registradas'],
+      ex: 'As lojas gravam o horário em UTC, 3 horas à frente de Brasília. Uma assinatura que venceu às 22h de 30/04 aparecia em maio. Eram 753 eventos no mês errado; a decisão D-009 converteu tudo para o horário de Brasília.',
+      pq: '"Limpar é decidir" (Aula 2). Sem registro, ninguém sabe depois por que um número mudou, e o professor não consegue auditar.',
+      tec: '<code>.claude/skills/qualidade-dados/SKILL.md</code> · <code>src/qualidade.py</code> (vazios disfarçados só em texto livre) · ações de Redman: corrigir, remover, marcar' },
+    { t: 'Limpeza', st: 'done', d: 'Script aplica as decisões e confere cada número; os brutos nunca mudam',
+      frase: 'Aplicamos as decisões numa cópia, sem tocar no original, e conferimos se cada número bateu com o que tínhamos previsto.',
+      entrou: ['Os 12 arquivos brutos', 'As decisões do DECISOES.md'],
+      fez: ['Um script lê cada arquivo bruto, do jeito que veio', 'Aplica as regras: junta o mesmo treino gravado pelo app e pelo relógio, transforma "R$ 34,90" em número, padroniza cidades, converte fusos', 'Grava a versão limpa numa pasta separada (dados/processados)', 'Monta uma tabela de conferência: o que a decisão previa × o que o script obteve'],
+      saiu: ['Cópia limpa em dados/processados/', 'saidas/limpeza_conferencia.md', 'Contas: 64.948 → 64.829 · treinos: 1.254.475 → 1.245.092 · cobranças: 165.548 → 163.607', 'Faturamento líquido de set/2026: R$ 436.442, igual ao slide da Aula 2'],
+      ex: 'O mesmo treino de 5 km aparecia duas vezes, uma pelo app e outra pelo Garmin, e a pessoa ganhava 10 km. Havia 9.383 pares assim; ficou um treino de cada par.',
+      pq: 'Como o original nunca muda, sempre dá para refazer tudo e conferir. Se uma decisão mudar, basta rodar de novo.',
+      tec: '<code>src/limpeza.py</code> · arquivos <code>.parquet</code> · <code>dados/processados/</code> fora do Git pelo tamanho (D-050), recriado pelo script' },
+    { t: 'Base integrada', st: 'done', d: '1 linha por assinante ativo em 30/09, 49 colunas, bate com o enunciado',
+      frase: 'Juntamos os 12 arquivos numa tabela só: uma linha por assinante ativo, com tudo o que se sabia sobre ele até 30/09.',
+      entrou: ['A cópia limpa dos 12 arquivos', 'A data de corte: 30/09/2026'],
+      fez: ['Escolhemos quem entra: assinantes pagantes ativos no corte (contas de cortesia ficam fora)', 'Resumimos cada arquivo em colunas por pessoa: treinos e minutos dos últimos 3 meses, recusas de cartão em 90 dias, chamados em aberto, seguidores…', 'Usamos só o que se sabia até o corte: nada do futuro', 'Conferimos o resultado contra os números do enunciado'],
+      saiu: ['base_assinantes_corte.parquet: 14.753 linhas × 49 colunas', 'saidas/base_integrada.md', '57,5% anual · App Store 36,6%, Google Play 33,6%, cartão 20,3%, Pix 9,5%: iguais ao enunciado'],
+      ex: 'As ~24 linhas de cobrança de uma pessoa viram 3 colunas: receita líquida total, recusas em 90 dias e retentativas.',
+      pq: 'O K-means e o modelo de churn precisam de uma linha por pessoa. E usar informação do futuro ("vazamento") faz o modelo parecer ótimo na sala de aula e errar na vida real.',
+      tec: '<code>src/base_integrada.py</code> · corte em D-002 · não usa o retrato de 01/10 de assinaturas.csv (D-015)' },
+    { t: 'Dimensões novas', st: 'done', d: '19 dimensões testadas com gabarito histórico (31/05 e 31/07)',
+      frase: 'Criamos novas medidas e testamos, no passado, quais delas teriam avisado quem ia sair.',
+      entrou: ['A base integrada', 'Ideias de medidas: queda no treino, irregularidade, renova em 60 dias, afetado pelo reajuste…', 'O histórico de quem saiu de verdade'],
+      fez: ['Remontamos a base em datas passadas (31/05 e 31/07), quando já sabemos quem saiu nos 60 dias seguintes', 'Criamos 19 dimensões novas', 'Medimos, para cada uma sozinha, o quanto separa quem saiu de quem ficou (AUC: 0,50 é sorteio, 1,00 é perfeito)', 'Repetimos para todos, só mensais e anuais perto de renovar'],
+      saiu: ['saidas/dimensoes_novas.md, dimensoes_auc.csv e dimensoes_leitura.md', '"Renova em 60 dias" lidera (AUC 0,76); treino recente e dias sem treinar vêm em seguida', 'Preço e canal de pagamento pesam pouco'],
+      ex: 'É como testar um termômetro em pacientes que já sabemos se tiveram febre: se ele não acerta no passado, não vale usar no futuro.',
+      pq: 'Evita levar para o modelo uma medida que parece boa na conversa mas não separa nada nos dados.',
+      tec: '<code>src/dimensoes.py</code> · <code>montar(d, T)</code> recria a base em qualquer corte · AUC univariado · gráfico "O que separa quem sai" neste painel' },
+    { t: 'Motivos', st: 'done', d: 'Por que desligam: trajetória, sinais, perfis; desenho do modelo (D-052, D-053)',
+      frase: 'Investigamos por que as pessoas desligam a renovação, comparando cada uma com um "gêmeo" parecido que ficou.',
+      entrou: ['Quem desligou a renovação entre mar e set/2026', 'Treinos, posts, chamados, pagamentos e a pesquisa de saída dessas pessoas'],
+      fez: ['Para cada pessoa que desligou, achamos um gêmeo: mesmo plano e tempo de casa, mas que não desligou', 'Olhamos as 8 semanas antes da decisão, nos dois grupos', 'Contamos sinais: queda de treino, post de prova concluída, chamado técnico, cartão recusado, reajuste de preço', 'Classificamos cada saída num perfil pelo primeiro sinal que aparece'],
+      saiu: ['saidas/motivos_desligamento.md e motivos_leitura.md', 'Treinos caem de 2,4 para 1,0 por semana nas 4 semanas antes', 'Post de prova concluída é 7,9× mais comum em quem desliga; preço e cartão não diferenciam', 'Perfis: parou de treinar 36%, objetivo cumprido 9%, técnico 6%, sem sinal claro 47%', 'Decisões D-052 (quem já desligou vai para regra à parte) e D-053 (o que o modelo prevê)'],
+      ex: 'Uma pessoa posta "terminei minha meia maratona!" e, dias depois, desliga a renovação. O app não falhou: a meta acabou. A mensagem certa é propor a próxima meta, não um desconto.',
+      pq: 'O gêmeo isola o efeito (Aula 2: comparar comparáveis). E o achado mudou o desenho do modelo: prever quem vai decidir sair, enquanto ainda dá tempo de agir.',
+      tec: '<code>src/motivos.py</code> · <code>desligamentos_e_gemeos.parquet</code> · gráficos "A decisão dá aviso", "O que é mais comum em quem desliga" e "Perfis" neste painel' },
+    { t: 'Raio-x da base', st: 'done', d: 'Análise exploratória da base toda com as técnicas das Aulas 2 e 3: distribuições, extremos, correlação, cruzamentos, três lentes',
+      frase: 'Fizemos um exame geral da base inteira para conhecer o cliente antes de dividi-lo em grupos.',
+      entrou: ['A base ativa de 30/09 (14.753 assinantes)', 'O gabarito de 31/05 (11.965 assinantes, 14,8% desligaram em 60 dias)'],
+      fez: ['Granularidade: de quantas contas chegamos a quantos assinantes', 'Cinco números, média × mediana e extremos de cada variável', 'Histogramas para ver o formato de cada distribuição', 'Tabelas de frequência: objetivo, canal, relógio, nível, estado', 'O que dizem × o que fazem: dias prometidos × treinos reais', 'Correlação entre as medidas de comportamento', 'Cruzamentos com a taxa de saída e o tamanho de cada grupo', 'Quanto cada lente (quem é, contrato, comportamento, necessidade) separa quem sai'],
+      saiu: ['A seção Raio-x deste painel', 'Contrato e tempo de casa são o primeiro corte da base', 'O treino avisa pela queda, não pelo nível', '4 medidas de treino dizem quase a mesma coisa: escolher uma ou duas', '30% sem objetivo informado'],
+      ex: 'O mensal com até 1 mês de casa sai 3,7× mais que o anual com mais de 1 ano. Isso a média geral de 14,8% esconde.',
+      pq: 'O K-means só forma bons grupos se soubermos quais variáveis usar e como prepará-las. O raio-x responde isso antes de rodar.',
+      tec: '<code>src/raio_x.py</code> · Pearson · regra de 1,5 × IQR · regressão logística com validação cruzada em 5 partes para comparar as lentes' },
+    { t: 'Clusters e personas', st: 'now', d: 'K-means da base toda (sem usar o churn) → churn e valor por grupo → 3 a 4 personas',
+      frase: 'Vamos deixar o algoritmo separar a base em grupos de pessoas parecidas, sem contar a ele quem saiu, e só depois ver quanto cada grupo sai.',
+      entrou: ['A base de 31/05 (para formar os grupos, porque tem gabarito)', 'A base de 30/09 (para aplicar os grupos hoje)', 'As variáveis escolhidas pelo raio-x'],
+      fez: ['Escolher 6 a 10 variáveis de contrato, comportamento e objetivo (idade e sexo ficam fora)', 'Colocar todas na mesma escala, para nenhuma mandar sozinha', 'Testar de 3 a 8 grupos e escolher pelo cotovelo e pela silhueta', 'Descrever cada grupo e medir a saída e o valor de cada um', 'Checar os 5 critérios da Aula 3: mensurável, substancial, diferenciável, acessível, acionável', 'Escrever 3 a 4 cartões de persona no formato da Aula 4'],
+      saiu: ['3 a 4 segmentos com taxa de saída e receita', 'Cartões de persona: conflito, evidência, gatilho, ação e limite'],
+      ex: 'Idade vai até 74 e treinos no mês até 57. Sem colocar na mesma escala, a variável com números maiores decide sozinha quem fica em cada grupo.',
+      pq: 'É o que o professor pediu e o coração da entrega de 15/11.',
+      tec: 'scikit-learn: <code>StandardScaler</code>, <code>KMeans</code>, <code>silhouette_score</code> · variáveis com cauda longa entram em log ou faixas' },
+    { t: 'EDA e mini deck', st: 'todo', d: 'Notebook com os gráficos + 3 a 5 slides (tecnologia, semana 5)',
+      frase: 'Vamos organizar a exploração num caderno que qualquer pessoa consegue rodar e resumir o que importa em poucos slides.',
+      entrou: ['Os scripts e gráficos já feitos (raio-x, dimensões, motivos, clusters)'],
+      fez: ['Montar um notebook que lê a base, mostra cada gráfico e explica o que ele diz', 'Escolher os 5 achados mais fortes', 'Fazer de 3 a 5 slides para a trilha de tecnologia'],
+      saiu: ['Notebook de EDA', 'Mini deck de 3 a 5 slides'],
+      pq: 'É a prova de que os números vêm do código e podem ser refeitos.' },
+    { t: 'Relatório de segmentação', st: 'todo', d: 'Cartões de persona, drivers, prioridade, limites (negócios, semana 5)',
+      frase: 'Vamos contar para a diretoria da Vitaliza quem são os grupos de clientes, por que cada um sai e onde agir primeiro.',
+      entrou: ['Os segmentos e as personas', 'Os gráficos da EDA'],
+      fez: ['Escrever um cartão por persona', 'Listar o que leva cada grupo a sair', 'Separar em "agir já" e "monitorar"', 'Deixar claros os limites da análise'],
+      saiu: ['Customer Segmentation Report (entrega de 15/11)'],
+      pq: 'É a peça de negócio da semana 5: transforma números em decisão.' },
+    { t: 'Modelo de churn', st: 'todo', d: 'Logística, árvores, boosting; métricas e interpretação (semana 10)',
+      frase: 'Vamos treinar um modelo que dá a cada assinante uma nota de risco de desligar a renovação nos próximos 60 dias.',
+      entrou: ['A base com as dimensões novas', 'O alvo definido na D-053'],
+      fez: ['Treinar no passado e testar num período que o modelo não viu', 'Comparar regressão logística, árvores e boosting', 'Explicar o que pesa na nota de cada pessoa'],
+      saiu: ['Ranking de risco dos assinantes de 30/09', 'Métricas e interpretação'],
+      pq: 'Sem saber quem está em risco, a retenção vira desconto para todo mundo.' },
+    { t: 'App preditivo-generativo', st: 'todo', d: 'Marimo + API de IA generativa para a mensagem de retenção (semana 10)',
+      frase: 'Vamos criar uma tela onde se escolhe um assinante, se vê o risco dele e a IA escreve a mensagem de retenção.',
+      entrou: ['O modelo de churn', 'Os perfis e personas', 'Uma API de IA generativa'],
+      fez: ['Montar o app em Marimo', 'Ligar o modelo de risco', 'Gerar a mensagem com a IA, sem enviar dados pessoais'],
+      saiu: ['App web da entrega de 20/12'],
+      pq: 'Mostra o sistema completo funcionando: dado → risco → mensagem.' },
+    { t: 'Plano de intervenção e ROI', st: 'todo', d: 'Segmentos-alvo, oferta, custo da IA, KPIs (semana 10)',
+      frase: 'Vamos dizer em quem agir, com que oferta e quanto isso rende de verdade, já descontando o custo da IA.',
+      entrou: ['O ranking de risco', 'O experimento de agosto (campanha_ago26)', 'O orçamento de CRM de R$ 40 mil/mês'],
+      fez: ['Medir quanto um contato reduz a saída, comparando com o grupo de controle', 'Calcular a receita líquida preservada × o custo', 'Definir quem recebe o contato e os KPIs para acompanhar'],
+      saiu: ['Plano de intervenção com ROI (entrega de 20/12)'],
+      pq: 'Fecha a pergunta do case: em quem vale a pena agir e quanto isso rende.' },
   ];
   const txt = { done: 'concluído', now: 'em andamento', todo: 'a fazer' };
-  document.getElementById('course').innerHTML = fases.map(([t, d, st], i) =>
-    `<li class="${i === fases.length - 1 ? 'finish' : ''}"><div class="km">km<b class="num">${String(i + 1).padStart(2, '0')}</b></div><div class="what"><h3>${t}</h3><p>${d}</p></div><span class="pill ${st}">${txt[st]}</span></li>`).join('');
+  const lista = (a, tag = 'ul') => a && a.length ? `<${tag}>${a.map(x => `<li>${x}</li>`).join('')}</${tag}>` : '';
+  const how = f => {
+    const feito = f.st === 'done';
+    return `<details class="how"><summary>${feito ? 'Como foi feito' : 'Como vai ser'}</summary><div class="how-body">
+      <p class="oneliner"><b>Em uma frase</b>${f.frase}</p>
+      <div class="flow">
+        <div class="in"><h4>1 · Entrou</h4>${lista(f.entrou)}</div>
+        <div class="do"><h4>2 · ${feito ? 'Fizemos' : 'Vamos fazer'}</h4>${lista(f.fez, 'ol')}</div>
+        <div class="out"><h4>3 · ${feito ? 'Saiu' : 'Vai sair'}</h4>${lista(f.saiu)}</div>
+      </div>
+      <div class="side">${f.ex ? `<div class="ex"><b>Exemplo concreto</b>${f.ex}</div>` : ''}${f.pq ? `<div class="why"><b>Por que importa</b>${f.pq}</div>` : ''}</div>
+      ${f.tec ? `<p class="tech"><b>Detalhe técnico</b> · ${f.tec}</p>` : ''}
+    </div></details>`;
+  };
+  document.getElementById('course').innerHTML = fases.map((f, i) =>
+    `<li class="${i === fases.length - 1 ? 'finish' : ''}"><div class="km">km<b class="num">${String(i + 1).padStart(2, '0')}</b></div><div class="what"><h3>${f.t}</h3><p>${f.d}</p></div><span class="pill ${f.st}">${txt[f.st]}</span>${how(f)}</li>`).join('');
+  const bt = document.getElementById('toggleHow');
+  bt.addEventListener('click', () => {
+    const ds = [...document.querySelectorAll('#course details.how')];
+    const abrir = ds.some(d => !d.open);
+    ds.forEach(d => d.open = abrir);
+    bt.textContent = abrir ? 'Fechar todas as etapas' : 'Abrir todas as etapas';
+  });
 })();
 
 // ---------- para decidir
